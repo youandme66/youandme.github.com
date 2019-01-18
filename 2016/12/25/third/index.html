@@ -1,0 +1,1435 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="插件,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Splashscreen插件显示或隐藏启动屏幕画面123456module.controller(&apos;MyCtrl&apos;, function($scope, $cordovaSplashscreen) &amp;#123;  $cordovaSplashscreen.show();//$cordovaSplashscreen.hide();&amp;#125;); StatusBar插件配置设备的状态栏颜色和样式。12">
+<meta name="keywords" content="插件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cordova平台总结一">
+<meta property="og:url" content="https://youandme66.github.io/2016/12/25/third/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="Splashscreen插件显示或隐藏启动屏幕画面123456module.controller(&apos;MyCtrl&apos;, function($scope, $cordovaSplashscreen) &amp;#123;  $cordovaSplashscreen.show();//$cordovaSplashscreen.hide();&amp;#125;); StatusBar插件配置设备的状态栏颜色和样式。12">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-12-25T09:39:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cordova平台总结一">
+<meta name="twitter:description" content="Splashscreen插件显示或隐藏启动屏幕画面123456module.controller(&apos;MyCtrl&apos;, function($scope, $cordovaSplashscreen) &amp;#123;  $cordovaSplashscreen.show();//$cordovaSplashscreen.hide();&amp;#125;); StatusBar插件配置设备的状态栏颜色和样式。12">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2016/12/25/third/">
+
+
+
+
+
+  <title> cordova平台总结一 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2016/12/25/third/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                cordova平台总结一
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-25T00:00:00+08:00">
+                2016-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/cordova/" itemprop="url" rel="index">
+                    <span itemprop="name">cordova</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2016/12/25/third/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2016/12/25/third/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/25/third/" class="leancloud_visitors" data-flag-title="cordova平台总结一">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Splashscreen插件"><a href="#Splashscreen插件" class="headerlink" title="Splashscreen插件"></a>Splashscreen插件</h3><p>显示或隐藏启动屏幕画面<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $cordovaSplashscreen</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaSplashscreen.show();</span><br><span class="line"><span class="comment">//$cordovaSplashscreen.hide();</span></span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="StatusBar插件"><a href="#StatusBar插件" class="headerlink" title="StatusBar插件"></a>StatusBar插件</h3><p>配置设备的状态栏颜色和样式。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaStatusbar</span>) </span>&#123;</span><br><span class="line">  $cordovaStatusbar.overlaysWebView(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 样式: 无 : 0, 白色不透明: 1, 黑色半透明: 2, 黑色不透明: 3</span></span><br><span class="line">  $cordovaStatusbar.style(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 背景颜色名字 : black, darkGray, lightGray, white, gray, red, green,</span></span><br><span class="line">  <span class="comment">// blue, cyan, yellow, magenta, orange, purple, brown 注:需要开启状态栏占用视图.</span></span><br><span class="line">  $cordovaStatusbar.styleColor(<span class="string">'black'</span>);</span><br><span class="line"></span><br><span class="line">  $cordovaStatusbar.styleHex(<span class="string">'#000'</span>);</span><br><span class="line"></span><br><span class="line">  $cordovaStatusbar.hide();</span><br><span class="line"></span><br><span class="line">  $cordovaStatusbar.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> isVisible = $cordovaStatusbar.isVisible();</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Badge"><a href="#Badge" class="headerlink" title="Badge"></a>Badge</h3><p>修改应用程序图标的角标数量，Android、ios和Windows手机。<br>方法<br>hasPermission()<br>检测是否有修改权限<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaBadge</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaBadge.hasPermission().then(<span class="function"><span class="keyword">function</span>(<span class="params">yes</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 有权限</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">no</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 无权限</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>set(badge, callback, scope)<br>设置角标数字<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaBadge</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaBadge.set(<span class="number">3</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 有权限, 已设置.</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 无权限</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>get()<br>获取角标数字<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaBadge</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaBadge.get().then(<span class="function"><span class="keyword">function</span>(<span class="params">badge</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 有权限, 已返回.</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 无权限</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>clear(callback, scope)<br>清除角标数字<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaBadge</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaBadge.clear().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 有权限, 已清除.</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 无权限</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>increase(count, callback, scope)<br>增加角标数字,如果不设置则+1<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaBadge</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaBadge.increase(<span class="number">10</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 有权限, 已增加10.</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 无权限</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>decrease(count, callback, scope)<br>减少角标数字,如果不设置则-1<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaBadge</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaBadge.decrease().then(<span class="function"><span class="keyword">function</span>(<span class="params">badge</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 有权限, 已减少10.</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 无权限</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="network插件"><a href="#network插件" class="headerlink" title="network插件"></a>network插件</h3><p>方法<br>getNetwork()<br>提供了一个快速的方法来确定设备的网络连接状态，和类型的连接。</p>
+<p>返回值 Connection Object:</p>
+<table>
+<thead>
+<tr>
+<th>Connection Type(连接类型)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection.UNKNOWN</td>
+<td>未知连接</td>
+</tr>
+<tr>
+<td>Connection.ETHERNET</td>
+<td>以太网连接</td>
+</tr>
+<tr>
+<td>Connection.WIFI</td>
+<td>无线网连接</td>
+</tr>
+<tr>
+<td>Connection.CELL_2G</td>
+<td>2G网连接</td>
+</tr>
+<tr>
+<td>Connection.CELL_3G</td>
+<td>3G网连接</td>
+</tr>
+<tr>
+<td>Connection.CELL_4G</td>
+<td>4G网连接</td>
+</tr>
+<tr>
+<td>Connection.CELL</td>
+<td>通用连接</td>
+</tr>
+<tr>
+<td>Connection.NONE</td>
+<td>无网络连接</td>
+</tr>
+</tbody>
+</table>
+<p>isOnline()<br>检测手机网络是否在线</p>
+<p>返回值 如果为true手机网络在线<br>isOffline()<br>检测手机网络是否离线</p>
+<p>返回值 如果为true手机网络离线<br>事件(Event)<br>$cordovaNetwork:online<br>监听$cordovaNetwork:online当手机上网时触发事件<br>返回值</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>event</td>
+<td>Object</td>
+<td>Angular 事件 $broadcast - 详情查阅 AngularJS docs</td>
+</tr>
+<tr>
+<td>networkState</td>
+<td>Object</td>
+<td>网络连接类型,具体参考getNetwork()的返回值</td>
+</tr>
+</tbody>
+</table>
+<p>$cordovaNetwork:offline<br>监听$cordovaNetwork:offline当手机网络离线时触发事件</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>event</td>
+<td>Object</td>
+<td>Angular 事件 $broadcast - 详情查阅 AngularJS docs</td>
+</tr>
+<tr>
+<td>networkState</td>
+<td>Object</td>
+<td>网络连接类型,具体参考getNetwork()的返回值</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"deviceready"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 监听手机网络在线事件</span></span><br><span class="line">    $rootScope.$on(<span class="string">'$cordovaNetwork:online'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event, networkState</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> onlineState = networkState;</span><br><span class="line">      $rootScope.netState=<span class="number">1</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听手机网络离线事件</span></span><br><span class="line">    $rootScope.$on(<span class="string">'$cordovaNetwork:offline'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event, networkState</span>)</span>&#123;</span><br><span class="line">      $cordovaToast.showLongBottom(<span class="string">'亲！此应用需要联网\\(^o^)/'</span>);</span><br><span class="line">      $rootScope.netState=<span class="number">0</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="Toast插件"><a href="#Toast插件" class="headerlink" title="Toast插件"></a>Toast插件</h3><p>这个插件可以显示一个像原生Toast(显示一小段文字提示)<br>方法<br>show(message, duration, position)<br>增加一个或多个本地通知</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>信息提示的一段文字</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>String</td>
+<td>信息提示显示持续事件 长或短: ‘short’, ‘long’</td>
+</tr>
+<tr>
+<td>position</td>
+<td>String</td>
+<td>信息提示显示的位置顶部,中间,底部: ‘top’, ‘center’,’bottom’</td>
+</tr>
+</tbody>
+</table>
+<p>如果不想填写额外参数可以通过更优雅的方式显示 Toast(提示信息)<br>showShortTop(message) 显示顶部</p>
+<p>showShortCenter(message) 显示中间</p>
+<p>showShortBottom(message) 显示底部</p>
+<p>showLongTop(message) 显示顶部(长时间)</p>
+<p>showLongCenter(message)显示中间(长时间)</p>
+<p>showLongBottom(message)显示底部(长时间)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaToast</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaToast</span><br><span class="line">    .show(<span class="string">'ionic中文网'</span>, <span class="string">'long'</span>, <span class="string">'center'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">success</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// success</span></span><br><span class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// error</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  $cordovaToast.showShortTop(<span class="string">'ionic中文网'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">success</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// success</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// error</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  $cordovaToast.showLongBottom(<span class="string">'ionic中文网'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">success</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// success</span></span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// error</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Dialogs插件"><a href="#Dialogs插件" class="headerlink" title="Dialogs插件"></a>Dialogs插件</h3><p>显示一个系统提示对话框<br>方法<br>alert(message, title, buttonName)</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>对话框提示的一段文字</td>
+</tr>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>对话框标题 默认:alert</td>
+</tr>
+<tr>
+<td>buttonName</td>
+<td>String</td>
+<td>对话框按钮名称 默认:ok</td>
+</tr>
+</tbody>
+</table>
+<p>confirm(message, title, buttonArray)<br>显示一个带有指定消息和取消及取消按钮的对话框(可以自定义两个按钮的名称)</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>对话框提示的一段文字</td>
+</tr>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>对话框标题 默认:alert</td>
+</tr>
+<tr>
+<td>buttonArray</td>
+<td>Array</td>
+<td>按钮名名称 是一个数组 默认:ok,cancel</td>
+</tr>
+</tbody>
+</table>
+<p>返回值 Integer 1或2取决于你点击了哪一个按钮<br>prompt(message, title, buttonArray, defaultText)<br>显示可提示用户进行输入的对话框</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>对话框提示的一段文字</td>
+</tr>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>对话框标题 默认:alert</td>
+</tr>
+<tr>
+<td>buttonArray</td>
+<td>Array</td>
+<td>按钮名名称 是一个数组 默认:ok,cancel</td>
+</tr>
+<tr>
+<td>defaultText</td>
+<td>String</td>
+<td>用户输入提示信息</td>
+</tr>
+</tbody>
+</table>
+<p>返回值 Object 用于接受用户输入:result.input1 判断用户点击那哪一个按钮 返回一个索引:result.buttonIndex</p>
+<p>beep(repetitions)<br>显示可提示用户进行输入的对话框</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repetitions</td>
+<td>Integer</td>
+<td>设置弹出对话框延迟以秒为单位</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $cordovaDialogs</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaDialogs.alert(<span class="string">'message'</span>, <span class="string">'title'</span>, <span class="string">'button name'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// callback success</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  $cordovaDialogs.confirm(<span class="string">'message'</span>, <span class="string">'title'</span>, [<span class="string">'button 1'</span>,<span class="string">'button 2'</span>])</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">buttonIndex</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// no button = 0, 'OK' = 1, 'Cancel' = 2</span></span><br><span class="line">      <span class="keyword">var</span> btnIndex = buttonIndex;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  $cordovaDialogs.prompt(<span class="string">'msg'</span>, <span class="string">'title'</span>, [<span class="string">'btn 1'</span>,<span class="string">'btn 2'</span>], <span class="string">'default text'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> input = result.input1;</span><br><span class="line">      <span class="comment">// no button = 0, 'OK' = 1, 'Cancel' = 2</span></span><br><span class="line">      <span class="keyword">var</span> btnIndex = result.buttonIndex;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// beep 3 times</span></span><br><span class="line">  $cordovaDialogs.beep(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Pin-Dialog"><a href="#Pin-Dialog" class="headerlink" title="Pin Dialog"></a>Pin Dialog</h3><p>数字密码对话框。<br>方法<br>prompt(message)</p>
+<p>显示一个可以输入数字密码的对话框<br>|参数|类型|说明|<br>|-|-|-|<br>|message|String|信息提示的一段文字|<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaPinDialog</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaPinDialog.prompt(<span class="string">'Some message here'</span>).then(</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// result</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// error</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="action-Sheet插件"><a href="#action-Sheet插件" class="headerlink" title="action Sheet插件"></a>action Sheet插件</h3><p>显示一个用户可以选择的原生上拉菜单.iOS调用UIActionSheet. Android调用AlertDialog。<br>方法<br>show(options)</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>options</td>
+<td>Object</td>
+<td>Options的选项</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>String</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>buttonLabels</td>
+<td>String Array</td>
+<td>每个按钮的文本，从1开始</td>
+</tr>
+<tr>
+<td>addCancelButtonWithLabel</td>
+<td>String</td>
+<td>如果为空，没有取消按钮。否则，设置取消按钮的文字</td>
+</tr>
+<tr>
+<td>androidEnableCancelButton</td>
+<td>Boolean</td>
+<td>显示Android取消按钮，默认为假</td>
+</tr>
+<tr>
+<td>winphoneEnableCancelButton</td>
+<td>Boolean</td>
+<td>显示IOS取消按钮，默认为假</td>
+</tr>
+<tr>
+<td>addDestructiveButtonWithLabel</td>
+<td>String</td>
+<td>添加一个红色的按钮</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'ThisCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$cordovaActionSheet</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> options = &#123;</span><br><span class="line">    title: <span class="string">'你要做什么?'</span>,</span><br><span class="line">    buttonLabels: [<span class="string">'分享到新浪微博'</span>, <span class="string">'分享到朋友圈'</span>],</span><br><span class="line">    addCancelButtonWithLabel: <span class="string">'取消'</span>,</span><br><span class="line">    androidEnableCancelButton: <span class="literal">true</span>,</span><br><span class="line">    winphoneEnableCancelButton: <span class="literal">true</span>,</span><br><span class="line">    addDestructiveButtonWithLabel: <span class="string">'删除这个'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.addEventListener(<span class="string">"deviceready"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    $cordovaActionSheet.show(options)</span><br><span class="line">      .then(<span class="function"><span class="keyword">function</span>(<span class="params">btnIndex</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> index = btnIndex;</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Date-Picker"><a href="#Date-Picker" class="headerlink" title="Date Picker"></a>Date Picker</h3><p>显示本地日期和时间选择器控件<br>方法<br>show(options)<br>显示一个日期选择器<br>options是一个时间选择器的选项。它是一个Object</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>options.mode</td>
+<td>String</td>
+<td>‘date’</td>
+<td>日期选择器模式:date 或者time</td>
+</tr>
+<tr>
+<td>options.date</td>
+<td>Date, String</td>
+<td>new Date()</td>
+<td>选择日期</td>
+</tr>
+<tr>
+<td>options.minDate</td>
+<td>Date, String</td>
+<td>无</td>
+<td>最小日期</td>
+</tr>
+<tr>
+<td>options.maxDate</td>
+<td>Date, String</td>
+<td>无</td>
+<td>最大日期</td>
+</tr>
+<tr>
+<td>options.allowOldDates</td>
+<td>Boolean</td>
+<td>true</td>
+<td>显示/隐藏早些时候的日期</td>
+</tr>
+<tr>
+<td>options.allowFutureDates</td>
+<td>Boolean</td>
+<td>true</td>
+<td>显示/隐藏以后的的日期</td>
+</tr>
+<tr>
+<td>options.doneButtonLabel</td>
+<td>String</td>
+<td>Done’</td>
+<td>完成按钮名称</td>
+</tr>
+<tr>
+<td>options.doneButtonColor</td>
+<td>String</td>
+<td>‘#0000FF’</td>
+<td>完成按钮颜色16进制代码</td>
+</tr>
+<tr>
+<td>options.cancelButtonLabel</td>
+<td>String</td>
+<td>‘Cancel’</td>
+<td>取消按钮名称</td>
+</tr>
+<tr>
+<td>options.cancelButtonColor</td>
+<td>String</td>
+<td>‘#000000’</td>
+<td>取消按钮颜色16进制代码</td>
+</tr>
+<tr>
+<td>options.minuteInterval</td>
+<td>Integer</td>
+<td>1</td>
+<td>选择器间隔时间</td>
+</tr>
+</tbody>
+</table>
+<p>返回值 Date 用户选择的时间<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $cordovaDatePicker</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> options = &#123;</span><br><span class="line">    date: <span class="keyword">new</span> <span class="built_in">Date</span>(),</span><br><span class="line">    mode: <span class="string">'date'</span>, <span class="comment">// or 'time'</span></span><br><span class="line">    minDate: <span class="keyword">new</span> <span class="built_in">Date</span>() - <span class="number">10000</span>,</span><br><span class="line">    allowOldDates: <span class="literal">true</span>,</span><br><span class="line">    allowFutureDates: <span class="literal">false</span>,</span><br><span class="line">    doneButtonLabel: <span class="string">'DONE'</span>,</span><br><span class="line">    doneButtonColor: <span class="string">'#F2F3F4'</span>,</span><br><span class="line">    cancelButtonLabel: <span class="string">'CANCEL'</span>,</span><br><span class="line">    cancelButtonColor: <span class="string">'#000000'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.addEventListener(<span class="string">"deviceready"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    $cordovaDatePicker.show(options).then(<span class="function"><span class="keyword">function</span>(<span class="params">date</span>)</span>&#123;</span><br><span class="line">        alert(date);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="native-audio"><a href="#native-audio" class="headerlink" title="native audio"></a>native audio</h3><p>Cordova / PhoneGap 3.5 +本地音频播放，针对HTML5游戏和音频应用所需的最小延迟，复调和并发。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $cordovaNativeAudio, $timeout</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  $cordovaNativeAudio</span><br><span class="line">    .preloadSimple(<span class="string">'click'</span>, <span class="string">'audio/click.mp3'</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span> (<span class="params">msg</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(msg);</span><br><span class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">      alert(error);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  $cordovaNativeAudio</span><br><span class="line">    .preloadComplex(<span class="string">'music'</span>, <span class="string">'audio/music.mp3'</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span> (<span class="params">msg</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(msg);</span><br><span class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.error(error);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  $scope.play = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $cordovaNativeAudio.play(<span class="string">'click'</span>);</span><br><span class="line">    $cordovaNativeAudio.loop(<span class="string">'music'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// stop 'music' loop and unload</span></span><br><span class="line">    $timeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      $cordovaNativeAudio.stop(<span class="string">'music'</span>);</span><br><span class="line"></span><br><span class="line">      $cordovaNativeAudio.unload(<span class="string">'click'</span>);</span><br><span class="line">      $cordovaNativeAudio.unload(<span class="string">'music'</span>);</span><br><span class="line">    &#125;, <span class="number">1000</span> * <span class="number">60</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Barcode-Scanner"><a href="#Barcode-Scanner" class="headerlink" title="Barcode Scanner"></a>Barcode Scanner</h3><p>打开相机自动扫描 条形码/二维码，返回数据。<br>方法<br>scan()<br>返回 对象 - 信息<br>encode(type, text)<br>|参数|类型|说明|<br>|-|-|-|<br>|type|Constant|编码类型（如：barcodescanner。编码。text_type）|<br>|text|String|编码所需的文本字符串|<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'BarcodeCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $cordovaBarcodeScanner</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.addEventListener(<span class="string">"deviceready"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    $cordovaBarcodeScanner</span><br><span class="line">      .scan()</span><br><span class="line">      .then(<span class="function"><span class="keyword">function</span>(<span class="params">barcodeData</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Success! Barcode data is here 扫描数据：barcodeData.text</span></span><br><span class="line">      &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// An error occurred</span></span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// <span class="doctag">NOTE:</span> encoding not functioning yet</span></span><br><span class="line">    $cordovaBarcodeScanner</span><br><span class="line">      .encode(BarcodeScanner.Encode.TEXT_TYPE, <span class="string">"http://www.nytimes.com"</span>)</span><br><span class="line">      .then(<span class="function"><span class="keyword">function</span>(<span class="params">success</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Success!</span></span><br><span class="line">      &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// An error occurred</span></span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Vibration插件"><a href="#Vibration插件" class="headerlink" title="Vibration插件"></a>Vibration插件</h3><p>使设备震动<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $cordovaVibration</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 震动 100ms</span></span><br><span class="line">  $cordovaVibration.vibrate(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="SQLite插件"><a href="#SQLite插件" class="headerlink" title="SQLite插件"></a>SQLite插件</h3><p>调用SQLite本地数据库储存接口<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.controller(<span class="string">'MyCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $cordovaSQLite</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> db = $cordovaSQLite.openDB(&#123; <span class="attr">name</span>: <span class="string">"my.db"</span> &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// for opening a background db:</span></span><br><span class="line">  <span class="keyword">var</span> db = $cordovaSQLite.openDB(&#123; <span class="attr">name</span>: <span class="string">"my.db"</span>, <span class="attr">bgType</span>: <span class="number">1</span> &#125;);</span><br><span class="line"></span><br><span class="line">  $scope.execute = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> query = <span class="string">"INSERT INTO test_table (data, data_num) VALUES (?,?)"</span>;</span><br><span class="line">    $cordovaSQLite.execute(db, query, [<span class="string">"test"</span>, <span class="number">100</span>]).then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"insertId: "</span> + res.insertId);</span><br><span class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.error(err);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/插件/" rel="tag"># 插件</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/25/second/" rel="next" title="ionic总结二">
+                <i class="fa fa-chevron-left"></i> ionic总结二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/26/fifth/" rel="prev" title="nodejs开发总结一">
+                nodejs开发总结一 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Splashscreen插件"><span class="nav-number">1.</span> <span class="nav-text">Splashscreen插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StatusBar插件"><span class="nav-number">2.</span> <span class="nav-text">StatusBar插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Badge"><span class="nav-number">3.</span> <span class="nav-text">Badge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#network插件"><span class="nav-number">4.</span> <span class="nav-text">network插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Toast插件"><span class="nav-number">5.</span> <span class="nav-text">Toast插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dialogs插件"><span class="nav-number">6.</span> <span class="nav-text">Dialogs插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pin-Dialog"><span class="nav-number">7.</span> <span class="nav-text">Pin Dialog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#action-Sheet插件"><span class="nav-number">8.</span> <span class="nav-text">action Sheet插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Date-Picker"><span class="nav-number">9.</span> <span class="nav-text">Date Picker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#native-audio"><span class="nav-number">10.</span> <span class="nav-text">native audio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Barcode-Scanner"><span class="nav-number">11.</span> <span class="nav-text">Barcode Scanner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vibration插件"><span class="nav-number">12.</span> <span class="nav-text">Vibration插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQLite插件"><span class="nav-number">13.</span> <span class="nav-text">SQLite插件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2016/12/25/third/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

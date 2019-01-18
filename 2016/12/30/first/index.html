@@ -1,0 +1,1091 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="系统,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="进程基本概念我说的肯定跟书上那些概念不一样，就我对进程的理解，当你附加给他代码，数据和分配给进程的资源，那么他就是一个进程，比如在你进入linux系统时，你进入的就是一个大的进程，有控制显示器的声音的键盘的什么的。这只是我的理解。fork()函数通过系统调用创建一个与原来进程几乎完全相同的进程，也就是两个进程可以做相同的事，但如果初始参数或这传入的变量不同，两个进程也可以做不同的事。一个进程调用f">
+<meta name="keywords" content="系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux父子进程">
+<meta property="og:url" content="https://youandme66.github.io/2016/12/30/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="进程基本概念我说的肯定跟书上那些概念不一样，就我对进程的理解，当你附加给他代码，数据和分配给进程的资源，那么他就是一个进程，比如在你进入linux系统时，你进入的就是一个大的进程，有控制显示器的声音的键盘的什么的。这只是我的理解。fork()函数通过系统调用创建一个与原来进程几乎完全相同的进程，也就是两个进程可以做相同的事，但如果初始参数或这传入的变量不同，两个进程也可以做不同的事。一个进程调用f">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-12-30T06:36:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux父子进程">
+<meta name="twitter:description" content="进程基本概念我说的肯定跟书上那些概念不一样，就我对进程的理解，当你附加给他代码，数据和分配给进程的资源，那么他就是一个进程，比如在你进入linux系统时，你进入的就是一个大的进程，有控制显示器的声音的键盘的什么的。这只是我的理解。fork()函数通过系统调用创建一个与原来进程几乎完全相同的进程，也就是两个进程可以做相同的事，但如果初始参数或这传入的变量不同，两个进程也可以做不同的事。一个进程调用f">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2016/12/30/first/">
+
+
+
+
+
+  <title> linux父子进程 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2016/12/30/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux父子进程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T00:00:00+08:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/进程/" itemprop="url" rel="index">
+                    <span itemprop="name">进程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2016/12/30/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2016/12/30/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/30/first/" class="leancloud_visitors" data-flag-title="linux父子进程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="进程基本概念"><a href="#进程基本概念" class="headerlink" title="进程基本概念"></a>进程基本概念</h3><p>我说的肯定跟书上那些概念不一样，就我对进程的理解，当你附加给他代码，数据和分配给进程的资源，那么他就是一个进程，比如在你进入linux系统时，你进入的就是一个大的进程，有控制显示器的声音的键盘的什么的。这只是我的理解。<br>fork()函数通过系统调用创建一个与原来进程几乎完全相同的进程，也就是两个进程可以做相同的事，但如果初始参数或这传入的变量不同，两个进程也可以做不同的事。<br>一个进程调用fork()函数后，系统先给新的进程分配资源，例如存储数据和代码的空间。然后把原来的进程的所有值都复制到新的进程中。<br>示例：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;   </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span>   </span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="keyword">pid_t</span> fpid; <span class="comment">//fpid表示fork函数返回的值  </span></span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;  </span><br><span class="line">    fpid=fork();   </span><br><span class="line">    <span class="keyword">if</span> (fpid &lt; <span class="number">0</span>)   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error in fork!"</span>);   </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid == <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"我是子进程, 我的进程号PID是 %d/n"</span>,getpid());   </span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"我是父进程，我的进程号PID是 %d/n"</span>,getpid());    </span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"统计结果是: %d/n"</span>,count);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果：<br>我是子进程，我的进程号PID是2605<br>统计结果是:1<br>我是父进程，我的进程号PID是2604<br>统计结果是:1<br>在语句fpid=fork()之前，只有一个进程在执行这段代码，但在这条语句之后，就变成两个进程在执行了，这两个进程的几乎完全相同，将要执行的下一条语句都是if(fpid&lt;0)然后一直执行到结束，如果你要想某些代码在子进程运行，某些代码在父进程可以运行，那么fpid是个好东西，因为在父进程他返回的是子进程的PID在子进程返回的是0。没有创建成功返回负数。<br>说一下原理：<br>为什么两个进程的fpid不同呢，这与fork函数的特性有关。fork调用的一个奇妙之处就是它仅仅被调用一次，却能够返回两次，它可能有三种不同的返回值。</p>
+<ul>
+<li>在父进程中，fork返回新创建子进程的进程ID</li>
+<li>在子进程中，fork返回0；</li>
+<li>如果出现错误，fork返回一个负值<br>在fork函数执行完毕后，如果创建新进程成功，则出现两个进程，一个是子进程，一个是父进程。在子进程中，fork函数返回0，在父进程中fork返回新创建子进程的进程PID。<br><span style="color:red">fpid的值为什么在父子进程中不同。“其实就相当于链表，进程形成了链表，父进程的fpid(p 意味point)指向子进程的进程id, 因为子进程没有子进程，所以其fpid为0.</span><br>fork出错可能有两种原因:</li>
+<li>当前的进程数已经达到了系统规定的上限，这时errno的值被设置为EAGAIN。</li>
+<li>系统内存不足，这时errno的值被设置为ENOMEM。<br>创建新进程成功后，系统中出现两个基本完全相同的进程，这两个进程执行没有固定的先后顺序，哪个进程先执行要看系统的进程调度策略。<br>每个进程都有一个独特（互不相同）的进程标识符（process ID），可以通过getpid（）函数获得，还有一个记录父进程pid的变量，可以通过getppid（）函数获得变量的值。<h3 id="fork进阶"><a href="#fork进阶" class="headerlink" title="fork进阶"></a>fork进阶</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;   </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">   <span class="keyword">int</span> i=<span class="number">0</span>;  </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"i son/pa ppid pid  fpid/n"</span>);  </span><br><span class="line">   <span class="comment">//ppid指当前进程的父进程pid  </span></span><br><span class="line">   <span class="comment">//pid指当前进程的pid,  </span></span><br><span class="line">   <span class="comment">//fpid指fork返回给当前进程的值  </span></span><br><span class="line">   <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;  </span><br><span class="line">       <span class="keyword">pid_t</span> fpid=fork();  </span><br><span class="line">       <span class="keyword">if</span>(fpid==<span class="number">0</span>)  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"%d child  %4d %4d %4d/n"</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">       <span class="keyword">else</span>  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"%d parent %4d %4d %4d/n"</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">   &#125;  </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>运行结果是:<br>  i son/pa ppid pid  fpid<br>  0 parent 2043 3224 3225<br>  0 child  3224 3225    0<br>  1 parent 2043 3224 3226<br>  1 parent 3224 3225 3227<br>  1 child     1 3227    0<br>  1 child     1 3226    0<br>这个代码很有意思.<br>首先进入for循环，i=0，执行fork()函数，这时候就创建了一个子进程，继续往下看，这时候就有两个进程在跑这段程序了，他们共有的初始变量是i=0，但是记住这个变量是复制给子进程的。接着父子进程都要去进行if判断，如果是子进程那么if(pid==0)判断通过，当然进程间是由系统调度的，所以他们没有先后顺序，按照我分析的来，所以输出0 child 3224 3225 0第一个说明他是被3224进程创建的，第二个说明他本身的进程号是3225，第三个说明他没有子进程fpid=0，父进程pid==0是不通过的那么他会执行else，输出0 parent 2043 3224 3225同样的2043是它的父进程，3224是当前进程，3225是他创建的子进程，你们可以看到，子进程输出的父进程是3224，那么他们就是这个关系。<br>接着他们会同时执行第二次循环，这是i=1，那么父进程又要开一个子进程，而原来由父进程开出来的子进程，现在也即将要变成父进程，开出一个子进程，是不是有点乱了，呜呜。我画个图吧~<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">     父进程</span><br><span class="line">     /    \</span><br><span class="line">    /      \</span><br><span class="line">  父进程  子进程</span><br><span class="line">  /   \   /  \</span><br><span class="line"> /     \ /    \</span><br><span class="line">父     子子(父)子</span><br></pre></td></tr></table></figure></p>
+<p>用bash画的，可能不太好看，简单说一下吧！这每一层代表的是每一个阶段的状态，并不是父进程创建了父进程和子进程，下面同样的。<br>然后就按照这个说吧！现在父进程再开个子进程，就是最后一行的第一个子进程，同时那个要变成父进程的子进程也开了一个子进程。这时候就有四个进程在运行了，这里就有两种情况了，如果两个父进程先执行完，父进程就会死亡，那么子进程里面的父进程PID号怎么办呢？这时候子进程的父进程就会变为1.先执行两个父进程，那么就先输出1 parent 2043 3224 3226这个是最老的进程，因为他的父进程就是创建他的进程。而3224是他的进程号，3226是目前创建的子进程，而原来那个子进程已经不需要他去标识了。第二个父进程就是原来的子进程，输出的是1 parent 3224 3225 3227他的父进程的PID还是在的为3224,3225是他的进程号ID，而3227是他目前创建的新进程PID作为标识，而这时候会有进程的死亡，所以两个子进程的父进程PID变为1，输出1 child 1 3227 0 1 child 1 3226 0<br>我们可以用链表来表示那个四层关系的<br>2043-&gt;3224-&gt;3225-&gt;3227<br>在p3224和p3225执行完第二个循环后，main函数就该退出了，也即进程该死亡了，因为它已经做完所有事情了。p3224和p3225死亡后，p3226，p3227就没有父进程了，这在操作系统是不被允许的，所以p3226，p3227的父进程就被置为p1了，p1是永远不会死亡的<br>这个程序总共产生了三个子进程，执行了6此printf操作。这基本就是子父进程的创建和应用。</p>
+<h3 id="简单说一下getpid-getppid-fork-函数返回值"><a href="#简单说一下getpid-getppid-fork-函数返回值" class="headerlink" title="简单说一下getpid(),getppid(),fork()函数返回值"></a>简单说一下getpid(),getppid(),fork()函数返回值</h3><p>getpid()返回当前进程的PID，getppid() 放回当前进程的父进程的PID，fork()会返回两个值，在父进程返回他创建的子进程的pid，在子进程返回0，这就解决的不管你是什么进程创建的子进程，我都能唯一的去识别两者的关系。</p>
+<h3 id="进程间的互斥和同步"><a href="#进程间的互斥和同步" class="headerlink" title="进程间的互斥和同步"></a>进程间的互斥和同步</h3><p>1、进程之间有时候会对同一个数据进行操作，或许这个数据是两个进程都要修改的(互斥)，或许这个数据是一个触发点(同步)。<br>进程互斥是进程之间发生的一种间接性作用，一般是程序不希望的。通常的情况是两个或两个以上的进程需要同时访问某个共享变量。我们一般将发生能够问共享变量的程序段称为临界区。两个进程不能同时进入临界区，否则就会导致数据的不一致，产生与时间有关的错误。解决互斥问题应该满足互斥和公平两个原则，即任意时刻只能允许一个进程处于同一共享变量的临界区，而且不能让任一进程无限期地等待。<br>进程同步是进程之间直接的相互作用，是合作进程间有意识的行为，典型的例子是公共汽车上司机与售票员的合作。只有当售票员关门之后司机才能启动车辆，只有司机停车之后售票员才能开车门。司机和售票员的行动需要一定的协调。同样地，两个进程之间有时也有这样的依赖关系，因此我们也要有一定的同步机制保证它们的执行次序。<br>2、根据信号量来做进程间的同步和互斥。<br>最典型的就是PV操作：<br>PV操作是由P操作原语与V操作原语组成，对信号量进程操作。<br>互斥PV操作：<br>P(S) ①将互斥的信号量的值S减1(一般取变量名为S，因为S痛sign)<br>     ②如果S==0，执行该进程，否则该进程就进入等待状态，排入等待队列。<br>V(S) ①将信号量S=S+1<br>     ②如果S&gt;0,执行该进程，否则释放队列中第一个等待信号量的进程。<br><span style="color:blue">科普一下：什么是信号量?<br>信号量的数据结构为一个值和一个指针，指针指向等待该信号量的下一个进程。信号量的值与相应资源的使用情况有关。当它的值大于0时，表示当前可用资源的数量；当它的值小于0时，其绝对值表示等待使用该资源的进程个数。<br></span><br>接下来我又要吐槽一下了，一般网上的人都说信号量S=0时，S表示可用资源什么的。其实是这样的，互斥的信号量S初始一般为1的，他要运行临界区的时候，应该是先S–再判断，如果没有执行，则他再返回S++，这就是为什么S初始信号量为1，而判断的是S==0。<br>后面我会举一个实例。<br>使用PV操作实现进程互斥需要注意的是:<br>（1）每个程序中用户实现互斥的P、V操作必须成对出现，先做P操作，进临界区，后做V操作，出临界区。若有多个分支，要认真检查其成对性。<br>（2）P、V操作应分别紧靠临界区的头尾部，临界区的代码应尽可能短，不能有死循环。<br>（3）互斥信号量的初值一般为1。</p>
+<p>同步PV操作:<br>PV操作是典型的同步机制之一。用一个信号量与一个消息联系起来，当信号量的值为0时，表示期望的消息尚未产生；当信号量的值非0时，表示期望的消息已经存在。用PV操作实现进程同步时，调用P操作测试消息是否到达，调用V操作发送消息。<br>这个跟互斥差不多，只不过这个初始值为0，这些我觉得都是可控的，只不过一般来说，你一辆车一开始肯定是空的，这个视情况而定吧。<br>使用PV操作实现进程同步需要注意的是:<br>（1）分析进程间的制约关系，确定信号量种类。在保持进程间有正确的同步关系情况下，哪个进程先执行，哪些进程后执行，彼此间通过什么资源（信号量）进行协调，从而明确要设置哪些信号量。（2）信号量的初值与相应资源的数量有关，也与P、V操作在程序代码中出现的位置有关。<br>（3）同一信号量的P、V操作要成对出现，但它们分别在不同的进程代码中。<br>举一个我觉得理解起来还不错的例子吧。先上代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 20<span class="comment">//厅内最大能容纳的人数</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> spys=<span class="number">1</span>;<span class="comment">//售票员的私有信号量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> spy;<span class="comment">//选择售票员的人数，最多只能有两个</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> ck=<span class="number">0</span>;<span class="comment">//厅内购票者私有信号量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n=MAX;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x;<span class="comment">//每次进入售票厅内的人数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">P1</span><span class="params">()</span></span>;<span class="comment">//定义P操作函数,一个售票员执行的过程</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">P2</span><span class="params">()</span></span>;<span class="comment">//定义p操作，两个售票员执行该过程</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> j=<span class="number">0</span>;<span class="comment">//人多时，减少的人数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">V1</span><span class="params">()</span></span>;<span class="comment">//V操作函数，一个售票窗口时购买者执行的过程</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">V2</span><span class="params">()</span></span>;<span class="comment">//V操作函数，两个售票窗口时购买者执行的过程</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Hello</span><span class="params">()</span></span>;<span class="comment">//输出客套语句</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Introduce</span><span class="params">()</span></span>;<span class="comment">//本客运站人员介绍</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	Introduce();<span class="comment">//初始化控制台颜色</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入今天上班的售票员人数：（最多2位）：\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;spy);<span class="comment">//输入售票员人数</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">switch</span>(spy)&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> <span class="number">0</span>:&#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"sorry！由于今天假日，所以售票员不上班，请各位乘客改乘其他交通工具!\n"</span>);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:&#123; </span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"今天就一个窗口售票哦！请乘客们排成一队！谢谢合作!\n"</span>);</span><br><span class="line">					P1();</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:&#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"今天有两个售票窗口啦！请乘客们按顺序排成两队！谢谢合作\n"</span>);</span><br><span class="line">					P2();</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">default</span>:&#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"本站员工有限，没有多余员工哦！"</span>);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">P1</span><span class="params">()</span> <span class="comment">//一个售票窗口时执行的过程</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	spys--;<span class="comment">//p操作改变售票员的信号量</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(spys==<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"20B506客运站欢迎各位乘客来乘坐本公司的汽车！祝你旅途愉快！\n"</span>);</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">		n--;</span><br><span class="line"></span><br><span class="line">		Hello();</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"当前购买者完成购票，请下一位购票者就绪\n"</span>);</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"当前售票厅内人数为%d\n"</span>,n);</span><br><span class="line"></span><br><span class="line">		ck++;<span class="comment">//v操作改变厅内购票者信号量</span></span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">		spys++;</span><br><span class="line"></span><br><span class="line">	V1();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">V1</span><span class="params">()</span><span class="comment">//顾客的执行过程</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	ck--;<span class="comment">//改变顾客进入厅内的信号量操作</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(ck==<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"请厅外的购票者排按顺序进入购票厅内（最多能进入人数为：%d）：\n"</span>,MAX-n);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line"></span><br><span class="line">		n=n+x;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"售票厅内人数为%d"</span>,n);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(n&gt;MAX)&#123;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"人数太多了，站不住脚呀！请出去一些人到售票厅外等候吧！\n"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"请输入出去的人数：\n"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;j);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">while</span>(j&gt;n-MAX)&#123;</span><br><span class="line"></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"还可以再进来些人哦！！"</span>);</span><br><span class="line"></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"请在厅外等候的乘客进入售票厅内吧：\n"</span>);</span><br><span class="line"></span><br><span class="line">				<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;j);</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			n=n-j;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"售票厅内人数为%d"</span>,n);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(n==<span class="number">0</span>)    &#123;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"可以下班了，售票员们，你们辛苦了\n"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//printf("\n厅内排队人数为%d，请厅外购票者们耐心等候，谢谢合作\n",n-1);</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(n&gt;=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"已经达到最大人数，请厅外的乘客耐心等候！谢谢合作\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">",本售票厅内可容纳最多20人数！,还可再进入%d人。\n"</span>,MAX-n);</span><br><span class="line"></span><br><span class="line">	Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">	spys++;<span class="comment">//改变售票员的信号量</span></span><br><span class="line"></span><br><span class="line">	P1();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">P2</span><span class="params">()</span> <span class="comment">//两个售票窗口时执行的过程</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	spys--;<span class="comment">//改变售票员的信号量</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(spys==<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"20B506客运站欢迎各位乘客来乘坐本公司的汽车！祝你旅途愉快！\n"</span>);</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">		n=n<span class="number">-2</span>;</span><br><span class="line"></span><br><span class="line">		Hello();</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"当前购买者完成购票，请下一位购票者就绪\n"</span>);</span><br><span class="line"></span><br><span class="line">		Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"当前售票厅内人数为%d\n"</span>,n);</span><br><span class="line"></span><br><span class="line">		ck++;<span class="comment">//改变购票者的信号量</span></span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">		spys++;</span><br><span class="line"></span><br><span class="line">	V2();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">V2</span><span class="params">()</span><span class="comment">//顾客的执行过程</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	ck--;<span class="comment">//相当于p操作</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(ck==<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"请厅外的购票者排按顺序进入购票厅内（最多能进入人数为：%d）：\n"</span>,MAX-n);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line"></span><br><span class="line">		n=n+x;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"售票厅内人数为%d"</span>,n);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(n&gt;MAX)&#123;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"人数太多了，站不住脚呀！请出去一些人到售票厅外等候吧！\n"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"请输入出去的人数：\n"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;j);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">while</span>(j&gt;n-MAX)&#123;</span><br><span class="line"></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"还可以再进来些人哦！！"</span>);</span><br><span class="line"></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"请在厅外等候的乘客进入售票厅内吧：\n"</span>);</span><br><span class="line"></span><br><span class="line">				<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;j);</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			n=n-j;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"售票厅内人数为%d"</span>,n);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(n==<span class="number">0</span>)    &#123;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"可以下班了，售票员们，你们辛苦了\n"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//printf("\n厅内排队人数为%d，请厅外购票者们耐心等候，谢谢合作\n",n-1);</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(n&gt;=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"已经达到最大人数，请厅外的乘客耐心等候！谢谢合作\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">",本售票厅内可容纳最多20人数！,还可再进入%d人。\n"</span>,MAX-n);</span><br><span class="line"></span><br><span class="line">	Sleep(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">	spys++;<span class="comment">//执行v操作</span></span><br><span class="line"></span><br><span class="line">	P2();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Hello</span><span class="params">()</span><span class="comment">//say hello</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"售票厅内能容纳最多的人数为20人，请乘客们按顺序在厅外等候！谢谢合作！\n"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Introduce</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"color 4e"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"------------------------------欢迎来到20B506客运站-----------\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"-----站长：allen-----\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"----------副站长：vivien----\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"--------------售票员甲：jack ------\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"-------------------售票员乙：mike-----\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"----------------------------------我们的服务就是最好的承诺！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们从这个里面分析同步和互斥的PV操作。在p1操作里面有一个–有一个++，很明显一个是控制互斥操作的信号量，一个是控制同步操作的信号量。那我再看看他们是控制那段临界区，而这段临界区完成了又改变了什么，我们就可以很清楚的了解到。<br>那我们总结如下：<br>存在互斥关系，一个售票员只能对应一个购票者，当售票员正在售票时，其他不能购票。<br>存在同步关系，当厅内购票者人满时，只有售票员售票完成之后厅外的人才能进来。<br>信号量如何体现呢？<br>Sys信号量控制售票员是否被购票者占用若正在被占用时sys=0，初始为sys=1，下一个无法进行购票，当购票完成后sys++，则又能进行购票。<br>Ck信号量控制，ck初始为0，售票是否完成，若完成++1，则厅外的人才能进来，进来后又—1.<br>这就是同步互斥的PV操作。</p>
+<h3 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h3><p>信号量机制功能强大，但使用时对信号量的操作分散，不好控制，读写和维护都很困难。就像你做一个项目一样，没有一个良好的框架，东写一点，西写一点最后不知道变量是哪的哪的，难道最后再合成同一个文件的代码吗？当然不会。所以后来又提出了一种集中式同步进程–管程。其基本思想是将共享变量和对它们的操作集中在一个模块中，操作系统或并发程序就由这样的模块构成。这样模块之间联系清晰，便于维护和修改，易于保证正确性。<br>管程作为一个模块，定义如下:<br>monitor_name=MoNITOR;<br>共享变量说明;<br>define 本管程内部定义、外部可调用的函数名表;<br>use 本管程外部定义、内部可调用的函数列表;<br>内部定义的函数说明和函数体<br>{<br>    共享变量初始化语句;(这就是我前面说的初始量都是视情况而定的)<br>}<br>管程的特性:<br>(1)模块化。管程是一个基本程序单位，可以单独编译；<br>(2)抽象数据类型。管程是种不仅有数据，而且有对数据的操作。<br>(3)信息掩蔽。管程外可以调用管程内部定义的函数，但函数的具体实现外部不可见;对于管程中定义的共享变量的所有操作都局限在管程中，外部只能通过调用管程的某些函数来间接访问这些变量。因此管程有很好的封装性。<br>为了保证共享变量的数据一致性，管程应互斥使用。管程通常是用于管理资源的，因此管程中有进程等待队列和相应的等待和唤醒操作。在管程入口有一个等待队列，称为入口等待队列。当一个已进入管程的进程等待时，就释放管程的互斥使用权；当已进入管程的一个进程唤醒另一个进程时，两者必须有一个退出或停止使用管程。在管程内部，由于执行唤醒操作，可能存在多个等待进程（等待使用管程），称为紧急等待队列，它的优先级高于入口等待队列。<br>因此，一个进程进入管程之前要先申请，一般由管程提供一个enter过程；离开时释放使用权，如果紧急等待队列不空，则唤醒第一个等待者，一般也由管程提供外部过程leave。<br>管程内部有自己的等待机制。管程可以说明一种特殊的条件型变量：var c:condition；实际上是一个指针，指向一个等待该条件的PCB队列。对条件型变量可执行wait和signal操作：（联系P和V； take和give）<br>wait(c):若紧急等待队列不空，唤醒第一个等待者，否则释放管程使用权。执行本操作的进程进入C队列尾部；<br>signal(c):若C队列为空，继续原进程，否则唤醒队列第一个等待者，自己进入紧急等待队列尾部。<br>管程实例一：<br>生产者消费者问题。生产者进程将产品放入某一缓冲区，消费者进程到此缓冲区中取产品。这个过程必须保证：1. 当缓冲区有剩余空间时，生产者才能在其中放入产品；2. 当缓冲区有数据时，消费者才能在其中取出产品。<br>解决方案：使用管程机制来实现生产者和消费者之间的同步互斥问题<br>1.假设有一基本管程monitor，提供了enter、leave、signal、wait等操作；<br>2.条件变量notfull表示缓冲区不满，条件变量notempty表示缓冲区不空；<br>3.缓冲区buff[0…n-1]用来存放产品，最大可放n件产品；<br>4.定义整型变量count表示缓冲区当前的产品数，指针in指向缓冲区当前第一个空的位置，指针out指向缓冲区当前第一个不空的位置；<br>5.定义过程add(ItemType item)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">add(ItemTypeitem) <span class="comment">//生产者进程在缓冲区放入产品</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(count==n) wait(notfull);</span><br><span class="line"> <span class="comment">//如果此时缓冲区已满，那么进程必须等待notfull，这意味着进程已经被阻塞到紧急队列里</span></span><br><span class="line">    buff[in]=item; <span class="comment">//否则在第一个空的位置放入产品</span></span><br><span class="line">    in=(in+<span class="number">1</span>)%n; <span class="comment">//指针循环加1</span></span><br><span class="line">    count++;</span><br><span class="line">    signal(notempty);</span><br><span class="line"><span class="comment">//此时缓冲区已经多了一个产品，也就是说生产者进程去唤醒因取不到产品被阻塞的消费者进程</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>6.定义过程ItemType remove()<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ItemType <span class="title">remove</span><span class="params">()</span>    <span class="comment">//消费者进程在缓冲区取出产品</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(count==<span class="number">0</span>) wait(notempty);</span><br><span class="line"><span class="comment">//如果缓冲区没有产品,那么消费者必须等待notempty，也就是被阻塞到紧急队列中去</span></span><br><span class="line">    item=buff[out]; <span class="comment">//消费者从第一个不空的位置取出产品</span></span><br><span class="line">    out=(out+<span class="number">1</span>)%n;</span><br><span class="line">    signal(notfull);</span><br><span class="line"><span class="comment">//此时缓冲区多了一个空的单元，也就是消费者进程去唤醒因缓冲区已满而不能放入产品的生产者进程</span></span><br><span class="line">    <span class="keyword">return</span> item;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>7.生产者进程代码段<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    produce(&amp;item); <span class="comment">//生成出一件产品</span></span><br><span class="line">    monitor. enter(); <span class="comment">//进入管程</span></span><br><span class="line">    monitor. add();  <span class="comment">//调用add方法，放入产品</span></span><br><span class="line">    monitor. leave(); <span class="comment">//离开管程</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>8.消费者进程代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">   monitor. enter();</span><br><span class="line">   item=monitor. remove(); <span class="comment">//取出产品</span></span><br><span class="line">   monitor. leave();</span><br><span class="line">   consumer(&amp;item); <span class="comment">//进行消费</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>管程实例二:<br>读者—写者问题。现有一个缓冲区，有若干读者进程和若干写者进程。读者进程在缓冲区读数据，写者进程在缓冲区写入数据。这个过程必须保证：1. 读者进程之间不需要互斥；2.写者进程之间必须互斥，即当一个写者进程在缓冲区写入数据时，别的写者进程必须被阻塞；3. 读者进程和写者进程必须互斥，即当有读者进程在读数据，写者进程必须被阻塞，有写者进程在写数据时，读者进程必须被阻塞。<br>解决方案：采用管程机制来解决读者—写者问题<br>1.假设已经有一个基本管程Monitor提供了enter、leave、signal、wait等操作；<br>2.定义条件变量r表示可以对缓冲区读，条件变量w表示可以对缓冲区写；<br>3.定义布尔类型变量IsWriting表示当前有写者进程在缓冲区写数据；<br>4.整型变量read_count表示读数据的个数；<br>5.定义过程startRead()<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">startRead</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(IsWriting) wait(r);</span><br><span class="line">   <span class="comment">//此时缓冲区有写者进程在写数据，那么读者进程等待r，也就是读者进程被阻塞到紧急队列中</span></span><br><span class="line">    read_count++; <span class="comment">//否则，读出数据</span></span><br><span class="line">    signal(r); <span class="comment">//唤醒被阻塞的读者进程</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>6.定义过程endRead()<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">endRead</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    read_count--;</span><br><span class="line">    <span class="keyword">if</span>(read_count= =<span class="number">0</span>) signal(w);</span><br><span class="line">   <span class="comment">// 此时表示所有读者进程都已经读完数据，那么唤醒被阻塞的写                 者进程</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>7.定义过程startWrite<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">startWrite</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(read_count!=<span class="number">0</span> || IsWriting) wait(w);</span><br><span class="line">   <span class="comment">//此时表示如果有读者进程存在或者其他写者进程存在，那么将要写数据的写者进程被阻塞</span></span><br><span class="line">    IsWriting=<span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>8.定义过程endWrite()<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">endWrite</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IsWriting=<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(r!=null) signal(r);</span><br><span class="line">   <span class="comment">//如果有读者进程存在，那么唤醒读者进程</span></span><br><span class="line">    <span class="keyword">else</span> signal(w); <span class="comment">//否则唤醒写者进程</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>9.读者进程代码段<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    Monitor. enter();</span><br><span class="line">    Monitor. startRead();</span><br><span class="line">    read();</span><br><span class="line">    Monitor. endRead();</span><br><span class="line">    Monitor. leave();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>10.写者进程代码段<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    Monitor. enter();</span><br><span class="line">    Monitor. startWrite();</span><br><span class="line">    write();</span><br><span class="line">    Monitor. endWrite();</span><br><span class="line">    Monitor. leave();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这就是管程。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/系统/" rel="tag"># 系统</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/30/third/" rel="next" title="变量生命周期，作用域">
+                <i class="fa fa-chevron-left"></i> 变量生命周期，作用域
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/30/fourth/" rel="prev" title="设计模式之单例模式">
+                设计模式之单例模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程基本概念"><span class="nav-number">1.</span> <span class="nav-text">进程基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fork进阶"><span class="nav-number">2.</span> <span class="nav-text">fork进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单说一下getpid-getppid-fork-函数返回值"><span class="nav-number">3.</span> <span class="nav-text">简单说一下getpid(),getppid(),fork()函数返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间的互斥和同步"><span class="nav-number">4.</span> <span class="nav-text">进程间的互斥和同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管程"><span class="nav-number">5.</span> <span class="nav-text">管程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2016/12/30/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

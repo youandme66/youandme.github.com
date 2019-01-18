@@ -1,0 +1,1209 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="ng属性指令 ng-href ng-src ng-disabled ng-checked ng-readonly ng-selected ng-class ng-style  布尔属性布尔属性代表一个true或false值。当这个属性出现时，这个属性的值就是true，如果未出现，这个属性就是false。当在angularjs中使用动态数据绑定时，不能简单地将这个属性值设置为true或false,因">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angularjs之内置指令">
+<meta property="og:url" content="https://youandme66.github.io/2017/03/09/second/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="ng属性指令 ng-href ng-src ng-disabled ng-checked ng-readonly ng-selected ng-class ng-style  布尔属性布尔属性代表一个true或false值。当这个属性出现时，这个属性的值就是true，如果未出现，这个属性就是false。当在angularjs中使用动态数据绑定时，不能简单地将这个属性值设置为true或false,因">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-10T09:49:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="angularjs之内置指令">
+<meta name="twitter:description" content="ng属性指令 ng-href ng-src ng-disabled ng-checked ng-readonly ng-selected ng-class ng-style  布尔属性布尔属性代表一个true或false值。当这个属性出现时，这个属性的值就是true，如果未出现，这个属性就是false。当在angularjs中使用动态数据绑定时，不能简单地将这个属性值设置为true或false,因">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/03/09/second/">
+
+
+
+
+
+  <title> angularjs之内置指令 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/03/09/second/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                angularjs之内置指令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-09T00:00:00+08:00">
+                2017-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/angularjs/" itemprop="url" rel="index">
+                    <span itemprop="name">angularjs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/03/09/second/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/03/09/second/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/09/second/" class="leancloud_visitors" data-flag-title="angularjs之内置指令">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="ng属性指令"><a href="#ng属性指令" class="headerlink" title="ng属性指令"></a>ng属性指令</h3><ul>
+<li>ng-href</li>
+<li>ng-src</li>
+<li>ng-disabled</li>
+<li>ng-checked</li>
+<li>ng-readonly</li>
+<li>ng-selected</li>
+<li>ng-class</li>
+<li>ng-style</li>
+</ul>
+<h3 id="布尔属性"><a href="#布尔属性" class="headerlink" title="布尔属性"></a>布尔属性</h3><p>布尔属性代表一个true或false值。当这个属性出现时，这个属性的值就是true，如果未出现，这个属性就是false。<br>当在angularjs中使用动态数据绑定时，不能简单地将这个属性值设置为true或false,因为根据标准定义只有当这个属性不出现时，它的值才为false。因此angularjs提供了一组带有ng-前缀版本的布尔属性，通过运算表达式的值来决定在目标元素上是插入还是移除对应的属性。</p>
+<ul>
+<li>ng-disabled<br>使用ng-disabled可以把disabled属性绑定到一下表单输入字段上:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span>&gt;</span>(text,checkbox,radio,number,url,email,submit)</span><br><span class="line"><span class="tag">&lt;<span class="name">textarea</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当写普通的HTML输入字段时，如果在元素标签上出现了disabled属性就会禁用这个输入字段。通过ng-disabled可以对是否出现属性进行绑定。例如，在下面的例子中按你会一直被禁用，知道用户在文本字段中输入内容:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"someProperty"</span> <span class="attr">placeholder</span>=<span class="string">"TypetoEnable"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-model</span>=<span class="string">"button"</span> <span class="attr">ng-disabled</span>=<span class="string">"!someProperty"</span>&gt;</span>AButton<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在下面的例子，文本字段会被禁用五秒，知道在\$timeout中将isDisabled属性设置为true:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;textarea ng-disabled=<span class="string">"isDisabled"</span>&gt;Wait5seconds&lt;<span class="regexp">/textarea&gt;</span></span><br><span class="line"><span class="regexp">angular.module('myApp',[])</span></span><br><span class="line"><span class="regexp">.run(function($rootScope,$timeout)&#123;</span></span><br><span class="line"><span class="regexp">    $rootScope.isDisabled=true;</span></span><br><span class="line"><span class="regexp">    $timeout(function()&#123;</span></span><br><span class="line"><span class="regexp">        $rootScope.isDisabled = false;</span></span><br><span class="line"><span class="regexp">&#125;,5000)</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>ng-readonly<br>同其他布尔属性一样，HTML定义只会检查readonly属性是否出现，而不是他的实际值。通过ng-readonly,可以将某个返回真或假的表达式同是否出现readonly属性进行绑定在,作用是是否只读:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"someProperty"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-readonly</span>=<span class="string">"someProperty"</span> <span class="attr">value</span>=<span class="string">"some text here"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ng-checked<br>标准的checked属性是一个布尔属性，不需要进行赋值，通过ng-checked将某个表达式同是否出现checked属性进行绑定<br>在下面的例子中，我们通过ng-init指令将someProperty的值设置为true。将some Property同ng-checked绑定在一起，angularjs会输出标准的HTML checked属性，这样默认会把复选框勾选:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span>someProperty=&#123;&#123;someProperty&#125;&#125;<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">ng-checked</span>=<span class="string">"someProperty"</span> <span class="attr">ng-init</span>=<span class="string">"someProperty=true"</span> <span class="attr">ng-model</span>=<span class="string">"someProperty"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>下面的例子刚好相反:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span>someProperty = &#123;&#123;anotherProperty&#125;&#125;<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">ng-checked</span>=<span class="string">"anotherProperty"</span> <span class="attr">ng-init</span>=<span class="string">"anotherProperty=false"</span> <span class="attr">ng-model</span>=<span class="string">"anotherProperty"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>注意，为了展示，这里用ng-model把someProperty和anotherProperty的值绑定到了对应的<label>标签里。</label></p>
+<ul>
+<li>ng-selected<br>ng-selected可以对是否出现option标签的selected属性进行绑定:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span>Select Two Fish:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">ng-model</span>=<span class="string">"isTwoFish"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">option</span>&gt;</span>One Fish<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">option</span> <span class="attr">ng-selected</span>=<span class="string">"isTwoFish"</span>&gt;</span>Two Fish<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="类布尔属性"><a href="#类布尔属性" class="headerlink" title="类布尔属性"></a>类布尔属性</h3><p>ng-href、ng-src等属性虽然不是标准的HTML布尔属性，但是由于行为相似，所以在angularjs源码内都是和布尔属性同等对待的。</p>
+<ul>
+<li>ng-href<br>当使用当前作用域中的属性动态创建URL时，应该用ng-href代替href。<br>这里的潜在问题是当用户点击一个由插值动态生成的链接时，如果插值尚未生效，将会跳转到错误的页面。<br>这时，如果使用ng-href,angularjs会等到插值生效后再执行点击链接的行为:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 当href包含一个&#123;&#123;expression&#125;&#125;时总是使用ng-href --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">ng-href</span>=<span class="string">"&#123;&#123;myHref&#125;&#125;"</span>&gt;</span>I`m feeling lucky,when i load<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 用户单击之前，hrefe不会加载--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;&#123;myHref&#125;&#125;"</span>&gt;</span>I`m feeling 404<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>将插值生效的事件延迟两秒，来观察实际的行为:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.run(<span class="function"><span class="keyword">function</span>(<span class="params">$rootScope,$timeout</span>)</span>&#123;</span><br><span class="line">    $timeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        $rootScope.myHref=<span class="string">"http://www.baidu.com"</span>;</span><br><span class="line">&#125;,<span class="number">2000</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>ng-src<br>angularjs会告诉浏览器在ng-src对应的表达式生效之前不要加载图像:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>wrongway<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"&#123;&#123;imgSrc&#125;&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Rightway<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">ng-src</span>=<span class="string">"&#123;&#123;imgSrc&#125;&#125;"</span>/&gt;</span></span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.run(function($rootScope,$timeout)&#123;</span><br><span class="line">      $timeout(function()&#123;</span><br><span class="line">        $rootScope.imgSrc='https://www.google.com/images/srpr/logo11w.png';</span><br><span class="line">&#125;,2000); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="在指令中使用子作用域"><a href="#在指令中使用子作用域" class="headerlink" title="在指令中使用子作用域"></a>在指令中使用子作用域</h3><p>下面将要介绍的指令会以父级作用域为原型生成子作用域。这种继承的机制可以创建一个隔离层，用来将需要协同工作的方法和数据模型对象放置在一起。<br>ng-app和ng-controller是特殊的指令，因为它们会修改嵌套在它们内部的指令的作用域。<br>ng-app为angularjs应用创建\$rootScope,ng-controller则会以\$rootScope或另外一个ng-controller的作用域为原型创建新的子作用域。</p>
+<ul>
+<li><p>ng-app<br>任何具有ng-app属性的DOM元素将被标记为\$rootScope的起始点。<br>$rootScope是作用域链的起始点，任何嵌套在ng-app内的指令都会继承它。在JavaScript代码中通过run方法来访问\$rootScope。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">ng-app</span>=<span class="string">"myApp"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">&#123;&#123;someProperty&#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"someAction()"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.run(function($rootScope)&#123;</span><br><span class="line">    $rootScope.someProperty = 'hello computer';</span><br><span class="line">    $rootScope.someAction = function()&#123;</span><br><span class="line">        $rootScope.someProperty = 'hello numan';</span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ng-controller<br>内置指令ng-controller的作用是为嵌套在其中的指令创建一个子作用域，避免将所有操作和模型都定义在\$rootScope上。用这个指令可以在一个DOM元素上放置控制器。<br>ng-controller接受一个参数expression,这个参数是必需的。<br>expression参数是一个angularjs表达式。<br>子\$scope只是一个JavaScript对象，其中含有从父级\$scope中通过原型继承得到的方法和属性，包括应用的\$rootScope.<br>嵌套在ng-controller中的指令有访问新子\$scope的权限，但是要牢记每个指令都应该遵守的和作用域相关的规则。\$scope对象的职责是承载DOM中指令所共享的操作和模型。操作指的是\$scope上标准的JavaScript方法，模型指的是\$scope上保存的包含瞬时状态数据的JavaScript对象。持久化状态的数据应该保存到服务器中，服务的作用是处理模型的持久化。<br>控制器应用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"someController"</span>&gt;</span></span><br><span class="line">&#123;&#123;someBareValue&#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"someAction()"</span>&gt;</span>Communicate to child<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"childController"</span>&gt;</span></span><br><span class="line">&#123;&#123;someBareValue&#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span> = <span class="string">"childAction()"</span>&gt;</span>Communicate to parent<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.controller('SomeController',function($scope)&#123;</span><br><span class="line">    //反模式，裸值</span><br><span class="line">    $scope.someBareValue = 'hello computer';</span><br><span class="line">    //设置 $scope 本身的操作，这样没问题</span><br><span class="line">    $scope.someAction = function()&#123;</span><br><span class="line">        //在someBareValue = 'hello numan,from parent';</span><br><span class="line">&#125;;</span><br><span class="line">.controller('ChildController',function($scope)&#123;</span><br><span class="line">    $scope.childAction = function()&#123;</span><br><span class="line">        //在ChildController中设置&#123;&#123;someBareValue&#125;&#125;</span><br><span class="line">        $scope.someBareValue = 'hello numan,from child';</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>由于原型继承的关系，修改父级对象中的someBareValue会同时修改子对象中的值，但反之则不行。<br>可以看下这个例子的实际效果，首先点击childButton，然后点击parentButton,这个例子充分说明了子控制器是复制而非引用someBareValue。<br>JavaScript对象要么是值复制要么是引用复制。字符串、数组和布尔型变量是值复制。数组、对象和函数则是引用复制。<br>如果将模型对象的某个属性设置为字符串，他会通过引用进行共享，因此在子$scope中修改属性也会修改父\$scope中的这个属性。下面的例子展示了正确的做法:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"someController"</span>&gt;</span></span><br><span class="line"> &#123;&#123;someModel.somevalue&#125;&#125;</span><br><span class="line"> <span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"someAction()"</span>&gt;</span> Communicate to child<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"ChildController"</span>&gt;</span></span><br><span class="line"> &#123;&#123;someModel.somevalue&#125;&#125;</span><br><span class="line"> <span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span> = <span class="string">"childAction()"</span>&gt;</span>Communicate to parent<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> angular.module('myApp',[])</span><br><span class="line"> .controller('SomeController',function()&#123;</span><br><span class="line"> 	//最佳实践，永远用一个模式</span><br><span class="line"> 	$scope.someModel=&#123;</span><br><span class="line"> 		someValue : 'hello coputer'</span><br><span class="line"> 	&#125;</span><br><span class="line"> 	$scope.someAction = function()&#123;</span><br><span class="line"> 		$scope.someModel.someValue = 'hello human,from parent';</span><br><span class="line"> 	&#125;;</span><br><span class="line"> &#125;)</span><br><span class="line"> .controller('ChildController',function($scope)&#123;</span><br><span class="line"> 	$scope.childAction = function()&#123;</span><br><span class="line"> 		$scope.someModel.someValue = 'hello human,from child';</span><br><span class="line"> 	&#125;</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>无论点击哪个按钮，值都会进行同步修改。<br>注意，虽然这个特性是实用ng-controller时最重要的特性之一，但在实用任何会创建子作用域的指令时，如果将指令定义中的scope设置为true，这个特性也会带来负面影响。下面的内置指令都有同样的特性:<br>ng-include,ng-switch,ng-repeat,ng-view,ng-controller,ng-if.</p>
+<ul>
+<li>ng-include<br>实用ng-include可以加载、编译包含外部HTML片段到当前的应用中。模板的URL被限制在与应用文档相同的域和协议下，可以通过白名单或包装成被信任的值来突破限制。更进一步，需要考虑跨域资源共享和同源规则来确保模板可以在任何浏览器中正常加载。例如，所有浏览器都不能进行跨域的请求，部分浏览器也不能访问file://协议的资源。<br>在同一个元素上添加onload属性可以在模板加载完后执行一个表达式。<br>要记住，使用ng-include时angularjs会自动创建子作用域。如果你想使用某个特定的作用域，例如ControllerA的作用域，必须在同一个DOM元素上添加ng-controller=”ControllerA”指令，这样当模板加载完成后，不会像往常一样从外部作用域继承并创建一个新的子作用域。</li>
+</ul>
+<p>示例:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-include</span>=<span class="string">"/myTemplateName.html"</span> <span class="attr">ng-controller</span>=<span class="string">"MyController"</span> <span class="attr">ng-init</span>=<span class="string">"name='world'"</span>&gt;</span></span><br><span class="line">Hello &#123;&#123;name&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>ng-switch<br>这个指令和ng-switch-when及on=”propertyName”一起使用，可以在propertyName发生变化时渲染不同指令到视图中。在下面例子中，当person.name是Ari时，文本域下面的div会显示，并且这个人会获得胜利:</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"person.name"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-switch</span> <span class="attr">on</span>=<span class="string">"person.name"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">p</span> <span class="attr">ng-switch-default</span>&gt;</span> And the winner is<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">h1</span> <span class="attr">ng-switch-when</span>=<span class="string">"Ari"</span>&gt;</span>&#123;&#123;person.name&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意，在switch被调用之前我们用ng-switch-default来输出默认值。</p>
+<ul>
+<li>ng-repeat</li>
+</ul>
+<p>ng-repeat用来遍历一个集合或为集合中的每个元素生成一个模板实例。集合中的每个元素都会被赋予自己的模板和作用域。同时每个模板实例的作用域中都会暴露一些特殊的属性。<br>\$index:遍历的进度。<br>\$first:当元素是遍历的第一个时值为true。<br>\$middle:当元素处于第一个和最后元素之间时值为true。<br>\$last:当元素是遍历的最后一个时值为true。<br>\$even:当\$index值时偶数时值为true。<br>\$odd:当\$index值是奇数时值为true。<br>下面的例子展示了如何用\$odd和\$even来制作一个红蓝相间的列表。记住，JavaScript中数组的索引从0开始，因此我们用!$even和!$odd来将\$even和\$odd的布尔值反转。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">ng-controller</span>=<span class="string">"PeopleController"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span> <span class="attr">ng-repeat</span>=<span class="string">"person in people"</span> <span class="attr">ng-class</span>=<span class="string">"&#123;even:!$even,odd:!$odd&#125;"</span>&gt;</span></span><br><span class="line">		&#123;&#123;person.name&#125;&#125; lives in &#123;&#123;person.city&#125;&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">.odd&#123;</span><br><span class="line">	background-color:blue;</span><br><span class="line">&#125;</span><br><span class="line">.even&#123;</span><br><span class="line">	background-color:red;</span><br><span class="line">&#125;</span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.controller('PeopleController',function()&#123;</span><br><span class="line">	$scope.people=[</span><br><span class="line">		&#123;name:"Ari",city:"San Francisco"&#125;,</span><br><span class="line">		&#123;name:"Erik",city:"Seattle"&#125;</span><br><span class="line">];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>ng-view<br>ng-view指令用来设置将被路由管理和放置在HTML中的视图的位置。</p>
+</li>
+<li><p>ng-controller</p>
+</li>
+<li><p>ng-if<br>使用ng-if指令可以完全根据表达式的值在DOM中生成或移除一个元素。如果赋值给ng-if的表达式为false，那对应的元素将会从DOM中移除，否则对应元素的一个克隆将被重新插入DOM中。<br>ng-if同ng-show和ng-hide指令最本质的区别是，它不是通过CSS显示或隐藏DOM节点，而是真正生成或移除节点。<br>当一个元素被ng-if从DOM中移除，同它关联的作用域也会被销毁，而且当它重新加入DOM中时，会通过原型继承从它的父作用域生成一个新的作用域。<br>同时有一个重要的细节需要知道ngIf重新创建元素时用的是它们编译后的状态。如果ng-if内部的代码加载之后被jquery修改过，那么当ng-if的表达式值为false时，这个DOM元素会被移除，表达式再次成为true时这个元素及其内部的子元素会被重新插入DOM，此时这些元素的状态会是它们的原始状态，而不是它们上次被移除时的状态。也就是说无论用jquery的.addClass添加了什么类都不会存在。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-if</span>=<span class="string">"2+2===0"</span>&gt;</span></span><br><span class="line">	won`t see this DOM node,not even in the source code</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-if</span>=<span class="string">"2+2==4"</span>&gt;</span></span><br><span class="line">	Hi,I do exist</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>ng-init<br>ng-init指令用来在指令被调用时设置内部作用域的初始状态。<br>ng-init最常见的使用场景是:对于任何需要健壮结构的场景，请在控制器中用数据模型对象来设置状态。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-init</span>=<span class="string">"greeting='hello';person='world'"</span>&gt;</span></span><br><span class="line">&#123;&#123;greeting&#125;&#125;&#123;&#123;person&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>双大括号<br>双大括号语法是angularjs内置的模板语法，它会在内部\$scope和视图之间创建绑定。基于这个绑定，只要\$scope发生变化，视图就会随之自动更新。<br>事实上它也是指令，虽然看起来并不像，实际上它是ng-bind的简略形式，用这种形式不需要创建新的元素，因此它常被用在行内文本中。<br>注意，在屏幕可视的区域内使用双大括号会导致页面加载时未渲染的元素发生闪烁，用ng-bind可以避免这个问题。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-init</span>=<span class="string">"greeting='HelloWorld'"</span>&gt;</span></span><br><span class="line">&#123;&#123;greeting&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ng-bind<br>尽管可以在视图中使用双大括号模板语法，我们也可以通过ng-bind指令实现同样的行为。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bod</span> <span class="attr">ng-init</span>=<span class="string">"greeting='HelloWorld'"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">ng-bind</span>=<span class="string">"greeting"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bod</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>ng-cloat<br>除使用ng-bind来避免为渲染元素闪烁，还可以在含有双大括号的元素上使用ng-cloak指令:</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-init</span>=<span class="string">"greeting='Helloworld'"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">ng-cloak</span>&gt;</span>&#123;&#123;greeting&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>ng-cloak指令会将内部元素隐藏，直到路由调用对应的页面时才显示出来。</p>
+<ul>
+<li>ng-bind-template<br>同ng-bind指令类似，ng-bind-template用来在视图中绑定多个表达式。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-bind-template</span>=<span class="string">"&#123;&#123;message&#125;&#125;&#123;&#123;name&#125;&#125;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>ng-model<br>ng-model指令用来将input、select、textarea或自定义表单控件同包含它们的作用域中的属性进行绑定。它可以提供并处理表单验证功能，在元素上设置相关的CSS类(ng-valid、ng-invalid等)，并负责在父表单中注册控件。<br>它将当前作用域中运算表达式的值同给定的元素进行绑定。如果属性并不存在，它会隐式创建并将其添加到当前作用域中。<br>我们应该始终用ngModel来绑定\$scope上一个数据模型内的属性，而不是\$scope<br>上的属性，这可以避免在作用域或后代作用域中发生属性覆盖。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"modelName.someProperty"</span>/&gt;</span></span><br><span class="line">上面的例子展示了如何正确地考虑和使用ngModel。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>ng-show/ng-hide<br>ng-show和ng-hide根据所给表达式的值来显示或隐藏HTML元素。当赋值给ng-show指令的值为false时元素会被隐藏，类似地，当赋值给ng-hide指令的值为true时元素也会被隐藏。<br>元素的显示或隐藏是通过移除或添加ng-hide这个CSS类来实现的。ng-hide类被预先定义在了angularjs的CSS文件中，并且它的display属性的值为none。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-show</span>=<span class="string">"2+2==0"</span>&gt;</span></span><br><span class="line">2+2 isn`t 0,don`t show</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-show</span>=<span class="string">"2+2==4"</span>&gt;</span></span><br><span class="line">2+2 is 4,do show</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-hide</span>=<span class="string">"2+2==3"</span>&gt;</span></span><br><span class="line">2+2 isn`t 3,don`t hide</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-hide</span>=<span class="string">"2+2==4"</span>&gt;</span></span><br><span class="line">2+2 is 4,don`t hide</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ng-change<br>这个指令会在表单输入发生变化时计算给定表达式的值。因为要处理表单输入，这个指令要和ngModel联合起来使用。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"EquationController"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span> =<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"equation.x"</span> <span class="attr">ng-change</span>=<span class="string">"change()"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">code</span>&gt;</span>&#123;&#123;equation.output&#125;&#125;<span class="tag">&lt;/<span class="name">code</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.controller('EquationController',function($scope)&#123;</span><br><span class="line">	$scope.equation=&#123;&#125;;</span><br><span class="line">	$scope.change = function()&#123;</span><br><span class="line">	$scope.equation.output=parseInt($scope.equation.x)+2;</span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ng-from<br>ng-from用来在一个表单内部嵌套另一个表单。普通的HTML<form>标签不允许嵌套，但ng-form可以。<br>这意味着内部所有的子表单都合法时，外部的表单才会合法。这对于用ng-repeat动态创建表单是非常有用的。<br>由于不能通过字符插值来给输入元素动态地生成name属性，所以需要将ng-form指令内每组重复的输入字段都包含一个外部表单元素内。<br>下面的CSS类会根据表单的验证状态自动设置:</form></li>
+<li>表单合法时设置ng-valid;</li>
+<li>表单不合法时设置ng-invalid;</li>
+<li>表单未进行修改时设置ng-pristion;</li>
+<li>表单进行过修改时设置ng-dirty;<br>angular不会将表单提交到服务器，除非它指定了action属性。要指定提交表单时调用哪个JavaScript方法，使用下面两个指令中的一个。</li>
+<li>ng-submit:在表单元素上使用</li>
+<li>ng-click：在第一个按钮或submit类型的输入字段上使用。<br>示例：<br>展示如何通过服务器返回的JSON数据动态生成一个表单。我们用ng-loop来遍历从服务器取回的所有数据。由于不能动态生成name属性，而我们又需要这个属性做验证，所以在循环的过程中会为每一个字段都生成一个新表单。<br>由于angularjs中用来取代<form>的ng-form指令可以嵌套，并且外部表单在所有子表单都合法之前一直处于不合法状态，因此我们可以在动态生成子表单的同时使用表单验证功能。<br>下面先看一下我们硬编码的JSON数据，把他假设成是从服务器返回的。</form></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.controller(<span class="string">'FormController'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</span><br><span class="line">	$scope.fields=[</span><br><span class="line">		&#123;<span class="attr">placeholder</span>:<span class="string">'Username'</span>,<span class="attr">isRequired</span>:<span class="literal">true</span>&#125;,</span><br><span class="line">		&#123;<span class="attr">placeholder</span>:<span class="string">'Password'</span>,<span class="attr">isRequired</span>:<span class="literal">true</span>&#125;,</span><br><span class="line">		&#123;<span class="attr">placeholder</span>:<span class="string">'Email(optional)'</span>,<span class="attr">isRequired</span>:<span class="literal">false</span>&#125;</span><br><span class="line">	];</span><br><span class="line">	$scope.submitFrom=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		alert(<span class="string">'it works!'</span>);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>下面用这些数据生成一个有验证功能的动态表单:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"signup_form"</span> <span class="attr">ng-controller</span>=<span class="string">"FormController"</span> <span class="attr">ng-submit</span>=<span class="string">"submitForm()"</span> <span class="attr">novalidate</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-repeat</span>=<span class="string">"field in fields"</span> <span class="attr">ng-form</span>=<span class="string">"signup_form_input"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"dynamic_input"</span> <span class="attr">ng-required</span>=<span class="string">"field.isRequired"</span> <span class="attr">ng-model</span>=<span class="string">"field.name"</span> <span class="attr">placeholder</span>=<span class="string">"&#123;&#123;field.palceholder&#125;&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-show</span> =<span class="string">"signup_form_input.dynamic_input.$dirty &amp;&amp; signup_form_input.dynamic_input.$invalid"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"error"</span> <span class="attr">ng-show</span>=<span class="string">"signup_form_input.dynamic_input.$error.required"</span>&gt;</span></span><br><span class="line">The field is required</span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">ng-disabled</span>=<span class="string">"signup_form.$invalid"</span>&gt;</span></span><br><span class="line">submit All</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">input.ng-invalid&#123;</span><br><span class="line">	border:1px solid red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>ng-click<br>ng-click用来指定一个元素被点击时调用的方法或表达式</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"CounterController"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"count=count+1"</span> <span class="attr">ng-init</span>=<span class="string">"count=0"</span>&gt;</span></span><br><span class="line">Increment</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">count:&#123;&#123;count&#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"decrement()"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.controller('CounterController',function()&#123;</span><br><span class="line">	$scope.decrement=function()&#123;</span><br><span class="line">		$scope.count=$scope.count-1;</span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ng-select<br>ng-select用来将数据同HTML的<select>元素进行绑定。这个指令可以和ng-model以及ng-options指令一同使用，构建精细且表现优良的动态表单。<br>ng-options的值可以是一个内涵表达式，其实这只是一种有趣的说法，简单来说就是它可以接受一个数组或对象，并对它们进行循环，将内部的内容提供给select标签内部的选项。</select></p>
+</li>
+<li><p>数组作为数据源<br>用数组中的值做标签<br>用数组中的值作为选中的标签<br>用数组中的值做标签组<br>用数组中的值作为选中的标签组</p>
+</li>
+<li><p>对象作为数据源<br>用对象的键值做标签<br>用对象的键值作为选中的标签<br>用对象的键值作为标签组<br>用对象的键值作为选中的标签组<br>示例:</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"CityController"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">ng-model</span>=<span class="string">"city"</span> <span class="attr">ng-option</span>=<span class="string">"city.name for city in cities"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span>Choose City<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">Best City:&#123;&#123;city.name&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.controller('CityController',function($scope)&#123;</span><br><span class="line">	$scope.cities = [</span><br><span class="line">		&#123;name:'Seattle'&#125;,</span><br><span class="line">		&#123;name:'San Francisco'&#125;,</span><br><span class="line">		&#123;name:'Chicago'&#125;,</span><br><span class="line">		&#123;name:'New York'&#125;,</span><br><span class="line">		&#123;name:'Boston'&#125;</span><br><span class="line">	];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ng-submit<br>ng-submit 用来表达式同onsubmit时间进行绑定。这个指令同时会阻止默认行为(发送请求并重新加载页面),除非表单不含有action属性。<br>示例:</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">ng-submit</span>=<span class="string">"submit()"</span> <span class="attr">ng-controller</span>=<span class="string">"FormController"</span>&gt;</span></span><br><span class="line">Enter text and hit enter:</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"person.name"</span> <span class="attr">name</span>=<span class="string">"person.name"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"person.name"</span> <span class="attr">value</span>=<span class="string">"Submit"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">code</span>&gt;</span>people=&#123;&#123;people&#125;&#125;<span class="tag">&lt;/<span class="name">code</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">ng-repeat</span>=<span class="string">"(index,object) in people"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123;object.name&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.controller('FormController',function($scope)&#123;</span><br><span class="line">	$scope.person=&#123;name:null&#125;;</span><br><span class="line">	$scope.people=[];</span><br><span class="line">	$scope.submit=function()&#123;</span><br><span class="line">	if($scope.person.name)&#123;</span><br><span class="line">	$scope.people.push(&#123;name:$scope.person.name&#125;);</span><br><span class="line">	$scope.person.name='';</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ng-class<br>使用ng-class动态设置元素的类，方法是绑定一个代表所有需要添加的类的表达式。重复的类不会添加。当表达式发生变化，先前添加的类会被移除，新类会被添加。<br>下面的例子会用ng-class在一个随机数大于5时将.red类添加到一个div上:</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"LotteryController"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-class</span>=<span class="string">"&#123;red:x&gt;5&#125;"</span> <span class="attr">ng-if</span>=<span class="string">"x&gt;0"</span>&gt;</span></span><br><span class="line">You won!</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"x=generateNumber()"</span> <span class="attr">ng-init</span>=<span class="string">"x=0"</span>&gt;</span></span><br><span class="line">Draw Number</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Number is: &#123;&#123;x&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">.red &#123;</span><br><span class="line">	background-color:red;</span><br><span class="line">&#125;</span><br><span class="line">angular.module('myApp',[])</span><br><span class="line">.controller('LotteryController',function($scope)&#123;</span><br><span class="line">	$scope.generateNumber = function()&#123;</span><br><span class="line">		return Math.floor((Math.random()*10)+1);</span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ng-attr-(suffix)<br>当angularjs编译DOM时会查找两个花括号some expression内的表达式。这些表达式会被自动注册到\$watch服务中并更新到\$digest循环中，成为它的一部分:</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> Hello &#123;&#123;someExpression&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">"&#123;&#123;cx&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>运行上面的代码会抛出一个错误，指出我们有一个属性。可以用ng-attr-cx来解决这个问题。注意，cx位于这个名称的尾部。在这个属性中，通过用双大括号来写表达式，达到前面提到的目的。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">circle</span> <span class="attr">ng-attr-cx</span>=<span class="string">"&#123;&#123;cx&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/first/" rel="next" title="angularjs之指令2">
+                <i class="fa fa-chevron-left"></i> angularjs之指令2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/10/first/" rel="prev" title="jQuery之图形库Highcharts">
+                jQuery之图形库Highcharts <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ng属性指令"><span class="nav-number">1.</span> <span class="nav-text">ng属性指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔属性"><span class="nav-number">2.</span> <span class="nav-text">布尔属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类布尔属性"><span class="nav-number">3.</span> <span class="nav-text">类布尔属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在指令中使用子作用域"><span class="nav-number">4.</span> <span class="nav-text">在指令中使用子作用域</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/03/09/second/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

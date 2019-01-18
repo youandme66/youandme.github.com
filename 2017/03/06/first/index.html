@@ -1,0 +1,1133 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="基本知识点 启动数据库服务net start mysql,关闭数据库服务net stop mysql 登录数据库mysql -u 用户名 -p 密码 显示数据库库名 show databases 建立数据库create database 数据库名 使用数据库use 数据库名 删除数据库 drop database 数据库名 进入数据库建立表; create table 表名(属性名 数据类型约束条">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL数据库">
+<meta property="og:url" content="https://youandme66.github.io/2017/03/06/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="基本知识点 启动数据库服务net start mysql,关闭数据库服务net stop mysql 登录数据库mysql -u 用户名 -p 密码 显示数据库库名 show databases 建立数据库create database 数据库名 使用数据库use 数据库名 删除数据库 drop database 数据库名 进入数据库建立表; create table 表名(属性名 数据类型约束条">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-06T06:01:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL数据库">
+<meta name="twitter:description" content="基本知识点 启动数据库服务net start mysql,关闭数据库服务net stop mysql 登录数据库mysql -u 用户名 -p 密码 显示数据库库名 show databases 建立数据库create database 数据库名 使用数据库use 数据库名 删除数据库 drop database 数据库名 进入数据库建立表; create table 表名(属性名 数据类型约束条">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/03/06/first/">
+
+
+
+
+
+  <title> MySQL数据库 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/03/06/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL数据库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T00:00:00+08:00">
+                2017-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/关系型数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">关系型数据库</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/关系型数据库/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/03/06/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/03/06/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/06/first/" class="leancloud_visitors" data-flag-title="MySQL数据库">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="基本知识点"><a href="#基本知识点" class="headerlink" title="基本知识点"></a>基本知识点</h3><ul>
+<li>启动数据库服务net start mysql,关闭数据库服务net stop mysql</li>
+<li>登录数据库mysql -u 用户名 -p 密码</li>
+<li>显示数据库库名 show databases</li>
+<li>建立数据库create database 数据库名</li>
+<li>使用数据库use 数据库名</li>
+<li>删除数据库 drop database 数据库名</li>
+<li>进入数据库建立表; create table 表名(属性名 数据类型约束条件)</li>
+<li>数据类型有int,tinyint,varchar,text,date,datetime,time等，现在而且已经支持json数据类型。</li>
+<li>约束条件有NOT NULL非空，UNIQUE唯一性，PRIMARY KEY主键，AUTO_INCREMENT自增（一个表中最左只有一个字段约束条件为自增）</li>
+<li>查看表的类型时可用DESC+表名，查看。或者show create table 表名\G,查看。第二种查看较详细。</li>
+<li>表的存储引擎常见的三种MyISAM，IMongo。</li>
+</ul>
+<h3 id="如何修改数据表字段？"><a href="#如何修改数据表字段？" class="headerlink" title="如何修改数据表字段？"></a>如何修改数据表字段？</h3><ul>
+<li>修改字段数据类型alter table 数据库表名 modify 字段 数据类型约束条件。</li>
+<li>修改字段名的位置alter table 数据库表名 modify 字段名 数据类型约束条件first(在第一个位置) | alter 字段名 (在此字段名之后)</li>
+<li>修改字段名的名称 alter table 数据库表名 change 字段名 需要修改为的字段名 数据类型约束条件。</li>
+<li>删除该字段 alter table 数据库表名 drop 字段名</li>
+<li>添加字段 alter table 数据库表名 add 字段名 数据类型约束条件。</li>
+<li>修改此表的存储引擎alter table 数据库表名 engine = 需修改为的数据存储引擎。</li>
+<li>重新命名表名 alter table 数据表名 rename 需修改为的数据表名</li>
+</ul>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><ul>
+<li><p>普通索引<br>1、建表时：关键字 index(字段名)<br>2、建表后： create index 索引属性名 on 表名(字段名)<br>3、建表后：alter table 表名 add index 索引属性名 (字段名(索引长度))</p>
+</li>
+<li><p>唯一性索引<br>1、关键字UNIQUE，值必须有唯一性<br>2、UNIQUE INDEX 索引属性名 (字段名类型(升序ASC降序DESC))<br>3、create unique index 索引属性名 on 表名 (具有唯一性的字段名)<br>4、alter table 表名 add unique index 索引名(属性名)</p>
+</li>
+<li><p>全文索引<br>1、关键字fulltext，只能创建在char，varchar，text类型的字段上。<br>2、fulltext index 索引属性名(字段名)<br>3、create fulltext index 索引属性名 on 表名(字段名)<br>4、alter table 表名 add fulltext index 索引名(索引名)</p>
+</li>
+<li><p>单列索引<br>1、对应一个字段<br>2、INDEX 索引属性名(字段名(索引长度))<br>3、create index 索引属性名 on 表名 (字段名(索引长度))<br>4、alter table 表名 add index 索引名 (字段名(索引长度))</p>
+</li>
+<li><p>多列索引<br>1、对应多个字段<br>2、index 索引属性名(字段1，字段2，…)<br>3、使用多列索引必须使用第一个字段查询<br>4、create index索引属性名 on 表名 (字段1，字段2…)<br>5、alter table 表名 add index 索引名(字段名1，字段名2，…)</p>
+</li>
+<li><p>空间索引<br>1、关键字geometry,point,linestring,polygon等，只有MyISAM存储引擎支持空间检索。<br>2、spatial index 索引属性名(字段名)<br>3、create spatial index 索引属性名 on 表名(字段名)<br>4、alter table 表名 add apatial index 索引名(字段名)</p>
+</li>
+<li><p>删除索引<br>drop index 索引名 on 表名</p>
+</li>
+</ul>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><ul>
+<li><p>查询权限: select select_priv,Create_view_priv from mysql.user where user=’root’;</p>
+</li>
+<li><p>创建视图:单表创建视图：create view 视图名(视图的字段名) as select 表的字段(*号表示全部字段) from 表名</p>
+</li>
+<li><p>多表创建视图： create algorithm=merge view 视图名 (视图的字段名) as select 表的字段名 (两个字段名相同时可用表名.字段名表示) from 表名1，表名2… where条件。<br>创建视图时数字加减字段名相当于字段里的数据加减数字。视图的约束条件在最后。算法在create之后。</p>
+</li>
+<li><p>查看视图<br>1、desc 视图名<br>2、SHOW TABLE STATUS LIKE’视图名’\G；也可查看数据表<br>3.SHOW CREATE VIEW视图名\G;<br>4.在视图的表中查看所有视图，SELECT*FROM information_schema.views\G;</p>
+</li>
+<li><p>修改视图<br>1.CREATE OR REPLACE算法语句/表的类型VIEW视图名（视图字段名）AS SELECT表的字段名FROM表名约束条件；（此语句可创造或修改）<br>2.ALTER算法语句/表的类型VIEW视图名（视图字段名）AS SELECT表的字段名FROM表名WHERE条件约束条件；</p>
+</li>
+<li><p>更新视图<br>当更新视图时，表中的数据也随之改变。只能更改权限范围里的数据。<br>有些视图无法更新：一.包含某些函数像SUM（）COUNT()MAX()MIN()等函数时。二.视图包含关键字时无法更新如UNION,UNIONALL,GROUP BY,HAVING等关键字。三.常量视图不能更改（就是只有一个值）。四.子查询不能更新视图五.由不可更新的视图导出的视图是不可更新的。五.临时表TEMPTABLE是不可更新的。<br>1.UPTADE视图名SET视图字段名1=“更改后的数据”，…；<br>2.视图中插入数据与表中插入数据相同INSERT INTO视图名VALUES（数据）；</p>
+</li>
+<li><p>删除视图<br>删除视图：1.DROP VIEW IF EXISTS视图名1，…；</p>
+<h3 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h3><p>触发器是由INSERT,UPDATE,DELETE来触发的某种特定操作。<br>创建触发器：1.单个语句：CREATE TRIGGER触发器名BEFORE/AFTER特定操作ON表名FOR EACH ROW执行语句；<br>多个语句：要用BEGIN，END关键字<br>查看触发器：1.SHOW TRIGGERS；<br>2.在表中查看SELECT*FROM information_schema.trigger\G;<br>触发器的使用：触发器执行顺序BEFORE执行操作AFTER<br>删除触发器：DROP TRIGGER触发器名；</p>
+<h3 id="操作数据"><a href="#操作数据" class="headerlink" title="操作数据"></a>操作数据</h3><p>1.插入数据：1.不指定字段名：INSERT INTO表名VALUES（数据1,…）；<br>2.指定字段名:INSERT INTO表名（字段名1，…）values(数据1，…);<br>3.同时插入多条记录：INSERT INTO表名（字段名1，…）values(数据1，…)，(数据1，…)，…;<br>4.查询结果插入到表中：INSERT INTO表名（字段名1，…）SELECT字段名FROM表名；</p>
+<h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><p>UPDATE表名SET字段名1=‘数据’…WHERE条件；</p>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><p>DELETE FROM表名WHERE条件；</p>
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><p>完全语法SELECT属性列表FROM表名和视图列表[WHERE条件表达式][GROUP BY属性名1[HAVING条件表达式2]][ORDER BY属性名2[ASC|DESC]]；<br>1.SELECT字段名FROM表名；<br>2.SELECT字段名FROM表名WHERE条件；<br>3.SELECT字段名FROM表名WHERE条件ORDER BY字段名ASC/DESC；<br>单表查询：1.查询所有字段<br>2.查询部分字段（查询顺序与列出的属性顺序相同）<br>3.查询指定记录WHERE<br>4.带IN关键字的查询语法规则：WHERE[NOT]IN(元素1，元素2，…)<br>查询条件表配合WHERE<br>比较：&lt;,&gt;,=,&lt;=,&gt;=,!=,&lt;&gt;(不等于),!&gt;,!&lt;<br>指定范围：BETWEEN AND,NOT BETWEEN AND<br>指定集合：IN,NOT IN<br>匹配字符：LIKE,NOT LIKE包括完全匹配和使用通配符%（表示多个字符）_（表示一个字符）。<br>是否为空值：IS NULL,IS NOT NULL<br>多个查询条件：AND,OR<br>5.查询结果不重复SELECT DISTINCT字段名FROM表名；<br>6.对查询结果排序ORDER BY属性名[ASC|DESC]，多个字段排序时，先排序第一个字段，如果第一个字段数据有相同再用第二个字段排序<br>7.分组查询：1.SELECT<em>FROM GROUP BY字段名;最先分到的优先。<br>2.使用GROUP_CONCAT(聚合某个字段的数据)再按某个字段名分组：SELECT字段名,GROUP_CONCAT(字段名)FROM表名GROUP BY字段名。<br>3.与集合函数使用COUNT()是统计要分组的数量：SELECT字段名,COUNT(字段名)FROM表名GROUP BY字段名。<br>4.GROUP BY与HAVING一起使用：SELECT字段名,COUNT(字段名)FROM表名GROUP BY字段名HAVING COUNT(字段名)条件。<br>5.按多个字段分组：SELECT</em>FROM GROUP BY字段名1，字段名2，…（分组要全局考虑）<br>6.记录求和：SELECT字段名,COUNT(字段名)FROM表名GROUP BY字段名WITH ROLLUP<br>SELECT字段名,GROUP_CONCAT(字段名)FROM表名GROUP BY字段名WITH ROLLUP<br>8.用LIMIT限制查询结果的数量1.不指定初始位置SELECT<em>FROM表名LIMIT数量；<br>2.指定初始位置SELECT</em>FROM表名LIMIT开始，结束；<br>9.使用集合函数查询：集合函数有COUNT(),SUM(),AVG(),MAX(),MIN()等。<br>1.查询所有记录数：SELECT COUNT(<em>)FROM表名；<br>2.分组计数：SELECT COUNT(</em>)FROM表名GROUP BY字段名；<br>3.求总成绩：SELECT字段名，SUM(字段名)FROM表名WHERE条件；（根据分组来求总数）<br>4.求平均值：SELECT AVG(字段名)FROM表名；（根据分组来求平均值）<br>5.求最大值：SELECT MAX(字段)FROM表名；（根据分组来求最大值）<br>6.求最小值：SELECT MIN(字段)FROM表名；（根据分组来求最小值）<br>连接查询：1.内连接查询：SELECT多个字段名FROM多个表WHERE条件<br>2.外连接查询：SELECT多个字段名FROM表一LEFT|RIGHT JOIN表二ON条件<br>3.复合条件查询：SELECT多个字段名FROM多个表WHERE条件AND条件；<br>子查询：子查询关键字包括IN、NOT IN、ANY、ALL、EXISTS、NOT EXISTS等关键字。子查询中包含比较运算符。<br>举例：SELECT字段名FROM表名WHERE字段名IN(SELECT字段名FROM表名)<br>SELECT字段名FROM表名WHERE字段名&gt;=(SELECT字段名FROM表名WHERE条件)<br>SELECT字段名FROM表名WHERE EXISTS(查询语句只返回真假)<br>SELECT字段名FROM表名WHERE字段名&gt;=ANY(查询语句的数据)<br>SELECT字段名FROM表名WHERE字段名&gt;=ALL(查询语句的数据)<br>合并查询结果：用UNION和UNION ALL关键字<br>举例：SELECT字段名FROM表名UNION/UNION ALL SELECT字段名FROM表名；UNION不去除相同的值UNION ALL去除相同的值<br>为表取别名：SELECT字段名FROM表名别名后面就可用此别名<br>为字段取别名：SELECT字段名AS别名FROM表名<br>正则表达式查询:正则表达式模式字符^:匹配字符串开始的部分\$:匹配字符串结束的部分.:代表字符串中的任意一个字符，包括回车和换行[字符集合]:匹配“字符集合”中的任意一个字符[^字符集合]：匹配“字符集合”外的任何一个字符S1|S2|S3:匹配S1,S2,S3的任意一个字符串*：包括多个该符号之前的字符，包括0和1个+：代表多个该符号之前的字符，包括1个字符串{N}：字符串出现N次{M,N}:字符串至少出现M次，至多出现N次。<br>1.SELECT * FROM表名WHERE字段名REGEXP‘^开头的字符及字符串’;<br>2.SELECT * FROM表名WHERE字段名REGEXP‘结尾的字符及字符串\$’;<br>3.SELECT * FROM表名WHERE字段名REGEXP‘^开头的字符及字符串..结尾的字符串\$’;<br>4.SELECT * FROM表名WHERE字段名REGEXP‘[多个字符]’;<br>5.SELECT * FROM表名WHERE字段名REGEXP‘[0-9a-z]’;<br>6.SELECT * FROM表名WHERE字段名REGEXP‘[^0-9a-z]’;<br>7.SELECT * FROM表名WHERE字段名REGEXP‘字符串1|字符串2|字符串3’；<br>8.SELECT * FROM表名WHERE字段名REGEXP‘a+c’(a至少出现一次)；<br>9.SELECT * FROM表名WHERE字段名REGEXP‘a*c’(a可出现零次)；<br>7.SELECT * FROM表名WHERE字段名REGEXP‘a{3}’(a出现三次)；<br>7.SELECT * FROM表名WHERE字段名REGEXP‘a{3,6}’(a至少出现三次至多六次)；</p>
+<h3 id="运算符号"><a href="#运算符号" class="headerlink" title="运算符号"></a>运算符号</h3><p>符号+、-、*、/、%、DIV、MOD。</p>
+<h3 id="mysql函数"><a href="#mysql函数" class="headerlink" title="mysql函数"></a>mysql函数</h3><p>1.数学函数：ABS()取绝对值,PI()取圆周率，SQRT()求平方根，MOD(X,Y)求余运算，CEIL(X)大于或等于x的最小整数,CEILING(X)大于或等于x的最小整数,FLOOR(X)小于或等于x的最大整数,RAND()随机的,RAND(X)x一定返回值相同，ROUND(X)返回离x最近的整数四舍五入，ROUND(X,Y)返回x保留小数点y位进行四舍五入，TRUNCATE(X,Y)返回x保留小数点y位不进行四舍五入，SIGN(X)返回x的符号用1 0-1表示，POW(X,Y)X的Y次方,POWER(X,Y)X的Y次方,EXP(X)e的X方，LOG(X)计算x的自然对数，LOG10(X)底数为10的对数，RADIANS(X)角度转换为弧度，DEGREES（X)弧度转换为角度，SIN（X)正弦值，ASIN（X)反正弦值x为-1到1，COS（X)余弦值，ACOS（X)反余弦值x为-1到1，COT(),TAN(),ATAN()。<br>2.字符串函数：CHAR_LENGTH(s）字符串的字符数，LENGTH(s)字符串的长度，CONCAT(S1,S2,…)合并多个字符串，CONCAT_WS(X,S1,S2,…)可以将各字符串用参数X隔开，INSERT(S1,X,LEN,S2)函数将s1中x位置开始长度为len的字符串用s2替换，UPPER(S)和UCASE(S)将字符串s的所有字母变成大写字母，LOWER(S)和LCASE(S)函数将字符串s所有字母转换为小写字母，LEFT(s，n）返回字符串前n个字符，RIGHT(s，n）返回字符串后n个字符，LPAD(s1，len，s2）将s2填充到s1的开始处，使字符串达到len长度，RPAD（s1，len，s2）将s2填充到s1的结尾处，使字符串达到长度len，LTRIM（s）将去掉字符串s开始处的空格，RTRIM（s）将去掉字符串s结尾处的空格，TRIM（s）将去掉字符串s开始处和结尾处的空格，TRIM(s1 FROM s)将去掉字符串s中开始处和结尾处的字符串s1，REPEAT（s，n）将字符串s重复n次，SPACE(n）返回n个空格，REPLACE（s，s1，s2）将字符串s2替换到字符串s中的字符串s1，STRCMP(s1，s2）比较字符串s1，s2，返回-1 0 1，SUBSTRING(s，n，len）和MID（s，n，len）从字符串s的第n个位置获取长度为n的字符串，LOCATE(s1，s）、POSITION(s1 IN s）和INSTR(s，s1）从字符串s中获取s1的开始位置，REVERSE（s）将字符串s的顺序反过来，ELT（n，s1，s2，…）返回第n个字符串，FIELD(s，s1，s2，…）返回第一个与字符串s匹配的字符串的位置，FIND_IN_SET(s1，s2）返回在s2中与s1匹配的字符串的位置，MAKE_SET(x，s1，s2，…)按x的二进制数来取字符串。<br>3.日期和时间函数：CURDATE()和CURRENT_DATE()获取当前日期，CURTIME()和CURRENT_TIME（）获取当前时间，NOW(),CURRENT_TIMESTAMP,LOCALTIME()和SYSDATE()获取当前日期和时间，UNIX_TIMESTAMP()以UNIX时间戳的形式返回当前时间，UNIX_TIMESTAMP(d)将时间d以UNIX时间戳的形式返回，FROM_UNIXTIME(d)把UNIX时间戳的形式转换为普通格式时间，UTC_DATE()返回UTC国际协调日期，UTC_TIME（）返回UTC国际协调时间，MONTH（d）返回日期d中的月份值，MONTHNAME(d）返回日期d中的月份的英文名字，DAYNAME（d）返回日期d是星期几英文名，DAYOFWEEK(d）返回日期d是星期几开头1为星期日以此类推，WEEKDAY（d）返回日期d是星期几开头0为星期一以此类推，WEEK(d）和WEEKOFYEAR（d）都是计算日期d是本年的第几个星期，DAYOFYEAR返回日期d是本年的第几天，DAYOFMONTH（d）返回日期d是本月的第几天，YEAR(d)返回日期d中的年份值，QUARTER（d）返回d是本年第几季度，HOUR（t）返回时间t中的小时值，MINUTE(t）返回时间t中的秒钟值，EXTRACT(type FROM d）从日期d中获取指定的值，由type类型决定，TIME_TO_SEC(t）将时间t转换为以秒为单位的时间，SEC_TO_TIME(s）将以秒为单位的时间s转换为转换为时分秒。<br>计算日期和时间的函数：TO_DAYS(d）把日期转化为天数，FROM_DAYS(n）把天数转化为日期，DATEDIFF(d1，d2）指定某一天去比较d2-d1，ADDDATE(d，n）增加n天，SUBDATE(d，n）减去n天，ADDTIME(t，n)增加n秒，SUBTIME（t，n）减去n秒，ADDDATE(d，INTERVAL expr type)和DATE_ADD(d，INTERVAL expr type)d时间后的日期，<br>将时间和日期格式化的函数：DATE_FORMAT（d，f）日期，TIME_FORMATE(t，f）时间，GET_FORMAT(type，s)</p>
+<h3 id="条件判断函数"><a href="#条件判断函数" class="headerlink" title="条件判断函数"></a>条件判断函数</h3><p>IF（expr，v1，v2）如果表达式expr成立，返回结果v1，否则返回v2。<br>IFNULL(v1，v2）如果v1不为空就显示v1的值，否则就显示v2的值。<br>CASE WHEN expr1 THEN v1[WHEN expr2 THEN v2…][ELSE vn]END。<br>CASE expr1 WHEN e1 THEN v1[WHEN e2 THEN v2…][ELSE vn]END。</p>
+<h3 id="系统信息函数"><a href="#系统信息函数" class="headerlink" title="系统信息函数"></a>系统信息函数</h3><p>VERSION()获取mysql版本号，CONNECTION_ID()函数返回服务器的连接数，DATABASE()和SCHEMA()返回当前数据库名，USER()，SYSTEM_USER()，SESSION_USER(),CURRENT_USER()和CURRENT_USER获取用户名,CHARSET(str)返回字符串str的字符集，COLLATION（str）返回字符串str的字符排列顺序，LAST_INSERT_ID()返回最后生成的AUTO_INCREMENT值。</p>
+<h3 id="加密函数"><a href="#加密函数" class="headerlink" title="加密函数"></a>加密函数</h3><p>PASSWORD(str)对字符串str进行加密用于用户名密码。<br>MID5(str)对字符串str进行加密用于一般数据。<br>ENCODE(str，pswd_str)使用字符串pswd_str加密字符串str,加密的结果是一个二进制数，必须使用BLOB类型的字段来保存。</p>
+<h3 id="解密函数"><a href="#解密函数" class="headerlink" title="解密函数"></a>解密函数</h3><p>DECODE(crypt_str,pswd_str)可以使用字符串pswd_str来为crypt_str来解密crypt_str是通过ENCODE(str，pswd_str)加密的二进制数据。</p>
+<h3 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h3><p>格式化函数FORMAT（x，n)可以将数字x进行格式化，将x保留到小数点后n位需进行四舍五入。<br>ASCLL（s）返回字符串s的第一个字符的ASCLL码，BIN(x)返回x的二进制编码，HEX(x)返回x的十六进制编码，OCT(x)返回x的八进制编码，CONV（x，f1，f2）将x从f1进制数变成f2进制数。<br>INET_ATON(IP)可以将IP地址转换为数字表示需加引号，INET_NTOA（n）可以将数字n转换为IP地址。</p>
+<h3 id="解密加密函数"><a href="#解密加密函数" class="headerlink" title="解密加密函数"></a>解密加密函数</h3><p>CET_LOCT(name，time)定义一个名称为name、持续时间长度为time秒的锁，如果锁定成功返回1，如果尝试超时返回0.如果失败返回NULL。<br>RELEASE_LOCK（name）解除名称为name的锁。如果解锁成功返回1，如果解锁失败返回0，如果尝试超时返回0<br>IS_FREE_LOCK(name)判断是否使用name的锁，如果使用返回0，否则返回1.<br>BENCHMARK(count,expr)将表达式expr重复执行count次，然后返回执行时间。<br>改变字符集的函数CONVERT(s USING cs)将字符串s的字符集变成cs。</p>
+<h3 id="改变数据类型的函数"><a href="#改变数据类型的函数" class="headerlink" title="改变数据类型的函数"></a>改变数据类型的函数</h3><p>CAST(x AS type)和CONVERT(x，type）将x变成type型，只改变输出值的类型，字段类型未变。</p>
+<h3 id="存储过程和函数"><a href="#存储过程和函数" class="headerlink" title="存储过程和函数"></a>存储过程和函数</h3><p>1.创建存储过程：CREATE PROCEDURE存储过程名(IN数据名数据类型,OUT数据名数据类型,INOUT数据名数据类型)提取数据（如READS SQL DATA）BEGIN多个执行语句；END结束；<br>2.创建存储函数：CREATE FUNCTION存储函数名（数据名数据类型）RETURNS返回值类型BEGIN多个执行语句：END结束；<br>3.变量的使用：1.定义变量：DECLARE变量名数据类型默认值（DEFAULT)2.为变量赋值：SET变量名=数据值<br>4.定义条件和处理程序：1.定义条件：DECLARE条件名CONDITION FOR SQLSDATE‘sqlsdate_value’。<br>DECLARE条件名CONDITION FOR mysql_error_code。<br>2.定义处理程序：DECLARE处理方式HANDLER FOR<br>法一捕获sqlsdate_value：DECLARE CONTINUE HANDLER FOR SQLSTATE‘sqlsdate_value‘SET@info=‘CAN NOT FIND’；<br>法二捕获mysql_error_code：DECLARE CONTINUE HANDLER FOR mysql_error_code SET@info=‘CAN NOT FIND’；<br>法三调用定义条件：DECLARE CONTINUE HANDLER FOR条件名SET@info=‘CAN NOT FIND’；<br>法四使用SQLWARNING：DECLARE EXIT HANDLER FOR SQLWARNING SET@info=‘ERROR’；<br>法四使用SQLEXCEPTION：DECLARE EXIT HANDLER FOR SQLEXCEPTION SET@info=‘ERROR’；<br>法五使用NOT FOUND:DECLARE EXIT HANDLER FOR NOT FOUND SET@info=‘CAN NOT FIND’；<br>5.光标使用：1.声明光标：声明光标必须在处理程序之前，并且声明在变量和条件之后。<br>DECLARE光标名CURSOR FOR SELECT多个字段名FROM表名；<br>2.打开光标：OPEN光标名；<br>3.使用光标：FETCH光标名INTO变量名；<br>4.关闭光标：CLOSE光标名；<br>6.流程控制的使用：1.IF语句判断语句THEN执行语句[ELSEIF判断语句THEN执行语句][ELSE执行语句]END IF;<br>举例：IF age&gt;20 THEN SET@count1=@count1+1 ELSEIF age=20 THEN@count2=@count2+1 ELSE@count3=count3+1 END IF;<br>2.CASE判断变量WHEN变量THEN执行语句WHEN变量THEN执行语句ELSE执行语句END CASE;<br>3.开始标签：LOOP SET执行语句END LOOP结束标签；<br>4.开始标签：LOOP SET执行语句IF判断语句THEN执行语句LEAVE标签名；END LOOP结束标签；<br>5.ITERATE与LEAVE语句相同；<br>6.REPEAT SET执行语句UNTIL条件END REPEAT；<br>7.WHILE判断条件DO SET执行语句END WHILE；<br>7.调用存储过程和函数：1.调用存储过程：CALL存储过程名举例：CALL存储名（1002，@n）；<br>2.调用存储函数：与调用内部函数一样；<br>8.查看存储过程和函数：1.SHOW PROCEDURE（查看存储函数）|FUNCTION（查看存储过程）STATUS LIKE‘名称’；<br>2.SHOW CREATE PROCEDURE（查看存储函数）|FUNCTION（查看存储过程）名称；<br>3.SELECT*FROM表名WHERE ROUTINE_NAME=‘名称’；<br>9.修改存储过程和函数：ALTER PROCEDURE（查看存储函数）|FUNCTION（查看存储过程）名称</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/02/first/" rel="next" title="EffectWork开发之问题总结一">
+                <i class="fa fa-chevron-left"></i> EffectWork开发之问题总结一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/08/first/" rel="prev" title="NodeJs之Buffer处理二进制流">
+                NodeJs之Buffer处理二进制流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本知识点"><span class="nav-number">1.</span> <span class="nav-text">基本知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何修改数据表字段？"><span class="nav-number">2.</span> <span class="nav-text">如何修改数据表字段？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引"><span class="nav-number">3.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图"><span class="nav-number">4.</span> <span class="nav-text">视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#触发器"><span class="nav-number">5.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作数据"><span class="nav-number">6.</span> <span class="nav-text">操作数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新数据"><span class="nav-number">7.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">8.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询数据"><span class="nav-number">9.</span> <span class="nav-text">查询数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算符号"><span class="nav-number">10.</span> <span class="nav-text">运算符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql函数"><span class="nav-number">11.</span> <span class="nav-text">mysql函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件判断函数"><span class="nav-number">12.</span> <span class="nav-text">条件判断函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统信息函数"><span class="nav-number">13.</span> <span class="nav-text">系统信息函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密函数"><span class="nav-number">14.</span> <span class="nav-text">加密函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解密函数"><span class="nav-number">15.</span> <span class="nav-text">解密函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他函数"><span class="nav-number">16.</span> <span class="nav-text">其他函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解密加密函数"><span class="nav-number">17.</span> <span class="nav-text">解密加密函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变数据类型的函数"><span class="nav-number">18.</span> <span class="nav-text">改变数据类型的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储过程和函数"><span class="nav-number">19.</span> <span class="nav-text">存储过程和函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/03/06/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

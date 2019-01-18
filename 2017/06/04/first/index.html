@@ -1,0 +1,1181 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="JNI使用范围1、 在Java程序中复用以前写过的C/C++代码。 2、 自己实现一个java虚拟机 3、 学习不同语言如何进行协作，尤其是如何实现垃圾回收和多线程。 4、 把一个虚拟机实现整合到用C/C++写的程序中。 hello world1、 创建一个类（HelloWorld.java）声明本地方法。2、 使用javac编译源文件HollowWorld.java，产生HelloWorld.c">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JNI插件编程">
+<meta property="og:url" content="https://youandme66.github.io/2017/06/04/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="JNI使用范围1、 在Java程序中复用以前写过的C/C++代码。 2、 自己实现一个java虚拟机 3、 学习不同语言如何进行协作，尤其是如何实现垃圾回收和多线程。 4、 把一个虚拟机实现整合到用C/C++写的程序中。 hello world1、 创建一个类（HelloWorld.java）声明本地方法。2、 使用javac编译源文件HollowWorld.java，产生HelloWorld.c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-06-04T04:20:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JNI插件编程">
+<meta name="twitter:description" content="JNI使用范围1、 在Java程序中复用以前写过的C/C++代码。 2、 自己实现一个java虚拟机 3、 学习不同语言如何进行协作，尤其是如何实现垃圾回收和多线程。 4、 把一个虚拟机实现整合到用C/C++写的程序中。 hello world1、 创建一个类（HelloWorld.java）声明本地方法。2、 使用javac编译源文件HollowWorld.java，产生HelloWorld.c">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/06/04/first/">
+
+
+
+
+
+  <title> JNI插件编程 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/06/04/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JNI插件编程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-04T00:00:00+08:00">
+                2017-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/06/04/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/06/04/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/06/04/first/" class="leancloud_visitors" data-flag-title="JNI插件编程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="JNI使用范围"><a href="#JNI使用范围" class="headerlink" title="JNI使用范围"></a>JNI使用范围</h3><p>1、 在Java程序中复用以前写过的C/C++代码。</p>
+<p>2、 自己实现一个java虚拟机</p>
+<p>3、 学习不同语言如何进行协作，尤其是如何实现垃圾回收和多线程。</p>
+<p>4、 把一个虚拟机实现整合到用C/C++写的程序中。</p>
+<h3 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h3><p>1、 创建一个类（HelloWorld.java）声明本地方法。<br>2、 使用javac编译源文件HollowWorld.java，产生HelloWorld.class。使用javah –jni来生成C头文件（HelloWorld.h），这个头文件里面包含了本地方法的函数原型。<br>3、 用C代码写函数原型的实现。<br>4、 把C函数实现编译成一个本地库，创建Hello-World.dll或者libHello-World.so。<br>5、 使用java命令运行HelloWorld程序，类文件HelloWorld.class和本地库(HelloWorld.dll或者libHelloWorld.so)在运行时被加载。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.jni.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyJNI</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">sayhello</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		System.loadLibrary(<span class="string">"MyJNI"</span>);</span><br><span class="line">		MyJNI demo = <span class="keyword">new</span> MyJNI();</span><br><span class="line">		demo.sayhello();</span><br><span class="line">		System.out.println(<span class="string">"wo"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">com_jni_demo.MyJNI.h</span><br><span class="line"><span class="comment">/* DO NOT EDIT THIS FILE - it is machine generated */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"jni.h"</span></span></span><br><span class="line"><span class="comment">/* Header for class com_jni_demo_MyJNI */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _Included_com_jni_demo_MyJNI</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _Included_com_jni_demo_MyJNI</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Class:     com_jni_demo_MyJNI</span></span><br><span class="line"><span class="comment"> * Method:    sayhello</span></span><br><span class="line"><span class="comment"> * Signature: ()V</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL Java_com_jni_demo_MyJNI_sayhello</span><br><span class="line">  (JNIEnv *, jobject);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MyJNI.cpp</span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">"jni.h"</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">include</span> <span class="meta-string">"com_jni_demo_MyJNI.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function">JNIEXPORT <span class="keyword">void</span> JNICALL <span class="title">Java_com_jni_demo_MyJNI_sayhello</span><span class="params">(JNIEnv * env,jobject obj)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"hello,world"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="基本类型、字符串、数组"><a href="#基本类型、字符串、数组" class="headerlink" title="基本类型、字符串、数组"></a>基本类型、字符串、数组</h3><p>示例<br>java端源代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prompt</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// native method that prints a prompt and reads a line</span></span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">native</span> String <span class="title">getLine</span><span class="params">(String prompt)</span></span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         Prompt p = <span class="keyword">new</span> Prompt();</span><br><span class="line"></span><br><span class="line">         String input = p.getLine(<span class="string">"Type a line: "</span>);</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"User typed: "</span> + input);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">         System.loadLibrary(<span class="string">"Prompt"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>本地方法的C函数原型<br>C函数原型</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Prompt.getLine方法可以用下面这个C函数来实现：</span><br><span class="line"></span><br><span class="line">JNIEXPORT jstring JNICALL </span><br><span class="line"></span><br><span class="line"> Java_Prompt_getLine(JNIEnv *env, jobject <span class="keyword">this</span>, jstring prompt);</span><br></pre></td></tr></table></figure>
+<p>其中，JNIEXPORT和JNICALL这两个宏（被定义在jni.h）确保这个函数在本地库外可见，并且C编译器会进行正确的调用转换。</p>
+<ul>
+<li><p>本地方法参数<br>第一个参数JNIEnv接口指针，指向一个个函数表，函数表中的每一个入口指向一个JNI函数。本地方法经常通过这些函数来访问JVM中的数据结构。<br>第二个参数根据本地方法是一个静态方法还是实例方法而有所不同。本地方法是一个静态方法时，第二个参数代表本地方法所在的类；本地方法是一个实例方法时，第二个参数代表本地方法所在的对象。我们的例子当中，Java_Prompt_getLine是一个实例方法，因此jobject参数指向方法所在的对象。</p>
+</li>
+<li><p>类型映射<br>AVA中有两种类型：基本数据类型（int,float,char等）和引用类型（类，对象，数组等）。<br>JNI对基本类型和引用类型的处理是不同的。基本类型的映射是一对一的。例如JAVA中的int类型直接对应C/C++中的jint（定义在jni.h中的一个有符号 32位整数）。<br>NI把JAVA中的对象当作一个C指针传递到本地方法中，这个指针指向JVM中的内部数据结构，而内部数据结构在内存中的存储方式是不可见的。本地代码必须通过在JNIEnv中选择适当的JNI函数来操作JVM中的对象。例如，对于java.lang.String对应的JNI类型是jstring，但本地代码只能通过GetStringUTFChars这样的JNI函数来访问字符串的内容。<br>所有的JNI引用都是jobject类型，对了使用方便和类型安全，JNI定义了一个引用类型集合，集合当中的所有类型都是jobject的子类型。这些子类型和JAVA中常用的引用类型相对应。例如，jstring表示字符串，jobjectArray表示对象数组。</p>
+</li>
+</ul>
+<h3 id="访问字符串"><a href="#访问字符串" class="headerlink" title="访问字符串"></a>访问字符串</h3><p>Java_Prompt_getLine接收一个jstring类型的参数prompt，jstring类型指向JVM内部的一个字符串，和常规的C字符串类型char*不同。你不能把jstring当作一个普通的C字符串。</p>
+<ul>
+<li>转换为本地字符串<br>本地代码中，必须使用合适的JNI函数把jstring转化为C/C++字符串。JNI支持字符串在Unicode和UTF-8两种编码之间转换。Unicode字符串代表了16-bit的字符集合。UTF-8字符串使用一种向上兼容7-bit ASCII字符串的编码协议。UTF-8字符串很像NULL结尾的C字符串，在包含非ASCII字符的时候依然如此。所有的7-bitASCII字符的值都在1~127之间，这些值在UTF-8编码中保持原样。一个字节如果最高位被设置了，意味着这是一个多字节字符（16-bitUnicode值）。<br>函数Java_Prompt_getLine通过调用JNI函数GetStringUTFChars来读取字符串的内容。GetStringUTFChars可以把一个jstring指针（指向JVM内部的Unicode字符序列）转化成一个UTF-8格式的C字符串。如何你确信原始字符串数据只包含7-bit ASCII字符，你可以把转化后的字符串传递给常规的C库函数使用，如printf。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT jstring JNICALL </span><br><span class="line"></span><br><span class="line"> Java_Prompt_getLine(JNIEnv *env, jobject obj, jstring prompt)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">char</span> buf[<span class="number">128</span>];</span><br><span class="line"></span><br><span class="line">     <span class="keyword">const</span> jbyte *str;</span><br><span class="line"></span><br><span class="line">     str = (*env)-&gt;GetStringUTFChars(env, prompt, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (str == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">/* OutOfMemoryError already thrown */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"%s"</span>, str);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;ReleaseStringUTFChars(env, prompt, str);</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* We assume here that the user does not type more than</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">      * 127 characters */</span></span><br><span class="line"></span><br><span class="line">     <span class="built_in">scanf</span>(<span class="string">"%s"</span>, buf);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>不要忘记检查GetStringUTFChars。因为JVM需要为新诞生的UTF-8字符串分配内存，这个操作有可能因为内存太少而失败。失败时，GetStringUTFChars会返回NULL，并抛出一个OutOfMemoryError异常（对异常的处理在第6章）。这些JNI抛出的异常与JAVA中的异常是不同的。一个由JNI抛出的未决的异常不会改变程序执行流，因此，我们需要一个显示的return语句来跳过C函数中的剩余语句。Java_Prompt_getLine函数返回后，异常会在Prompt.main（Prompt.getLine这个发生异常的函数的调用者）中抛出，</p>
+<ul>
+<li><p>释放本地字符串资源<br>从GetStringUTFChars中获取的UTF-8字符串在本地代码中使用完毕后，要使用ReleaseStringUTFChars告诉JVM这个UTF-8字符串不会被使用了，因为这个UTF-8字符串占用的内存会被回收。</p>
+</li>
+<li><p>构造新的字符串<br>你可以通过JNI函数NewStringUTF在本地方法中创建一个新的java.lang.String字符串对象。这个新创建的字符串对象拥有一个与给定的UTF-8编码的C类型字符串内容相同的Unicode编码字符串。<br>如果一个VM不能为构造java.lang.String分配足够的内存，NewStringUTF会抛出一个OutOfMemoryError异常，并返回一个NULL。在这个例子中，我们不必检查它的返回值，因为本地方法会立即返回。如果NewStringUTF失败，OutOfMemoryError这个异常会被在Prompt.main（本地方法的调用者）中抛出。如果NeweStringUTF成功，它会返回一个JNI引用，这个引用指向新创建的java.lang.String对象。这个对象被Prompt.getLine返回然后被赋值给Prompt.main中的本地input。</p>
+</li>
+<li><p>其它JNI字符串处理函数<br>JNI支持许多操作字符串的函数，这里做个大致介绍。<br>GetStringChars和ReleaseStringChars获取以Unicode格式编码的字符串。当操作系统支持Unicode编码的字符串时，这些方法很有用。<br>UTF-8字符串以’\0’结尾，而Unicode字符串不是。如果jstring指向一个Unicode编码的字符串，为了得到这个字符串的长度，可以调用GetStringLength。如果一个jstring指向一个UTF-8编码的字符串，为了得到这个字符串的字节长度，可以调用标准C函数strlen。或者直接对jstring调用JNI函数GetStringUTFLength，而不用管jstring指向的字符串的编码格式。<br>GetStringChars和GetStringUTFChars函数中的第三个参数需要更进一步的解释：<br>const jchar <em><br>GetStringChars(JNIEnv </em>env, jstring str, jboolean *isCopy);<br>当从JNI函数GetStringChars中返回得到字符串B时，如果B是原始字符串java.lang.String的拷贝，则isCopy被赋值为JNI_TRUE。如果B和原始字符串指向的是JVM中的同一份数据，则isCopy被赋值为JNI_FALSE。当isCopy值为JNI_FALSE时，本地代码决不能修改字符串的内容，否则JVM中的原始字符串也会被修改，这会打破JAVA语言中字符串不可变的规则。<br>通常，因为你不必关心JVM是否会返回原始字符串的拷贝，你只需要为isCopy传递NULL作为参数。<br>JVM是否会通过拷贝原始Unicode字符串来生成UTF-8字符串是不可以预测的，程序员最好假设它会进行拷贝，而这个操作是花费时间和内存的。一个典型的JVM会在heap上为对象分配内存。一旦一个JAVA字符串对象的指针被传递给本地代码，GC就不会再碰这个字符串。换言之，这种情况下，JVM必须pin这个对象。可是，大量地pin一个对象是会产生内存碎片的，因为，虚拟机会随意性地来选择是复制还是直接传递指针。<br>当你不再使用一个从GetStringChars得到的字符串时，不管JVM内部是采用复制还是直接传递指针的方式，都不要忘记调用ReleaseStringChars。根据方法GetStringChars是复制还是直接返回指针，ReleaseStringChars会释放复制对象时所占的内存，或者unpin这个对象。</p>
+</li>
+<li><p>新JNI函数<br>为了提高JVM返回字符串直接指针的可能性，JDK1.2中引入了一对新函数，Get/ReleaseStringCritical。表面上，它们和Get/ReleaseStringChars函数差不多，但实际上这两个函数在使用有很大的限制。</p>
+</li>
+</ul>
+<p>使用这两个函数时，你必须两个函数中间的代码是运行在”critical region”（临界区）的，即，这两个函数中间的本地代码不能调用任何会让线程阻塞或等待JVM中的其它线程的本地函数或JNI函数。</p>
+<p>有了这些限制， JVM就可以在本地方法持有一个从GetStringCritical得到的字符串的直接指针时禁止GC。当GC被禁止时，任何线程如果触发GC的话，都会被阻塞。而Get/ReleaseStringCritical这两个函数中间的任何本地代码都不可以执行会导致阻塞的调用或者为新对象在JVM中分配内存。否则，JVM有可能死锁，想象一下这样的场景中：</p>
+<p>1、 只有当前线程触发的GC完成阻塞并释放GC时，由其它线程触发的GC才可能由阻塞中释放出来继续运行。</p>
+<p>2、 在这个过程中，当前线程会一直阻塞。因为任何阻塞性调用都需要获取一个正被其它线程持有的锁，而其它线程正等待GC。</p>
+<p>Get/ReleaseStringCritical的交迭调用是安全的，这种情况下，它们的使用必须有严格的顺序限制。而且，我们一定要记住检查是否因为内存溢出而导致它的返回值是NULL。因为JVM在执行GetStringCritical这个函数时，仍有发生数据复制的可能性，尤其是当JVM内部存储的数组不连续时，为了返回一个指向连续内存空间的指针，JVM必须复制所有数据。</p>
+<p>总之，为了避免死锁，在Get/ReleaseStringCritical之间不要调用任何JNI函数。Get/ReleaseStringCritical和 Get/ReleasePrimitiveArrayCritical这两个函数是可以的。</p>
+<p>下面代码演示了这对函数的正确用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">jchar *s1, *s2;</span><br><span class="line"></span><br><span class="line"> s1 = (*env)-&gt;GetStringCritical(env, jstr1);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (s1 == NULL) &#123;</span><br><span class="line"></span><br><span class="line">     ... <span class="comment">/* error handling */</span></span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> s2 = (*env)-&gt;GetStringCritical(env, jstr2);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (s2 == NULL) &#123;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;ReleaseStringCritical(env, jstr1, s1);</span><br><span class="line"></span><br><span class="line">     ... <span class="comment">/* error handling */</span></span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> ...     <span class="comment">/* use s1 and s2 */</span></span><br><span class="line"></span><br><span class="line"> (*env)-&gt;ReleaseStringCritical(env, jstr1, s1);</span><br><span class="line"></span><br><span class="line"> (*env)-&gt;ReleaseStringCritical(env, jstr2, s2);</span><br></pre></td></tr></table></figure>
+<p>JNI不支持Get/ReleaseStringUTFCritical，因为这样的函数在进行编码转换时很可能会促使JVM对数据进行复制，因为JVM内部表示字符串一般都是使用Unicode的。</p>
+<p>JDK1.2还一对新增的函数：GetStringRegion和GetStringUTFRegion。这对函数把字符串复制到一个预先分配的缓冲区内。Prompt.getLine这个本地方法可以用GetStringUTFRegion重新实现如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT jstring JNICALL </span><br><span class="line"></span><br><span class="line"> Java_Prompt_getLine(JNIEnv *env, jobject obj, jstring prompt)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* assume the prompt string and user input has less than 128</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">        characters */</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">char</span> outbuf[<span class="number">128</span>], inbuf[<span class="number">128</span>];</span><br><span class="line"></span><br><span class="line">     <span class="keyword">int</span> len = (*env)-&gt;GetStringLength(env, prompt);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;GetStringUTFRegion(env, prompt, <span class="number">0</span>, len, outbuf);</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"%s"</span>, outbuf);</span><br><span class="line"></span><br><span class="line">     <span class="built_in">scanf</span>(<span class="string">"%s"</span>, inbuf);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> (*env)-&gt;NewStringUTF(env, inbuf);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>GetStringUTFRegion这个函数会做越界检查，如果必要的话，会抛出异常StringIndexOutOfBoundsException。这个方法与GetStringUTFChars比较相似，不同的是，GetStringUTFRegion不做任何内存分配，不会抛出内存溢出异常。</p>
+<ul>
+<li>JNI字符串操作函数总结<br>对于小字符串来说，Get/SetStringRegion和Get/SetString-UTFRegion这两对函数是最佳选择，因为缓冲区可以被编译器提前分配，而且永远不会产生内存溢出的异常。当你需要处理一个字符串的一部分时，使用这对函数也是不错的，因为它们提供了一个开始索引和子字符串的长度值。另外，复制少量字符串的消耗是非常小的。</li>
+</ul>
+<p>在使用GetStringCritical时，必须非常小心。你必须确保在持有一个由GetStringCritical获取到的指针时，本地代码不会在JVM内部分配新对象，或者做任何其它可能导致系统死锁的阻塞性调用。</p>
+<p>下面的例子演示了使用GetStringCritical时需要注意的一些地方：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* This is not safe! */</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">const</span> <span class="keyword">char</span> *c_str = (*env)-&gt;GetStringCritical(env, j_str, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (c_str == NULL) &#123;</span><br><span class="line"></span><br><span class="line">     ... <span class="comment">/* error handling */</span></span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> fprintf(fd, <span class="string">"%s\n"</span>, c_str);</span><br><span class="line"></span><br><span class="line"> (*env)-&gt;ReleaseStringCritical(env, j_str, c_str);</span><br></pre></td></tr></table></figure>
+<p>上面代码的问题在于，GC被当前线程禁止的情况下，向一个文件写数据不一定安全。例如，另外一个线程T正在等待从文件fd中读取数据。假设操作系统的规则是fprintf会等待线程T完成所有对文件fd的数据读取操作，这种情况下就可能会产生死锁：线程T从文件fd中读取数据是需要缓冲区的，如果当前没有足够内存，线程T就会请求GC来回收一部分，GC一旦运行，就只能等到当前线程运行ReleaseStringCritical时才可以。而ReleaseStringCritical只有在fprintf调用返回时才会被调用。而fprintf这个调用，会一直等待线程T完成文件读取操作。</p>
+<h3 id="访问数组"><a href="#访问数组" class="headerlink" title="访问数组"></a>访问数组</h3><p>JNI在处理基本类型数组和对象数组上面是不同的。对象数组里面是一些指向对象实例或者其它数组的引用。<br>本地代码中访问JVM中的数组和访问JVM中的字符串有些相似。看一个简单的例子。下面的程序调用了一个本地方法sumArray，这个方法对一个int数组里面的元素进行累加：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntArray</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">sumArray</span><span class="params">(<span class="keyword">int</span>[] arr)</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         IntArray p = <span class="keyword">new</span> IntArray();</span><br><span class="line"></span><br><span class="line">         <span class="keyword">int</span> arr[] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">             arr[i] = i;</span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">int</span> sum = p.sumArray(arr);</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"sum = "</span> + sum);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">         System.loadLibrary(<span class="string">"IntArray"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>在本地代码中访问数组<br>数组的引用类型是一般是jarray或者或者jarray的子类型jintArray。就像jstring不是一个C字符串类型一样，jarray也不是一个C数组类型。所以，不要直接访问jarray。你必须使用合适的JNI函数来访问基本数组元素：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT jint JNICALL </span><br><span class="line"></span><br><span class="line"> Java_IntArray_sumArray(JNIEnv *env, jobject obj, jintArray arr)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     jint buf[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">     jint i, sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;GetIntArrayRegion(env, arr, <span class="number">0</span>, <span class="number">10</span>, buf);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">         sum += buf[i];</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> sum;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="访问字段"><a href="#访问字段" class="headerlink" title="访问字段"></a>访问字段</h3><p>JAVA支持两种field（字段），每一个对象的实例都有一个对象字段的复制；所有的对象共享一个类的静态字段。本地方法使用JNI提供的函数可以获取和修改这两种字段。先看一个从本地代码中访问对象字段的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceFieldAccess</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> String s;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">accessField</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         InstanceFieldAccess c = <span class="keyword">new</span> InstanceFieldAccess();</span><br><span class="line"></span><br><span class="line">         c.s = <span class="string">"abc"</span>;</span><br><span class="line"></span><br><span class="line">         c.accessField();</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"In Java:"</span>);</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"  c.s = \""</span> + c.s + <span class="string">"\""</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">         System.loadLibrary(<span class="string">"InstanceFieldAccess"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>InstanceFieldAccess这个类定义了一个对象字段s。main方法创建了一个对象并设置s的值，然后调用本地方法InstanceFieldAccess.accessField在本地代码中打印s的值，并把它修改为一个新值。本地方法返回后，JAVA中把这个值再打印一次，可以看出来，字段s的值已经被改变了。下面是本地方法的实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL </span><br><span class="line"></span><br><span class="line"> Java_InstanceFieldAccess_accessField(JNIEnv *env, jobject obj)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     jfieldID fid;   <span class="comment">/* store the field ID */</span></span><br><span class="line"></span><br><span class="line">     jstring jstr;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">const</span> <span class="keyword">char</span> *str;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Get a reference to obj's class */</span></span><br><span class="line"></span><br><span class="line">     jclass cls = (*env)-&gt;GetObjectClass(env, obj);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"In C:\n"</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Look for the instance field s in cls */</span></span><br><span class="line"></span><br><span class="line">     fid = (*env)-&gt;GetFieldID(env, cls, <span class="string">"s"</span>,</span><br><span class="line"></span><br><span class="line">                              <span class="string">"Ljava/lang/String;"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (fid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>; <span class="comment">/* failed to find the field */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Read the instance field s */</span></span><br><span class="line"></span><br><span class="line">     jstr = (*env)-&gt;GetObjectField(env, obj, fid);</span><br><span class="line"></span><br><span class="line">     str = (*env)-&gt;GetStringUTFChars(env, jstr, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (str == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>; <span class="comment">/* out of memory */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"  c.s = \"%s\"\n"</span>, str);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;ReleaseStringUTFChars(env, jstr, str);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Create a new string and overwrite the instance field */</span></span><br><span class="line"></span><br><span class="line">     jstr = (*env)-&gt;NewStringUTF(env, <span class="string">"123"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (jstr == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>; <span class="comment">/* out of memory */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;SetObjectField(env, obj, fid, jstr);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">运行程序，得到输出为：</span><br><span class="line"></span><br><span class="line">In C:</span><br><span class="line"></span><br><span class="line">   c.s = <span class="string">"abc"</span></span><br><span class="line"></span><br><span class="line"> In Java:</span><br><span class="line"></span><br><span class="line">   c.s = <span class="string">"123"</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>访问一个对象字段的流程<br>为了访问一个对象的实例字段，本地方法需要做两步：</li>
+</ul>
+<p>首先，通过在类引用上调用GetFieldID获取field ID（字段ID）、字段名字和字段描述符：</p>
+<p>Fid=(<em>env)-&gt;GetFieldID(env,cls,”s”,”Ljava/lang/String;”);<br>上例中的代码通过在对象引用obj上调用GetObjectClass获取到类引用。一旦获取到字段ID，你就可以把对象和字段ID作为参数来访问字段：<br>Jstr=(</em>env)-&gt;GetObjectField(env,obj,fid);<br>因为字符串和数组是特殊的对象，所以我们使用GetObjectField来访问字符串类型的实例字段。除了Get/SetObjectField，JNI还支持其它如GetIntField、SetFloatField等用来访问基本类型字段的函数。</p>
+<ul>
+<li><p>字段描述符<br>在上一节我们使用过一个特殊的C字符串“Ljava/lang/String”来代表一个JVM中的字段类型。这个字符串被称为JNI field descriptor（字段描述符）。<br>字符串的内容由字段被声明的类型决定。例如，使用“I”来表示一个int类型的字段，“F”来表示一个float类型的字段，“D”来表示一个double类型的字段，“Z”来表示一个boolean类型的字段等等。<br>像java.lang.String这样的引用类型的描述符都是以L开头，后面跟着一个JNI类描述符，以分号结尾。一个JAVA类的全名中的包名分隔符“.”被转化成“/”。因此，对于一个字段类型的字段来说，它的描述符是“Ljava/lang/String”。<br>数组的描述符中包含“]”字符，后面会跟着数组类型的描述符，如“[I”是int[]类型的字段的描述符。</p>
+</li>
+<li><p>访问静态字段<br>访问静态字段和访问实例字段相似，看下面这个InstanceFieldAccess例子的变形：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StaticFielcdAccess</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> si;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">accessField</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         StaticFieldAccess c = <span class="keyword">new</span> StaticFieldAccess();</span><br><span class="line"></span><br><span class="line">         StaticFieldAccess.si = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">         c.accessField();</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"In Java:"</span>);</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"  StaticFieldAccess.si = "</span> + si);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">         System.loadLibrary(<span class="string">"StaticFieldAccess"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>StaticFieldAccess这个类包含一个静态字段si，main方法创建了一个对象，初始化静态字段，然后调用本地方法StaticFieldAccess.accessField在本地代码中打印静态字段中的值，然后设置新的值，为了演示这个值确实被改变了，在本地方法返回后，JAVA中再次这个静态字段的值。</p>
+<p>下面是本地方法StaticFieldAccess.accessField的实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL </span><br><span class="line"></span><br><span class="line"> Java_StaticFieldAccess_accessField(JNIEnv *env, jobject obj)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     jfieldID fid;   <span class="comment">/* store the field ID */</span></span><br><span class="line"></span><br><span class="line">     jint si;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Get a reference to obj's class */</span></span><br><span class="line"></span><br><span class="line">     jclass cls = (*env)-&gt;GetObjectClass(env, obj);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"In C:\n"</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Look for the static field si in cls */</span></span><br><span class="line"></span><br><span class="line">     fid = (*env)-&gt;GetStaticFieldID(env, cls, <span class="string">"si"</span>, <span class="string">"I"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (fid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>; <span class="comment">/* field not found */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Access the static field si */</span></span><br><span class="line"></span><br><span class="line">     si = (*env)-&gt;GetStaticIntField(env, cls, fid);</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"  StaticFieldAccess.si = %d\n"</span>, si);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;SetStaticIntField(env, cls, fid, <span class="number">200</span>);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">运行程序可得到输出结果：</span><br><span class="line"></span><br><span class="line">In C:</span><br><span class="line"></span><br><span class="line">   StaticFieldAccess.si = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"> In Java:</span><br><span class="line"></span><br><span class="line">   StaticFieldAccess.si = <span class="number">200</span></span><br></pre></td></tr></table></figure></p>
+<p>访问静态字段和对象实例字段的不同点<br>访问静态字段使用GetStaticFieldID，而访问对象的实例字段使用GetFieldID，但是，这两个方法都有相同的返回值类型：jfieldID。</p>
+<h3 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a>调用方法</h3><p>JAVA中有几种不同类型的方法，实例方法必须在一个类的某个对象实例上面调用。而静态方法可以在任何一个对象实例上调用。对于构建方法的调用我们推迟到下一节。<br>JNI支持一系列完整的函数让你可以在本地代码中回调JAVA方法，下面例子演示了如何从本地代码中调用一个JAVA中的实例方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceMethodCall</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">nativeMethod</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">callback</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"In Java"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         InstanceMethodCall c = <span class="keyword">new</span> InstanceMethodCall();</span><br><span class="line"></span><br><span class="line">         c.nativeMethod();</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">         System.loadLibrary(<span class="string">"InstanceMethodCall"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面的是本地方法的实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL </span><br><span class="line"></span><br><span class="line"> Java_InstanceMethodCall_nativeMethod(JNIEnv *env, jobject obj)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     jclass cls = (*env)-&gt;GetObjectClass(env, obj);</span><br><span class="line"></span><br><span class="line">     jmethodID mid = </span><br><span class="line"></span><br><span class="line">         (*env)-&gt;GetMethodID(env, cls, <span class="string">"callback"</span>, <span class="string">"()V"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (mid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>; <span class="comment">/* method not found */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"In C\n"</span>);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;CallVoidMethod(env, obj, mid);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>调用实例方法<br>1、 本地方法首先调用JNI函数GetMethodID。这个函数在指定的类中寻找相应的方法。这个寻找过程是基于方法描述符的。如果方法不存在，GetMethodID返回NULL。这时，立即从本地方法中返回，并引发一个NoSuchMethodError错误。<br>2、 本地方法通过调用CallVoidMethod来调用返回值为void的实例方法。<br>除了CallVoidMethod这个函数以外，JNI也支持对返回值为其它类型的方法的调用。如果你调用的方法返回值类型为int，你的本地方法会使用CallIntMethod。类似地，你可以调用CallObjectMethod来调用返回值为java.lang.String、数组等对象类型的方法。<br>你也可以使用Call<type>Method系列的函数来调用接口方法。你必须从接口类型中获取方法ID，下面的代码演示了如何在java.lang.Thread实例上面调用Runnable.run方法：</type></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">jobject thd = ...; <span class="comment">/* a java.lang.Thread instance */</span></span><br><span class="line"></span><br><span class="line"> jmethodID mid;</span><br><span class="line"></span><br><span class="line"> jclass runnableIntf = </span><br><span class="line"></span><br><span class="line">     (*env)-&gt;FindClass(env, <span class="string">"java/lang/Runnable"</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (runnableIntf == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">     ... <span class="comment">/* error handling */</span></span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> mid = (*env)-&gt;GetMethodID(env, runnableIntf, <span class="string">"run"</span>, <span class="string">"()V"</span>);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (mid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">     ... <span class="comment">/* error handling */</span></span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> (*env)-&gt;CallVoidMethod(env, thd, mid);</span><br><span class="line"></span><br><span class="line"> ... <span class="comment">/* check for possible exceptions */</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>生成方法描述符<br>JNI中描述字段使用字段描述符，描述方法同样有方法描述符。一个方法描述符包含参数类型和返回值类型。参数类型出现在前面，并由一对圆括号将它们括起来，参数类型按它们在方法声明中出现的顺序被列出来，并且多个参数类型之间没有分隔符。如果一个方法没有参数，被表示为一对空圆括号。方法的返回值类型紧跟参数类型的右括号后面。<br>例如，“（I）V”表示这个方法的一个参数类型为int，并且有一个void类回值。“（）D”表示这个方法没有参数，返回值类型为double。<br>方法描述符中可能会包含类描述符，如方法native private String getLine(String);的描述符为：“(Ljava/lang/String;)Ljava/lang/String;”<br>数组类型的描述符以“[”开头，后面跟着数组元素类型的描述符。如，public static void main(String[] args);的描述符是：”([Ljava/lang/String;)V”</p>
+</li>
+<li><p>调用静态方法<br>1、 通过GetStaticMethodID获取方法ID。对应于调用实例方法时的GetMethodID。<br>2、 传入类、方法ID、参数，并调用提供静态方法调用功能的JNI系列函数中的一个，如：CallStaticVoidMethod，CallStaticBooleanMethod等。<br>调用静态方法和调用实例方法的JNI函数有一个很大的不同，前者第二个参数是类引用，后者是对象实例的引用。<br>在JAVA访问一个静态方法可以通过类，也可以通过对象实例。而JNI的规定是，在本地代码中回调JAVA中的静态方法时，必须指定一个类引用才行。下面的例子演示了这个用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StaticMethodCall</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">nativeMethod</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">callback</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"In Java"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         StaticMethodCall c = <span class="keyword">new</span> StaticMethodCall();</span><br><span class="line"></span><br><span class="line">         c.nativeMethod();</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">         System.loadLibrary(<span class="string">"StaticMethodCall"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>下面是本地方法的实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL </span><br><span class="line"></span><br><span class="line"> Java_StaticMethodCall_nativeMethod(JNIEnv *env, jobject obj)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     jclass cls = (*env)-&gt;GetObjectClass(env, obj);</span><br><span class="line"></span><br><span class="line">     jmethodID mid = </span><br><span class="line"></span><br><span class="line">         (*env)-&gt;GetStaticMethodID(env, cls, <span class="string">"callback"</span>, <span class="string">"()V"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (mid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>;  <span class="comment">/* method not found */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"In C\n"</span>);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;CallStaticVoidMethod(env, cls, mid);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>当调用CallStaticVoidMethod时，确保你传入的是类引用cls而不是对象引用obj。运行程序，输出为：</p>
+<p>In C</p>
+<p>In Java</p>
+<h3 id="调用父类的实例方法"><a href="#调用父类的实例方法" class="headerlink" title="调用父类的实例方法"></a>调用父类的实例方法</h3><p>如果一个方法被定义在父类中，在子类中被覆盖，你也可以调用这个实例方法。JNI提供了一系列完成这些功能的函数：CallNonvirtual<type>Method。为了调用一个定义在父类中的实例方法，你必须遵守下面的步骤：<br>1、 使用GetMethodID从一个指向父类的引用当中获取方法ID。<br>2、 传入对象、父类、方法ID和参数，并调用CallNonvirtualVoidMethod、CallNonvirtualBooleanMethod等一系列函数中的一个。<br>这种调用父类实例方法的情况其实很少遇到，通常在JAVA中可以很简单地做到：super.f();</type></p>
+<ul>
+<li>调用构造函数<br>JNI中，构造函数可以和实例方法一样被调用，调用方式也相似。传入“<init>”作为方法名，“V”作为返回类型。你可以通过向JNI函数NewObject传入方法来调用构造函数。下面的代码实现了与JNI函数NewString相同的功能：把存储在C缓冲区内的Unicode编码的字符序列，创建成一个java.lang.String对象：</init></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">jstring</span><br><span class="line"></span><br><span class="line"> MyNewString(JNIEnv *env, jchar *chars, jint len)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     jclass stringClass;</span><br><span class="line"></span><br><span class="line">     jmethodID cid;</span><br><span class="line"></span><br><span class="line">     jcharArray elemArr;</span><br><span class="line"></span><br><span class="line">     jstring result;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     stringClass = (*env)-&gt;FindClass(env, <span class="string">"java/lang/String"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (stringClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">/* exception thrown */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/* Get the method ID for the String(char[]) constructor */</span></span><br><span class="line"></span><br><span class="line">     cid = (*env)-&gt;GetMethodID(env, stringClass,</span><br><span class="line"></span><br><span class="line">                               <span class="string">"&lt;init&gt;"</span>, <span class="string">"([C)V"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (cid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">/* exception thrown */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Create a char[] that holds the string characters */</span></span><br><span class="line"></span><br><span class="line">     elemArr = (*env)-&gt;NewCharArray(env, len);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (elemArr == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">/* exception thrown */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;SetCharArrayRegion(env, elemArr, <span class="number">0</span>, len, chars);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Construct a java.lang.String object */</span></span><br><span class="line"></span><br><span class="line">     result = (*env)-&gt;NewObject(env, stringClass, cid, elemArr);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Free local references */</span></span><br><span class="line"></span><br><span class="line">     (*env)-&gt;DeleteLocalRef(env, elemArr);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;DeleteLocalRef(env, stringClass);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>上面这个本地方法有些复杂，需要详细解释一下。首先，FindClass返回一个java.lang.String类的引用，接着，GetMethodID返回构造函数String(char[] chars)的方法ID。我们调用NewCharArray分配一个字符数组来保存字符串元素。JNI函数NewObject调用方法ID所标识的构造函数。NewObject函数需要的参数有：类的引用、构造方法的ID、构造方法需要的参数。<br>这个例子引出了一个问题，既然我们可以利用JNI函数来实现相同的功能，为什么JNI还需要NewString这样的内置函数？原因是，内置函数的效率远高于在本地代码里面调用构造函数的API。而字符串又是最常用到的对象类型，因此需要在JNI中给予特殊的支持。<br>你也可以做到通过CallNonvirtualVoidMethod函数来调用构造函数。这种情况下，本地代码必须首先通过调用AllocObject函数创建一个未初始化的对象。上面例子中的result = (*env)-&gt;NewObject(env, stringClass, cid, elemArr);可以被如下代码替换：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">result = (*env)-&gt;AllocObject(env, stringClass);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (result) &#123;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;CallNonvirtualVoidMethod(env, result, stringClass,</span><br><span class="line"></span><br><span class="line">                                      cid, elemArr);</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* we need to check for possible exceptions */</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> ((*env)-&gt;ExceptionCheck(env)) &#123;</span><br><span class="line"></span><br><span class="line">         (*env)-&gt;DeleteLocalRef(env, result);</span><br><span class="line"></span><br><span class="line">         result = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>AllocObject创建了一个未初始化的对象，使用时一定要非常小心，确保一个对象上面，构造函数最多被调用一次。本地代码不应该在一个对象上面调用多次构造函数。有时，你可能会发现创建一个未初始化的对象然后一段时间以后再调用构造函数的方式是很有用的。尽管如此，大部分情况下，你应该使用NewObject，尽量避免使用容易出错的AllocObject/CallNonvirtualVoidMethod方法。</p>
+<ul>
+<li>缓存字段ID和方法ID使用时缓存<br>字段ID和方法ID可以在字段的值被访问或者方法被回调的时候缓存起来。下面的代码中把字段ID存储在静态变量当中，这样当本地方法被重复调用时，不必重新搜索字段ID：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL </span><br><span class="line"></span><br><span class="line"> Java_InstanceFieldAccess_accessField(JNIEnv *env, jobject obj)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> jfieldID fid_s = <span class="literal">NULL</span>; <span class="comment">/* cached field ID for s */</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     jclass cls = (*env)-&gt;GetObjectClass(env, obj);</span><br><span class="line"></span><br><span class="line">     jstring jstr;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">const</span> <span class="keyword">char</span> *str;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (fid_s == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         fid_s = (*env)-&gt;GetFieldID(env, cls, <span class="string">"s"</span>, </span><br><span class="line"></span><br><span class="line">                                    <span class="string">"Ljava/lang/String;"</span>);</span><br><span class="line"></span><br><span class="line">         <span class="keyword">if</span> (fid_s == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">             <span class="keyword">return</span>; <span class="comment">/* exception already thrown */</span></span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"In C:\n"</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     jstr = (*env)-&gt;GetObjectField(env, obj, fid_s);</span><br><span class="line"></span><br><span class="line">     str = (*env)-&gt;GetStringUTFChars(env, jstr, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (str == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>; <span class="comment">/* out of memory */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"  c.s = \"%s\"\n"</span>, str);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;ReleaseStringUTFChars(env, jstr, str);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     jstr = (*env)-&gt;NewStringUTF(env, <span class="string">"123"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (jstr == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>; <span class="comment">/* out of memory */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;SetObjectField(env, obj, fid_s, jstr);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>由于多个线程可能同时访问这个本地方法，上面方法中的代码很可能会导致混乱，其实没事，多个线程计算的ID其实是相同的。<br>同样的思想，我们也可以缓存java.lang.String的构造方法的ID：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line">jstring</span><br><span class="line"></span><br><span class="line"> MyNewString(JNIEnv *env, jchar *chars, jint len)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     jclass stringClass;</span><br><span class="line"></span><br><span class="line">     jcharArray elemArr;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> jmethodID cid = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">     jstring result;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     stringClass = (*env)-&gt;FindClass(env, <span class="string">"java/lang/String"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (stringClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">/* exception thrown */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Note that cid is a static variable */</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (cid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="comment">/* Get the method ID for the String constructor */</span></span><br><span class="line"></span><br><span class="line">         cid = (*env)-&gt;GetMethodID(env, stringClass,</span><br><span class="line"></span><br><span class="line">                                   <span class="string">"&lt;init&gt;"</span>, <span class="string">"([C)V"</span>);</span><br><span class="line"></span><br><span class="line">         <span class="keyword">if</span> (cid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">             <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">/* exception thrown */</span></span><br><span class="line"></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Create a char[] that holds the string characters */</span></span><br><span class="line"></span><br><span class="line">     elemArr = (*env)-&gt;NewCharArray(env, len);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (elemArr == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">/* exception thrown */</span></span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;SetCharArrayRegion(env, elemArr, <span class="number">0</span>, len, chars);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Construct a java.lang.String object */</span></span><br><span class="line"></span><br><span class="line">     result = (*env)-&gt;NewObject(env, stringClass, cid, elemArr);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Free local references */</span></span><br><span class="line"></span><br><span class="line">     (*env)-&gt;DeleteLocalRef(env, elemArr);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;DeleteLocalRef(env, stringClass);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line">``` </span><br><span class="line">当MyNewString方法第一次被调用时，我们计算java.lang.String的构造方法的ID，并存储在静态变量cid中。</span><br><span class="line"></span><br><span class="line">- 类的静态初始化过程中缓存字段和方法ID</span><br><span class="line">我们在使用时缓存字段和方法的ID的话，每次本地方法被调用时都要检查ID是否已经被缓存。许多情况下，在字段ID和方法ID被使用前就初始化是很方便的。VM在调用一个类的方法和字段之前，都会执行类的静态初始化过程，所以在静态初始化该类的过程中计算并缓存字段ID和方法ID是个不错的选择。</span><br><span class="line">例如，为了缓存InstanceMethodCall.callback的方法ID，我们引入了一个新的本地方法initIDs，这个方法在InstanceMethodCall的静态初始化过程中被调用。代码如下：</span><br><span class="line"></span><br><span class="line">``` C</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InstanceMethodCall</span> &#123;</span></span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> native <span class="keyword">void</span> <span class="title">initIDs</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> native <span class="keyword">void</span> <span class="title">nativeMethod</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">callback</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         System.out.println(<span class="string">"In Java"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         InstanceMethodCall c = <span class="keyword">new</span> InstanceMethodCall();</span><br><span class="line"></span><br><span class="line">         c.nativeMethod();</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">         System.loadLibrary(<span class="string">"InstanceMethodCall"</span>);</span><br><span class="line"></span><br><span class="line">         initIDs();</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">与<span class="number">4.2</span>节中的代码相比，上面这段代码多了两行，initIDs方法简单地计算并缓存方法ID：</span><br><span class="line"></span><br><span class="line">jmethodID MID_InstanceMethodCall_callback;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> JNIEXPORT <span class="keyword">void</span> JNICALL </span><br><span class="line"></span><br><span class="line"> Java_InstanceMethodCall_initIDs(JNIEnv *env, jclass cls)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     MID_InstanceMethodCall_callback =</span><br><span class="line"></span><br><span class="line">         (*env)-&gt;GetMethodID(env, cls, <span class="string">"callback"</span>, <span class="string">"()V"</span>);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">VM进行静态初始化时在调用任何方法前调用initIDs，这样方法ID就被缓存了全局变量中，本地方法的实现就不必再进行ID计算：</span><br><span class="line"></span><br><span class="line">JNIEXPORT <span class="keyword">void</span> JNICALL </span><br><span class="line"></span><br><span class="line"> Java_InstanceMethodCall_nativeMethod(JNIEnv *env, jobject obj)</span><br><span class="line"></span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"In C\n"</span>);</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;CallVoidMethod(env, obj,</span><br><span class="line"></span><br><span class="line">                            MID_InstanceMethodCall_callback);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="把一个JVM嵌入到本地程序中"><a href="#把一个JVM嵌入到本地程序中" class="headerlink" title="把一个JVM嵌入到本地程序中"></a>把一个JVM嵌入到本地程序中</h3><p>一个JVM可以看作就是一个本地库。本地程序可以链接这个库，然后通过“调用接口”（invocation interface）来加载JVM。实际上，JDK中标准的启动器也就是一段简单的链接了JVM的C代码。启动器解析命令、加载JVM、并通过“调用接口”（invocation interface）运行JAVA程序。<br>创建JVM<br>我们用下面这段C代码来加载一个JVM并调用Prog.main方法来演示如何使用调用接口。</p>
+<p>public class Prog {</p>
+<pre><code>public static void main(String[] args) {
+
+     System.out.println(&quot;Hello World &quot; + args[0]);
+
+}
+</code></pre><p> }<br>下面是启动器<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">define</span> PATH_SEPARATOR <span class="meta-string">';'</span> <span class="comment">/* define it to be ':' on Solaris */</span></span></span><br><span class="line"></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">define</span> USER_CLASSPATH <span class="meta-string">"."</span> <span class="comment">/* where Prog.class is */</span></span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> main() &#123;</span><br><span class="line"></span><br><span class="line">     JNIEnv *env;</span><br><span class="line"></span><br><span class="line">     JavaVM *jvm;</span><br><span class="line"></span><br><span class="line">     jint res;</span><br><span class="line"></span><br><span class="line">     jclass cls;</span><br><span class="line"></span><br><span class="line">     jmethodID mid;</span><br><span class="line"></span><br><span class="line">     jstring jstr;</span><br><span class="line"></span><br><span class="line">     jclass stringClass;</span><br><span class="line"></span><br><span class="line">     jobjectArray args;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">ifdef</span> JNI_VERSION_1_2</span></span><br><span class="line"></span><br><span class="line">     JavaVMInitArgs vm_args;</span><br><span class="line"></span><br><span class="line">     JavaVMOption options[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">     options[<span class="number">0</span>].optionString =</span><br><span class="line"></span><br><span class="line">         <span class="string">"-Djava.class.path="</span> USER_CLASSPATH;</span><br><span class="line"></span><br><span class="line">     vm_args.version = <span class="number">0x00010002</span>;</span><br><span class="line"></span><br><span class="line">     vm_args.options = options;</span><br><span class="line"></span><br><span class="line">     vm_args.nOptions = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">     vm_args.ignoreUnrecognized = JNI_TRUE;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Create the Java VM */</span></span><br><span class="line"></span><br><span class="line">     res = JNI_CreateJavaVM(&amp;jvm, (<span class="keyword">void</span>**)&amp;env, &amp;vm_args);</span><br><span class="line"></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"></span><br><span class="line">     JDK1_1InitArgs vm_args;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">char</span> classpath[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line">     vm_args.version = <span class="number">0x00010001</span>;</span><br><span class="line"></span><br><span class="line">     JNI_GetDefaultJavaVMInitArgs(&amp;vm_args);</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Append USER_CLASSPATH to the default system class path */</span></span><br><span class="line"></span><br><span class="line">     <span class="built_in">sprintf</span>(classpath, <span class="string">"%s%c%s"</span>,</span><br><span class="line"></span><br><span class="line">             vm_args.classpath, PATH_SEPARATOR, USER_CLASSPATH);</span><br><span class="line"></span><br><span class="line">     vm_args.classpath = classpath;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* Create the Java VM */</span></span><br><span class="line"></span><br><span class="line">     res = JNI_CreateJavaVM(&amp;jvm, &amp;env, &amp;vm_args);</span><br><span class="line"></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* JNI_VERSION_1_2 */</span></span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (res &lt; <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Can't create Java VM\n"</span>);</span><br><span class="line"></span><br><span class="line">         <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     cls = (*env)-&gt;FindClass(env, <span class="string">"Prog"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (cls == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">goto</span> destroy;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">     mid = (*env)-&gt;GetStaticMethodID(env, cls, <span class="string">"main"</span>,</span><br><span class="line"></span><br><span class="line">                                     <span class="string">"([Ljava/lang/String;)V"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (mid == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">goto</span> destroy;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     jstr = (*env)-&gt;NewStringUTF(env, <span class="string">" from C!"</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (jstr == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">goto</span> destroy;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     stringClass = (*env)-&gt;FindClass(env, <span class="string">"java/lang/String"</span>);</span><br><span class="line"></span><br><span class="line">     args = (*env)-&gt;NewObjectArray(env, <span class="number">1</span>, stringClass, jstr);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (args == <span class="literal">NULL</span>) &#123;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">goto</span> destroy;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     (*env)-&gt;CallStaticVoidMethod(env, cls, mid, args);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> destroy:</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> ((*env)-&gt;ExceptionOccurred(env)) &#123;</span><br><span class="line"></span><br><span class="line">         (*env)-&gt;ExceptionDescribe(env);</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     (*jvm)-&gt;DestroyJavaVM(jvm);</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码有条件地编译一个初始化JDK1_1InitArgs这个structure。这个structure是JDK1.1下特有的，尽管JDK1.2也会支持，但JDK1.2引入了一个更通用的叫作JavaVMInitArgs的VM初始化structure。</p>
+<p>常量JNI_VERSION_1_2在JDK1.2下定义，JDK1.1下是没有的。</p>
+<p>当目标平台是1.1时，C代码首先调用JNI_GetDefaultJavaVMInitArgs来获得默认的VM设置。这个调用会返回heap size、stack size、默认类路径等信息，并把这些信息存放在参数vm_args中。然后我们把Prog.class所在的目录附加到vm_args.classpath中。</p>
+<p>当平台目标是1.2时，C代码创建了一个JavaVMInitArgs的structure。VM的初始化参数被存放在一个JavaVMOption数组中。</p>
+<p>设置完VM初始化structure后，C程序调用JNI_CreateJavaVM来加载和初始化JVM，传入的前两个参数：</p>
+<p>1、 接口指针jvm，指向新创建的JVM。</p>
+<p>2、 当前线程的JNIEnv接口指针env。本地代码通过env指针访问JNI函数。</p>
+<p>当函数JNI_CreateJavaVM函数成功返回时，当前本地线程已经把自己的控制权交给JVM。这时，它会就像一个本地方法一样运行。以后就可以通过JNI函数来启动Prog.main方法。</p>
+<p>接着，程序调用DestroyJavaVM函数来unloadJVM。不幸的是，在JDK1.1和JDK1.2中你不能unloadJVM，它会一直返回一个错误码。</p>
+<p>运行上面的程序，产生如下输出：</p>
+<p>Hello World from C!</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/04/second/" rel="next" title="数据类型向下转换(强制类型转换)原理">
+                <i class="fa fa-chevron-left"></i> 数据类型向下转换(强制类型转换)原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/05/first/" rel="prev" title=".lib和.dll的区别">
+                .lib和.dll的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JNI使用范围"><span class="nav-number">1.</span> <span class="nav-text">JNI使用范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hello-world"><span class="nav-number">2.</span> <span class="nav-text">hello world</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本类型、字符串、数组"><span class="nav-number">3.</span> <span class="nav-text">基本类型、字符串、数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问字符串"><span class="nav-number">4.</span> <span class="nav-text">访问字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问数组"><span class="nav-number">5.</span> <span class="nav-text">访问数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问字段"><span class="nav-number">6.</span> <span class="nav-text">访问字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用方法"><span class="nav-number">7.</span> <span class="nav-text">调用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用父类的实例方法"><span class="nav-number">8.</span> <span class="nav-text">调用父类的实例方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把一个JVM嵌入到本地程序中"><span class="nav-number">9.</span> <span class="nav-text">把一个JVM嵌入到本地程序中</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/06/04/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1151 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="理解,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="01背包问题蛮力算法求解1、根据物品个数n，我们都知道每一个物品都有放与不放两种情况，那么就有2的n次方中情况，那么我们就一种一种情况进行比较，那么首先我们要做一个b[n]的数组，这个数组每次都要根据情况算法算出一种情况保存在b[n]数组中，得到情况数组后，我们进行装背包和价格累加运算，最后算出来后看这种情况装的物品重量是否大于背包的总重量，如果大于则不符合，直接淘汰，如果小于等于背包的总重量，那">
+<meta name="keywords" content="理解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01背包">
+<meta property="og:url" content="https://youandme66.github.io/2016/12/30/second/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="01背包问题蛮力算法求解1、根据物品个数n，我们都知道每一个物品都有放与不放两种情况，那么就有2的n次方中情况，那么我们就一种一种情况进行比较，那么首先我们要做一个b[n]的数组，这个数组每次都要根据情况算法算出一种情况保存在b[n]数组中，得到情况数组后，我们进行装背包和价格累加运算，最后算出来后看这种情况装的物品重量是否大于背包的总重量，如果大于则不符合，直接淘汰，如果小于等于背包的总重量，那">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-12-30T07:45:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="01背包">
+<meta name="twitter:description" content="01背包问题蛮力算法求解1、根据物品个数n，我们都知道每一个物品都有放与不放两种情况，那么就有2的n次方中情况，那么我们就一种一种情况进行比较，那么首先我们要做一个b[n]的数组，这个数组每次都要根据情况算法算出一种情况保存在b[n]数组中，得到情况数组后，我们进行装背包和价格累加运算，最后算出来后看这种情况装的物品重量是否大于背包的总重量，如果大于则不符合，直接淘汰，如果小于等于背包的总重量，那">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2016/12/30/second/">
+
+
+
+
+
+  <title> 01背包 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2016/12/30/second/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                01背包
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-30T00:00:00+08:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2016/12/30/second/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2016/12/30/second/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/30/second/" class="leancloud_visitors" data-flag-title="01背包">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="01背包问题蛮力算法求解"><a href="#01背包问题蛮力算法求解" class="headerlink" title="01背包问题蛮力算法求解"></a>01背包问题蛮力算法求解</h3><p>1、根据物品个数n，我们都知道每一个物品都有放与不放两种情况，那么就有2的n次方中情况，那么我们就一种一种情况进行比较，那么首先我们要做一个b[n]的数组，这个数组每次都要根据情况算法算出一种情况保存在b[n]数组中，得到情况数组后，我们进行装背包和价格累加运算，最后算出来后看这种情况装的物品重量是否大于背包的总重量，如果大于则不符合，直接淘汰，如果小于等于背包的总重量，那么进行与之前可以装背包的物品价值进行比较，如果当前情况的价值小于之前的价值，直接淘汰，如果当前情况的价值大于之前的价值，保存此刻的价值，并把情况数组赋值给最终情况数组，作为装包的物品记录。那么最后输出总价值，和装入的物品就是根据计算后的总价值和最终的情况数组。这是我对蛮力算法求解这个问题的理解。<br>2、剖析代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">conversion</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> b[MAX])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;MAX;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		b[i] = n%<span class="number">2</span>;</span><br><span class="line">		n = n/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(n==<span class="number">0</span>)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码很经典，符合场景为:比如你每一个事件都有放与不放，走与不走两种情况，那么你有m个事件，你就有pow(2,m)中情况，那么要怎么列举出来呢，难道要11,00,10,01写出来吗？肯定不会。那么这个方法，就是你把是第n种情况的n传进去，那么他就会给你计算出一个一维数组，那么这个一维数组就是你m个事件中的一种情况。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">force</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,c,b[MAX],temp[MAX];</span><br><span class="line">	<span class="keyword">int</span> tw,maxv,v[MAX],temp_w,temp_v;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入物品个数 n:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);   <span class="comment">//n为个数 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入背包重量 c:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;tw);    <span class="comment">//tw为重量 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"\t\t\t输入第 %d 个物品的重量,价格"</span>,i+<span class="number">1</span>);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"\n\t\t\t"</span>);</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;w[i],&amp;v[i]); <span class="comment">//w数组为重量，v为价格 </span></span><br><span class="line">		&#125;</span><br><span class="line">	maxv = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="built_in">pow</span>(<span class="number">2</span>,n);i++) </span><br><span class="line">		&#123;</span><br><span class="line">        	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       		&#123;</span><br><span class="line">              	b[j] = <span class="number">0</span>;</span><br><span class="line">       		&#125;</span><br><span class="line">       		conversion(i,b);</span><br><span class="line">       		temp_v = <span class="number">0</span>;</span><br><span class="line">       		temp_w = <span class="number">0</span>;</span><br><span class="line">    		<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       		&#123;</span><br><span class="line">       			<span class="keyword">if</span> (b[j]==<span class="number">1</span>)</span><br><span class="line">       			&#123;</span><br><span class="line">                 	temp_w = temp_w+w[j];</span><br><span class="line">                 	temp_v = temp_v + v[j];</span><br><span class="line">       			&#125;</span><br><span class="line">       		&#125;</span><br><span class="line">       		<span class="keyword">if</span> ((temp_w &lt;= tw)&amp;&amp;(temp_v&gt;maxv))</span><br><span class="line">       		&#123;</span><br><span class="line">             	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">             	&#123;</span><br><span class="line">              		temp[j] = <span class="number">0</span>;</span><br><span class="line">             	&#125;</span><br><span class="line">        		maxv = temp_v;</span><br><span class="line">       			<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       			&#123;</span><br><span class="line">        			temp[j] = b[j];</span><br><span class="line">       			&#125;</span><br><span class="line">       		&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t此背包能装的最大价值:%d\n"</span>,maxv);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t选择的物品有:\n"</span>);</span><br><span class="line">	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">	&#123;</span><br><span class="line">    	<span class="keyword">if</span>(temp[j])</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"\t\t\t第%d个物品，重量 为%d，价值为%d\n"</span>, j+<span class="number">1</span>,w[j],v[j]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后把每一种情况都算一遍，看在满足背包容量的情况下是否有最大价值，这里面隐含了一个冒泡排序，只是有点分散了，不太明显，但还是有的。最后maxv，temp放的是最大价值和最终放的物品，temp一维数组中，标识位为1对应的下表值就是第几个物品已装入。</p>
+<h3 id="01背包问题递归算法求解"><a href="#01背包问题递归算法求解" class="headerlink" title="01背包问题递归算法求解"></a>01背包问题递归算法求解</h3><p>1、01背包问题，是当背包装入物品的重量不得大于背包的容量，所以递归的边界分为两种，一种就是装入的物品重量大于背包的容量则返回，当装完当前的物品则返回。分为两种递归，一种是放入此物品递归，另一种是不放入此物品递归，而且当递归返回的时候要判断两种装入和不装入递归返回的大小，那么当返回装入此物品的时候，就要加上这个物品的价值。在装入这个物品时候，设置一个标识位，表示这个物品装入了。最终按照这个标志位来输出放入的物品。<br>2、剖析代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Make</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> res; </span><br><span class="line">	<span class="keyword">if</span>(i==<span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(j&gt;=w[i]&amp;&amp;Make(i<span class="number">-1</span>,j)&lt;Make(i<span class="number">-1</span>,j-w[i])+p[i])&#123;</span><br><span class="line">		x[i]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">return</span> Make(i<span class="number">-1</span>,j-w[i])+p[i];</span><br><span class="line">	 &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	 	x[i]=<span class="number">0</span>;</span><br><span class="line">	 	<span class="keyword">return</span> Make(i<span class="number">-1</span>,j);</span><br><span class="line">	 &#125;       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为什么是i==-1，因为我用一维数组存的物品和重量，那么最终装完，要不是到下标值为4或者为0，所以如果采用从0开始，结束的应该是i==5，如果采用从4开始，结束的应该是i==-1，都可以用。第二个else if是第二个结束条件，每次都要判断当前背包的重量是否能装入这个物品，如果能还要判断当装入了这个物品和没装入这个物品两者的价值比较，如果装入的价值大于没装入的肯定要装进去咯。这里可能你们会有点疑问，装入后肯定价值要大一些呀，其实这里的装入，是最终的装入，这里有点不好说清楚，就是你已经递归完成后，其实所有的情况的总价值都算出来，倒过来在看装入这个物品的总价值和没装入这个物品的总价值进行对比。就是说向下的递归条件还有加入这个物品的总价值进行比较，来决定他放不放。<br>传入的就是物品个数和背包重量，因为这两个是结束条件，而另一个隐含的结束条件就是总价值大小。</p>
+<h3 id="01背包问题动态规划算法求解"><a href="#01背包问题动态规划算法求解" class="headerlink" title="01背包问题动态规划算法求解"></a>01背包问题动态规划算法求解</h3><p>动态规划建立递推关系，建立二维数组，二维数组的行容量为物品的重量加1，而列容量为物品的个数。那么在第一个物品装包的时候我们向二维数组的第一行写入在背包总容量之下的每一个容量所能装入的物品产生的价值。第一个装入的物品可以作为初始化递推条件。在进行下面物品递推的过程中，我们以上一行作为基础，进行递推。那么在进行下一行的最大价值结算要结合上一行的价值的大小进行比较或者相加。得出此时的最大价值。以此类推最终形成整个二维表。然后从二维表的最右端的最下面与它的上一行进行比较如果他大于上一行就进行装包，如果不大于则往上移进行比较，若他大于他的上一行就装包。最终计算出装包的所有物品。<br>这个我认为是最有思想的了，这个要把模型建立起来，如果没有模型不好想，因为我一开始一直在一维空间里面想，就算开始进入了二维空间，一会又乱了，可能我画图会画顺推的图，代码写逆推的。<br>就拿背包容量为10，第一个物品重量2,6第二个2,3，第三个6,5，第四个5,4，第五个4，6.</p>
+<table>
+<thead>
+<tr>
+<th>物品重量</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2,6</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>2,3</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+</tr>
+<tr>
+<td>6,5</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>11</td>
+<td>11</td>
+<td>14</td>
+</tr>
+<tr>
+<td>5,4</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>13</td>
+<td>14</td>
+</tr>
+<tr>
+<td>4,6</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>12</td>
+<td>12</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p>这就是整个分析图。<br>我来说说怎么分析的吧！<br>首先二维数组的横下标表示当前背包当前的容量，那么在当前容量下到底能放什么呢？就要根据这个二维表来算，怎么算呢？<br>我按行来分析吧！我们要先初始化一个物品作为二维表的第一行，随便拿一个，比如说我第一行放的是2,6这个物品，那么当背包容量为0时放不下，价值就为零，1时放不下价值为0,2时放得下了那么价值就变为6了是不是。也就是说你给我背包容量大于2的我都能放得下这个物品，价值为6.<br>这时候来了第二个物品，我们还是先按照第一个物品来算，背包容量为0时，放不下，最大价值为0,1时还是放不下，2时可以放下了，但是你要考虑最大价值，现在有两个物品，并且背包容量只有2,那么这时候的步骤应该是这样的你要用此刻的背包容量减去你当前要装的物品剩下的容量对应的价值是多少，然后加上当前物品的价值，然后再与上面的背包容量为2所装的东西进行比较，发现之前的背包容量为2的价值比你现在还要大，所以你这个没必要装。<br>以此类推，最终得到这个二维表，发现最终得到的最大价值为15。<br>到这还没结束，你还要把装进去的物品推出来。先比较最后一个物品是否装进去了，如果最后一行的最后一列大于倒数第二行的最后一列说明已经装进去了，如果没有那么找倒数第二行的最大值与上一个比较，找到之后用10减去4得到6，那么找到上一行的第六列再与上一行的第六列进行比较，如果相等再往上一行比较，知道找到变化的一行，以次类推找出所有装入背包的物品。<br>下面给出逆推算法<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dynamic</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,cw,c,sw,sp,a[MAX],b[MAX],g[MAX][<span class="number">10</span>*MAX];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入物品个数 n:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入背包重量 c:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;c);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t\t\t输入第 %d个物品的重量,价值:"</span>,i);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n\t\t\t"</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;b[i],&amp;a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=c;j++)</span><br><span class="line">		<span class="keyword">if</span>(j&gt;=b[<span class="number">1</span>])</span><br><span class="line">			g[<span class="number">1</span>][j]=a[<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			g[<span class="number">1</span>][j]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;=n; i++) </span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt;= c; j++)</span><br><span class="line">			<span class="keyword">if</span>(j&gt;=b[i]&amp;&amp;g[i<span class="number">-1</span>][j]&lt;g[i<span class="number">-1</span>][j-b[i]]+a[i]) </span><br><span class="line">				g[i][j]=g[i<span class="number">-1</span>][j-b[i]]+a[i];           </span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				g[i][j]=g[i<span class="number">-1</span>][j]; </span><br><span class="line">    cw=c;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\t\t\tc=%d\n"</span>,c );</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\t\t\t选择的物品有:\n"</span>);</span><br><span class="line">    <span class="keyword">for</span>(sp=<span class="number">0</span>,sw=<span class="number">0</span>,i=n;i&gt;=<span class="number">2</span>;i--)</span><br><span class="line">    	<span class="keyword">if</span>(g[i][cw]&gt;g[i<span class="number">-1</span>][cw])&#123;</span><br><span class="line">    		cw-=b[i];</span><br><span class="line">    		sw+=b[i];</span><br><span class="line">    		sp+=a[i];</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"\t\t\t第%2d个物品，重量为 %3d 价格为%3d\n"</span>,i,b[i],a[i]);</span><br><span class="line">    	&#125;</span><br><span class="line">    <span class="keyword">if</span>(g[n][c]-sp==a[i])&#123;</span><br><span class="line">    	sw+=b[i];</span><br><span class="line">    	sp+=a[i];</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"\t\t\t第%2d个物品，重量为%3d 价格为 %3d\n"</span>,<span class="number">1</span>,b[<span class="number">1</span>],a[<span class="number">1</span>] );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\t\t\t重量=%d , 价格=%d\n"</span>,sw,sp );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个就是实现01背包的三种算法。<br>总结:<br>蛮力算法，我认为就是把所有的情况都列出来，在列出情况之前没有限制条件，然后再根据每种情况，做实际的运算，然后根据限制条件判断此种情况是否符合当前问题的解决方案。<br>递归算法，我认为递归算法首先要找出递归的边界作为你递归的终结条件，而且这个条件的变量要作为递归式的形参，因为在往下传的时候肯定要改变这个条件，那么唯一能够动态改变值并且能够作为条件的就是形参。所以我们要把关于递归条件的放入形参。然后再设计递归式。<br>动态规划算法：这个我认为是最能理解的算法，根据背包容量和物品个数建立模型，然后根据模型进行推论，然后再根据推论设计算法。最终解决问题。<br>关于时间复杂度和空间复杂度，根据运行的时间结果，蛮力是最消耗时间的，而动态规划是时间消耗最短的。而至于递归，我感觉他利用了栈先进后出，消耗的空间要大一些。<br>另外，根据这些算法，我感觉解决一个问题最难的就是推导，比如说动态规划一开始就要给这个问题，建立模型，那么在抉择哪个模型适合是很困难的。<br>附录:完整代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> MAX 100 </span></span><br><span class="line">LARGE_INTEGER nFreq;                  <span class="comment">//传出参数 </span></span><br><span class="line">LARGE_INTEGER nBeginTime;             <span class="comment">//传出起始时间 </span></span><br><span class="line">LARGE_INTEGER nEndTime;               <span class="comment">//传出结束时间 </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> p[MAX]=&#123;<span class="number">0</span>&#125;,w[MAX]=&#123;<span class="number">0</span>&#125;,x[MAX]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Make</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> res; </span><br><span class="line">	<span class="keyword">if</span>(i==<span class="number">-1</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(j&gt;=w[i]&amp;&amp;Make(i<span class="number">-1</span>,j)&lt;Make(i<span class="number">-1</span>,j-w[i])+p[i])&#123;</span><br><span class="line">		x[i]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">return</span> Make(i<span class="number">-1</span>,j-w[i])+p[i];</span><br><span class="line">	 &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	 	x[i]=<span class="number">0</span>;</span><br><span class="line">	 	<span class="keyword">return</span> Make(i<span class="number">-1</span>,j);</span><br><span class="line">	 &#125;       </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">conversion</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> b[MAX])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;MAX;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		b[i] = n%<span class="number">2</span>;</span><br><span class="line">		n = n/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(n==<span class="number">0</span>)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getNum</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	srand((<span class="keyword">unsigned</span>)time(<span class="literal">NULL</span>));</span><br><span class="line">	<span class="keyword">int</span> number=rand()%(i+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> number;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">force</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,c,b[MAX],temp[MAX];</span><br><span class="line">	<span class="keyword">int</span> tw,maxv,v[MAX],temp_w,temp_v;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入物品个数 n:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);   <span class="comment">//n为个数 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入背包重量 c:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;tw);    <span class="comment">//tw为重量 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"\t\t\t输入第 %d 个物品的重量,价格"</span>,i+<span class="number">1</span>);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"\n\t\t\t"</span>);</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;w[i],&amp;v[i]); <span class="comment">//w数组为重量，v为价格 </span></span><br><span class="line">		&#125;</span><br><span class="line">	maxv = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="built_in">pow</span>(<span class="number">2</span>,n);i++) </span><br><span class="line">		&#123;</span><br><span class="line">        	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       		&#123;</span><br><span class="line">              	b[j] = <span class="number">0</span>;</span><br><span class="line">       		&#125;</span><br><span class="line">       		conversion(i,b);</span><br><span class="line">       		temp_v = <span class="number">0</span>;</span><br><span class="line">       		temp_w = <span class="number">0</span>;</span><br><span class="line">    		<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       		&#123;</span><br><span class="line">       			<span class="keyword">if</span> (b[j]==<span class="number">1</span>)</span><br><span class="line">       			&#123;</span><br><span class="line">                 	temp_w = temp_w+w[j];</span><br><span class="line">                 	temp_v = temp_v + v[j];</span><br><span class="line">       			&#125;</span><br><span class="line">       		&#125;</span><br><span class="line">       		<span class="keyword">if</span> ((temp_w &lt;= tw)&amp;&amp;(temp_v&gt;maxv))</span><br><span class="line">       		&#123;</span><br><span class="line">             	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">             	&#123;</span><br><span class="line">              		temp[j] = <span class="number">0</span>;</span><br><span class="line">             	&#125;</span><br><span class="line">        		maxv = temp_v;</span><br><span class="line">       			<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       			&#123;</span><br><span class="line">        			temp[j] = b[j];</span><br><span class="line">       			&#125;</span><br><span class="line">       		&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t此背包能装的最大价值:%d\n"</span>,maxv);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t选择的物品有:\n"</span>);</span><br><span class="line">	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">	&#123;</span><br><span class="line">    	<span class="keyword">if</span>(temp[j])</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"\t\t\t第%d个物品，重量 为%d，价值为%d\n"</span>, j+<span class="number">1</span>,w[j],v[j]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recursive</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,c,cw,sw,sp;   </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入物品的个数 n:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入背包的重量 c:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;c);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t\t\t输入第%d个物品的重量，价格"</span>,i+<span class="number">1</span> );</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n\t\t\t"</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;w[i],&amp;p[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> maxNum=Make(n<span class="number">-1</span>,c);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t此背包能装的最大价值:%d\n"</span>,maxNum);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t选择的物品有:\n"</span>);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(x[i]==<span class="number">1</span>)&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"\t\t\t第%d个物品，重量为%d,价格为%d\n"</span>,i+<span class="number">1</span>,w[i],p[i]);</span><br><span class="line">			&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dynamic</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,cw,c,sw,sp,a[MAX],b[MAX],g[MAX][<span class="number">10</span>*MAX];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入物品个数 n:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t\t\t输入背包重量 c:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;c);</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t\t\t输入第 %d个物品的重量,价值:"</span>,i);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n\t\t\t"</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;b[i],&amp;a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=c;j++)</span><br><span class="line">		<span class="keyword">if</span>(j&gt;=b[<span class="number">1</span>])</span><br><span class="line">			g[<span class="number">1</span>][j]=a[<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			g[<span class="number">1</span>][j]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;=n; i++) </span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt;= c; j++)</span><br><span class="line">			<span class="keyword">if</span>(j&gt;=b[i]&amp;&amp;g[i<span class="number">-1</span>][j]&lt;g[i<span class="number">-1</span>][j-b[i]]+a[i]) </span><br><span class="line">				g[i][j]=g[i<span class="number">-1</span>][j-b[i]]+a[i];           </span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				g[i][j]=g[i<span class="number">-1</span>][j]; </span><br><span class="line">    cw=c;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\t\t\tc=%d\n"</span>,c );</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\t\t\t选择的物品有:\n"</span>);</span><br><span class="line">    <span class="keyword">for</span>(sp=<span class="number">0</span>,sw=<span class="number">0</span>,i=n;i&gt;=<span class="number">2</span>;i--)</span><br><span class="line">    	<span class="keyword">if</span>(g[i][cw]&gt;g[i<span class="number">-1</span>][cw])&#123;</span><br><span class="line">    		cw-=b[i];</span><br><span class="line">    		sw+=b[i];</span><br><span class="line">    		sp+=a[i];</span><br><span class="line">    		<span class="built_in">printf</span>(<span class="string">"\t\t\t第%2d个物品，重量为 %3d 价格为%3d\n"</span>,i,b[i],a[i]);</span><br><span class="line">    	&#125;</span><br><span class="line">    <span class="keyword">if</span>(g[n][c]-sp==a[i])&#123;</span><br><span class="line">    	sw+=b[i];</span><br><span class="line">    	sp+=a[i];</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"\t\t\t第%2d个物品，重量为%3d 价格为 %3d\n"</span>,<span class="number">1</span>,b[<span class="number">1</span>],a[<span class="number">1</span>] );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\t\t\t重量=%d , 价格=%d\n"</span>,sw,sp );</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">compareTime</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryPerformanceFrequency(&amp;nFreq);    <span class="comment">//传出精度 </span></span><br><span class="line">	<span class="keyword">double</span> cost1_time=<span class="number">0.0</span>,cost2_time=<span class="number">0.0</span>,cost3_time=<span class="number">0.0</span>;</span><br><span class="line">	<span class="keyword">int</span> i,j,k,tw;</span><br><span class="line">    <span class="keyword">int</span>	b[MAX],temp[MAX];</span><br><span class="line">	<span class="keyword">int</span> temp_w,temp_v,maxv;</span><br><span class="line">	<span class="keyword">int</span> g[MAX][<span class="number">10</span>*MAX];</span><br><span class="line">	<span class="keyword">int</span> cw;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"|-------------------------------------------------------------------------|\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\t|物品个数|背包重量|蛮力算法\t|递归算法\t|动态规划算法|\n"</span>);</span><br><span class="line">	<span class="keyword">for</span>(n=<span class="number">5</span>;n&lt;=<span class="number">100</span>;n+=<span class="number">5</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(tw=<span class="number">20</span>;tw&lt;=<span class="number">400</span>;tw+=<span class="number">20</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;n;k++)&#123;</span><br><span class="line">				p[k]=getNum(tw/<span class="number">2</span>);</span><br><span class="line">				w[k]=getNum(tw/<span class="number">2</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			QueryPerformanceCounter(&amp;nBeginTime);        <span class="comment">//开始数据 </span></span><br><span class="line">			maxv=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="built_in">pow</span>(<span class="number">2</span>,n);i++) </span><br><span class="line">		   &#123;</span><br><span class="line">        	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       		&#123;</span><br><span class="line">              	b[j] = <span class="number">0</span>;</span><br><span class="line">       		&#125;</span><br><span class="line">       		conversion(i,b);</span><br><span class="line">       		temp_v = <span class="number">0</span>;</span><br><span class="line">       		temp_w = <span class="number">0</span>;</span><br><span class="line">    		<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       		&#123;</span><br><span class="line">       			<span class="keyword">if</span> (b[j]==<span class="number">1</span>)</span><br><span class="line">       			&#123;</span><br><span class="line">                 	temp_w = temp_w+w[j];</span><br><span class="line">                 	temp_v = temp_v + p[j];</span><br><span class="line">       			&#125;</span><br><span class="line">       		&#125;</span><br><span class="line">       		<span class="keyword">if</span> ((temp_w &lt;= tw)&amp;&amp;(temp_v&gt;maxv))</span><br><span class="line">       		&#123;</span><br><span class="line">             	<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">             	&#123;</span><br><span class="line">              		temp[j] = <span class="number">0</span>;</span><br><span class="line">             	&#125;</span><br><span class="line">        		maxv = temp_v;</span><br><span class="line">       			<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">       			&#123;</span><br><span class="line">        			temp[j] = b[j];</span><br><span class="line">       			&#125;</span><br><span class="line">       		&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		QueryPerformanceCounter(&amp;nEndTime);          <span class="comment">//执行完数据 </span></span><br><span class="line">		cost1_time=(<span class="keyword">double</span>)(((nEndTime.QuadPart-nBeginTime.QuadPart) *<span class="number">1000.0</span>) /nFreq.QuadPart);   <span class="comment">//相减得到数据除精度 </span></span><br><span class="line">		QueryPerformanceCounter(&amp;nBeginTime);</span><br><span class="line">		Make(n<span class="number">-1</span>,tw);</span><br><span class="line">		QueryPerformanceCounter(&amp;nEndTime); </span><br><span class="line">		cost2_time=(<span class="keyword">double</span>)(((nEndTime.QuadPart-nBeginTime.QuadPart) *<span class="number">1000.0</span>) /nFreq.QuadPart);</span><br><span class="line">		QueryPerformanceCounter(&amp;nBeginTime);</span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=tw;j++)</span><br><span class="line">		<span class="keyword">if</span>(j&gt;=w[<span class="number">1</span>])</span><br><span class="line">			g[<span class="number">1</span>][j]=p[<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			g[<span class="number">1</span>][j]=<span class="number">0</span>; </span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;=n; i++)</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt;= tw; j++) </span><br><span class="line">			<span class="keyword">if</span>(j&gt;=w[i]&amp;&amp;g[i<span class="number">-1</span>][j]&lt;g[i<span class="number">-1</span>][j-w[i]]+p[i])</span><br><span class="line">			    g[i][j]=g[i<span class="number">-1</span>][j-w[i]]+p[i];</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				g[i][j]=g[i<span class="number">-1</span>][j];</span><br><span class="line">        cw=tw;</span><br><span class="line">		QueryPerformanceCounter(&amp;nEndTime);</span><br><span class="line">		cost3_time=(<span class="keyword">double</span>)(((nEndTime.QuadPart-nBeginTime.QuadPart) *<span class="number">1000.0</span>) /nFreq.QuadPart);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t|%3d\t|%3d\t|%12g\t|%11g\t|%11g|\n"</span>,n,tw,cost1_time,cost2_time,cost3_time);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"|------------------------------------------------------------------|\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">4</span>,b=<span class="number">5</span>,d=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(a!=<span class="number">3</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t\t\t1.算法检测\n"</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t\t\t2.算法时间复杂度比较\n"</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t\t\t3.退出\n"</span>);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\t\t\t请选择:"</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"\t\t\t%d"</span>,&amp;a);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">		<span class="keyword">switch</span>(a)&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">				<span class="keyword">while</span>(b!=<span class="number">4</span>)&#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t1.蛮力算法\n"</span>);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t2.递归算法\n"</span>);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t3.动态规划算法\n"</span>);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t4.退出\n"</span>);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t请选择:"</span>);</span><br><span class="line">					<span class="built_in">scanf</span>(<span class="string">"\t\t\t%d"</span>,&amp;b);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">					<span class="keyword">switch</span>(b)&#123;</span><br><span class="line">						<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">							d=<span class="number">1</span>;</span><br><span class="line">							<span class="keyword">while</span>(d!=<span class="number">2</span>)&#123;</span><br><span class="line">								force();</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t1.继续蛮力算法\n"</span>);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t2.退出\n"</span>);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t请选择:"</span>);</span><br><span class="line">								<span class="built_in">scanf</span>(<span class="string">"\t\t\t%d"</span>,&amp;d);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">							&#125;</span><br><span class="line">							<span class="keyword">break</span>;</span><br><span class="line">						<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">							d=<span class="number">1</span>;</span><br><span class="line">							<span class="keyword">while</span>(d!=<span class="number">2</span>)&#123;</span><br><span class="line">								recursive();</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t1.继续递归算法\n"</span>);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t2.退出\n"</span>);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t请选择:"</span>);</span><br><span class="line">								<span class="built_in">scanf</span>(<span class="string">"\t\t\t%d"</span>,&amp;d);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">							&#125;</span><br><span class="line">							<span class="keyword">break</span>;</span><br><span class="line">						<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">							d=<span class="number">1</span>;</span><br><span class="line">							<span class="keyword">while</span>(d!=<span class="number">2</span>)&#123;</span><br><span class="line">								dynamic();</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t1.继续动态规划算法\n"</span>);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t2.退出\n"</span>);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\t\t\t请选择:"</span>);</span><br><span class="line">								<span class="built_in">scanf</span>(<span class="string">"\t\t\t%d"</span>,&amp;d);</span><br><span class="line">								<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">							&#125;</span><br><span class="line">							<span class="keyword">break</span>;</span><br><span class="line">						<span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">							<span class="keyword">break</span>;</span><br><span class="line">						<span class="keyword">default</span>:</span><br><span class="line">							<span class="built_in">printf</span>(<span class="string">"\t\t\t请重新选择:\n"</span>);</span><br><span class="line">							<span class="keyword">break</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">				d=<span class="number">1</span>;</span><br><span class="line">				<span class="keyword">while</span>(d!=<span class="number">2</span>)&#123;</span><br><span class="line">					compareTime();</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t1.继续时间复杂度比较\n"</span>);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t2.退出\n"</span>);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\t\t\t请选择:"</span>);</span><br><span class="line">					<span class="built_in">scanf</span>(<span class="string">"\t\t\t%d"</span>,&amp;d);</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"\t\t\t请重新选择:\n"</span>);</span><br><span class="line">				<span class="keyword">break</span>;	</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/理解/" rel="tag"># 理解</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/30/fourth/" rel="next" title="设计模式之单例模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之单例模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/01/third/" rel="prev" title="java内部类">
+                java内部类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#01背包问题蛮力算法求解"><span class="nav-number">1.</span> <span class="nav-text">01背包问题蛮力算法求解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#01背包问题递归算法求解"><span class="nav-number">2.</span> <span class="nav-text">01背包问题递归算法求解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#01背包问题动态规划算法求解"><span class="nav-number">3.</span> <span class="nav-text">01背包问题动态规划算法求解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2016/12/30/second/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

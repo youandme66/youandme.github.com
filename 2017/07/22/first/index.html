@@ -1,0 +1,1097 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="什么是索引索引用来快速地寻找那些具有特定值的记录，所有MySQL索引都以B-树的形式保存。如果没有索引，执行查询时MySQL必须从第一个记录开始扫描整个表的所有记录，直至找到符合要求的记录。表里面的记录数量越多，这个操作的代价就越高。如果作为搜索条件的列上已经创建了索引，MySQL无需扫描任何记录即可迅速得到目标记录所在的位置。如果表有1000个记录，通过索引查找记录至少要比顺序扫描记录快100倍">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL知识点巩固">
+<meta property="og:url" content="https://youandme66.github.io/2017/07/22/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="什么是索引索引用来快速地寻找那些具有特定值的记录，所有MySQL索引都以B-树的形式保存。如果没有索引，执行查询时MySQL必须从第一个记录开始扫描整个表的所有记录，直至找到符合要求的记录。表里面的记录数量越多，这个操作的代价就越高。如果作为搜索条件的列上已经创建了索引，MySQL无需扫描任何记录即可迅速得到目标记录所在的位置。如果表有1000个记录，通过索引查找记录至少要比顺序扫描记录快100倍">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://youandme66.github.io/2017/07/22/first/step1.jpg">
+<meta property="og:image" content="https://youandme66.github.io/2017/07/22/first/step2.jpg">
+<meta property="og:image" content="https://youandme66.github.io/2017/07/22/first/step1.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/07/22/first/step2.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/07/22/first/step3.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/07/22/first/step4.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/07/22/first/step5.png">
+<meta property="og:updated_time" content="2017-07-24T08:05:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL知识点巩固">
+<meta name="twitter:description" content="什么是索引索引用来快速地寻找那些具有特定值的记录，所有MySQL索引都以B-树的形式保存。如果没有索引，执行查询时MySQL必须从第一个记录开始扫描整个表的所有记录，直至找到符合要求的记录。表里面的记录数量越多，这个操作的代价就越高。如果作为搜索条件的列上已经创建了索引，MySQL无需扫描任何记录即可迅速得到目标记录所在的位置。如果表有1000个记录，通过索引查找记录至少要比顺序扫描记录快100倍">
+<meta name="twitter:image" content="https://youandme66.github.io/2017/07/22/first/step1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/07/22/first/">
+
+
+
+
+
+  <title> MySQL知识点巩固 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/07/22/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL知识点巩固
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-22T00:00:00+08:00">
+                2017-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/07/22/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/07/22/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/07/22/first/" class="leancloud_visitors" data-flag-title="MySQL知识点巩固">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是索引"><a href="#什么是索引" class="headerlink" title="什么是索引"></a>什么是索引</h3><p>索引用来快速地寻找那些具有特定值的记录，所有MySQL索引都以B-树的形式保存。如果没有索引，执行查询时MySQL必须从第一个记录开始扫描整个表的所有记录，直至找到符合要求的记录。表里面的记录数量越多，这个操作的代价就越高。如果作为搜索条件的列上已经创建了索引，MySQL无需扫描任何记录即可迅速得到目标记录所在的位置。如果表有1000个记录，通过索引查找记录至少要比顺序扫描记录快100倍。<br>假设我们创建了一个名为people的表:<br>create table people (peopleid SMALLINT NOT NULL,name CHAR(50) NOT NULL);<br>然后，我们完全随机把1000个不同name值插入到people表。<br>如果我们创建了name列的索引，MySQL将在索引中排序name列：<br>对于索引中的每一项，MySQL在内部为它保存一个数据文件中实际记录所在位置的“指针”。因此，如果我们要查找name等于“Mike”记录的peopleid（SQL命令为“SELECT peopleid FROM people WHERE name=’Mike’;”），MySQL能够在name的索引中查找“Mike”值，然后直接转到数据文件中相应的行，准确地返回该行的peopleid（999）。在这个过程中，MySQL只需处理一个行就可以返回结果。如果没有“name”列的索引，MySQL要扫描数据文件中的所有记录，即1000个记录！显然，需要MySQL处理的记录数量越少，则它完成任务的速度就越快。<br>普通索引:仅加速查询<br>唯一索引:加速查询+列值唯一(可以有null)<br>主键索引:加速查询+列值唯一表中只有一个(不可以有null)<br>组合索引:多列值组成一个索引，专门用于组合搜索，其效率大于索引合并<br>全文索引:对文本的内容进行分词，进行搜索。<br>索引合并:使用多个单列索引组合搜索<br>覆盖索引:select的数据列只用从索引中就能够取得,不必读取数据行，换句话说查询列要被所建的索引覆盖。 </p>
+<h3 id="如何创建索引"><a href="#如何创建索引" class="headerlink" title="如何创建索引"></a>如何创建索引</h3><p>创建表的时候创建索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table tbl name(</span><br><span class="line">字段名陈 字段类型 [完整性约束条件],</span><br><span class="line">,,,,</span><br><span class="line">[UNIQUE|FULLTEXT|SPATIAL] INDEX|KEY [索引名称]  (字段名称[长度])[ASC|DESC]</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>在已经存在的表上创建索引:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、create [unique|fulltext|spatial] index 索引名称 on 表名&#123;字段名称[(长度)]  [ASC|DESC]&#125;</span><br><span class="line">2、alter table ta1_name add [unique|fulltext|spatial] index 索引名称(字段名陈[(长度)]  [ASC|DESC])</span><br></pre></td></tr></table></figure></p>
+<p>删除索引?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop index 索引名称 on tb1_name;</span><br></pre></td></tr></table></figure></p>
+<h3 id="普通索引"><a href="#普通索引" class="headerlink" title="普通索引"></a>普通索引</h3><p>普通索引仅有一个功能:加速查询<br>创建表+索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create table in1(</span><br><span class="line">    nid int not null auto_increment primary key,</span><br><span class="line">    name varchar(32) not null,</span><br><span class="line">    email varchar(64) not null,</span><br><span class="line">    extra text,</span><br><span class="line">    index ix_name (name)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>创建索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index index_name on table_name(column_name)</span><br></pre></td></tr></table></figure></p>
+<p>删除索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop index_name on table_name;</span><br></pre></td></tr></table></figure></p>
+<p>查看索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show index from table_name;</span><br></pre></td></tr></table></figure></p>
+<p>注意:对于创建索引时如果是BLOB和TEXT类型，必须指定length。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index ix_extra on in1(extra(32));</span><br></pre></td></tr></table></figure></p>
+<h3 id="唯一性索引"><a href="#唯一性索引" class="headerlink" title="唯一性索引"></a>唯一性索引</h3><p>唯一索引有两个功能:加速查询和唯一约束(可含null)<br>创建表+唯一索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create table in1(</span><br><span class="line">    nid int not null auto_increment primary key,</span><br><span class="line">    name varchar(32) not null,</span><br><span class="line">    email varchar(64) not null,</span><br><span class="line">    extra text,</span><br><span class="line">    unique ix_name (name)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>创建唯一索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create unique index 索引名 on 表名(列名)</span><br></pre></td></tr></table></figure></p>
+<p>删除索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop unique index 索引名 on 表名</span><br></pre></td></tr></table></figure></p>
+<h3 id="主键索引"><a href="#主键索引" class="headerlink" title="主键索引"></a>主键索引</h3><p>主键有两个功能:加速查询和唯一约束(不可含null)<br>创建表+创建主键<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">create table in1(</span><br><span class="line">	nid int not null auto_increment primary key,</span><br><span class="line">	name varchar(32) not null,</span><br><span class="line">	email varchar(64) not null,</span><br><span class="line">	extra text,</span><br><span class="line">	index ix_name(name)</span><br><span class="line">)</span><br><span class="line">or</span><br><span class="line">create table in1(</span><br><span class="line">	nid int not null auto_increment,</span><br><span class="line">	name varchar(32) not null,</span><br><span class="line">	email varchar(64) not null,</span><br><span class="line">	extra text,</span><br><span class="line">	primary key(nid),</span><br><span class="line">	index ix_name(name)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>创建主键<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table 表名 add primary key(列名);</span><br></pre></td></tr></table></figure></p>
+<p>删除主键<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table 表名 drop primary key;</span><br><span class="line">alter table 表名 modify 列名 int,drop primary key;</span><br></pre></td></tr></table></figure></p>
+<h3 id="组合索引"><a href="#组合索引" class="headerlink" title="组合索引"></a>组合索引</h3><p>组合索引是将n个列组合成一个索引<br>其应用场景为：频繁的同时使用n列来进行查询，如：where n1 = ‘alex’ and n2 = 666。<br>创建表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table in3(</span><br><span class="line">	nid int not null auto_increment primary key,</span><br><span class="line">	name varchar(32) not null,</span><br><span class="line">	email varchar(64) not null,</span><br><span class="line">	extra text</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>创建组合索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index ix_name_email on in3(name,email);</span><br></pre></td></tr></table></figure></p>
+<p>如上创建组合索引之后，查询:<br>name and email –使用索引<br>name –使用索引<br>email –不使用索引<br>注意:对于同时搜索n个条件时，组合索引的性能好于多个单列索引合并。<br>相关命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- 查看表结构</span><br><span class="line">desc 表名</span><br><span class="line">- 查看生成表的sql</span><br><span class="line">show create table 表名</span><br><span class="line">- 查看索引</span><br><span class="line">show index from 表名</span><br><span class="line">- 查看执行时间</span><br><span class="line">set profiling = 1;</span><br><span class="line">sql ...</span><br><span class="line">show profiles;</span><br></pre></td></tr></table></figure></p>
+<p>使用索引和不使用索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">由于索引时专门用于加速搜索而生，所以加上索引之后，查询效率会快到飞起来。</span><br><span class="line"># 有索引</span><br><span class="line">mysql &gt; select * from tb1 where name = &apos;wupeiqi-888&apos;;</span><br><span class="line">+-----+-------------+---------------------+----------------------------------+---------------------+</span><br><span class="line">| nid | name        | email               | radom                            | ctime               |</span><br><span class="line">+-----+-------------+---------------------+----------------------------------+---------------------+</span><br><span class="line">| 889 | wupeiqi-888 | wupeiqi888@live.com | 5312269e76a16a90b8a8301d5314204b | 2016-08-03 09:33:35 |</span><br><span class="line">+-----+-------------+---------------------+----------------------------------+---------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 无索引</span><br><span class="line">mysql&gt; select * from tb1 where email = &apos;wupeiqi888@live.com&apos;;</span><br><span class="line">+-----+-------------+---------------------+----------------------------------+---------------------+</span><br><span class="line">| nid | name        | email               | radom                            | ctime               |</span><br><span class="line">+-----+-------------+---------------------+----------------------------------+---------------------+</span><br><span class="line">| 889 | wupeiqi-888 | wupeiqi888@live.com | 5312269e76a16a90b8a8301d5314204b | 2016-08-03 09:33:35 |</span><br><span class="line">+-----+-------------+---------------------+----------------------------------+---------------------+</span><br><span class="line">1 row in set (1.23 sec)</span><br></pre></td></tr></table></figure></p>
+<p>正确使用索引<br>数据库表中添加索引后确实会让查询速度起飞，但前提必须是正确的使用索引来查询，如果以错误的方式使用，则即使建立索引也会不奏效。<br>即使建立索引，索引也不会生效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">- like &apos;%xx&apos;</span><br><span class="line">    select * from tb1 where name like &apos;%cn&apos;;</span><br><span class="line">- 使用函数</span><br><span class="line">    select * from tb1 where reverse(name) = &apos;wupeiqi&apos;;</span><br><span class="line">- or</span><br><span class="line">    select * from tb1 where nid = 1 or email = &apos;seven@live.com&apos;;</span><br><span class="line">    特别的：当or条件中有未建立索引的列才失效，以下会走索引</span><br><span class="line">            select * from tb1 where nid = 1 or name = &apos;seven&apos;;</span><br><span class="line">            select * from tb1 where nid = 1 or email = &apos;seven@live.com&apos; and name = &apos;alex&apos;</span><br><span class="line">- 类型不一致</span><br><span class="line">    如果列是字符串类型，传入条件是必须用引号引起来，不然...</span><br><span class="line">    select * from tb1 where name = 999;</span><br><span class="line">- !=</span><br><span class="line">    select * from tb1 where name != &apos;alex&apos;</span><br><span class="line">    特别的：如果是主键，则还是会走索引</span><br><span class="line">        select * from tb1 where nid != 123</span><br><span class="line">- &gt;</span><br><span class="line">    select * from tb1 where name &gt; &apos;alex&apos;</span><br><span class="line">    特别的：如果是主键或索引是整数类型，则还是会走索引</span><br><span class="line">        select * from tb1 where nid &gt; 123</span><br><span class="line">        select * from tb1 where num &gt; 123</span><br><span class="line">- order by</span><br><span class="line">    select email from tb1 order by name desc;</span><br><span class="line">    当根据索引排序时候，选择的映射如果不是索引，则不走索引</span><br><span class="line">    特别的：如果对主键排序，则还是走索引：</span><br><span class="line">        select * from tb1 order by nid desc;</span><br><span class="line"></span><br><span class="line">- 组合索引最左前缀</span><br><span class="line">    如果组合索引为：(name,email)</span><br><span class="line">    name and email       -- 使用索引</span><br><span class="line">    name                 -- 使用索引</span><br><span class="line">    email                -- 不使用索引</span><br></pre></td></tr></table></figure></p>
+<p>其他注意事项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- 避免使用select *</span><br><span class="line">- count(1)或count(列) 代替 count(*)</span><br><span class="line">- 创建表时尽量时 char 代替 varchar</span><br><span class="line">- 表的字段顺序固定长度的字段优先</span><br><span class="line">- 组合索引代替多个单列索引（经常使用多个条件查询时）</span><br><span class="line">- 尽量使用短索引</span><br><span class="line">- 使用连接（JOIN）来代替子查询(Sub-Queries)</span><br><span class="line">- 连表时注意条件类型需一致</span><br><span class="line">- 索引散列值（重复少）不适合建索引，例：性别不适合</span><br></pre></td></tr></table></figure></p>
+<p>limit 分页<br>无论是否有索引，limit分页是一个值得关注的问题<br><img src="/2017/07/22/first/step1.jpg" alt="图片加载中"><br><img src="/2017/07/22/first/step2.jpg" alt="图片加载中"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">每页显示10条：</span><br><span class="line">当前 118 120， 125</span><br><span class="line"></span><br><span class="line">倒序：</span><br><span class="line">            大      小</span><br><span class="line">            980    970  7 6  6 5  54  43  32</span><br><span class="line"></span><br><span class="line">21 19 98     </span><br><span class="line">下一页：</span><br><span class="line"></span><br><span class="line">    select </span><br><span class="line">        * </span><br><span class="line">    from </span><br><span class="line">        tb1 </span><br><span class="line">    where </span><br><span class="line">        nid &lt; (select nid from (select nid from tb1 where nid &lt; 当前页最小值 order by nid desc limit 每页数据 *【页码-当前页】) A order by A.nid asc limit 1)  </span><br><span class="line">    order by </span><br><span class="line">        nid desc </span><br><span class="line">    limit 10;</span><br><span class="line"></span><br><span class="line">    select </span><br><span class="line">        * </span><br><span class="line">    from </span><br><span class="line">        tb1 </span><br><span class="line">    where </span><br><span class="line">        nid &lt; (select nid from (select nid from tb1 where nid &lt; 970  order by nid desc limit 40) A order by A.nid asc limit 1)  </span><br><span class="line">    order by </span><br><span class="line">        nid desc </span><br><span class="line">    limit 10;</span><br><span class="line"></span><br><span class="line">上一页：</span><br><span class="line"></span><br><span class="line">    select </span><br><span class="line">        * </span><br><span class="line">    from </span><br><span class="line">        tb1 </span><br><span class="line">    where </span><br><span class="line">        nid &lt; (select nid from (select nid from tb1 where nid &gt; 当前页最大值 order by nid asc limit 每页数据 *【当前页-页码】) A order by A.nid asc limit 1)  </span><br><span class="line">    order by </span><br><span class="line">        nid desc </span><br><span class="line">    limit 10;</span><br><span class="line"></span><br><span class="line">    select </span><br><span class="line">        * </span><br><span class="line">    from </span><br><span class="line">        tb1 </span><br><span class="line">    where </span><br><span class="line">        nid &lt; (select nid from (select nid from tb1 where nid &gt; 980 order by nid asc limit 20) A order by A.nid desc limit 1)  </span><br><span class="line">    order by </span><br><span class="line">        nid desc </span><br><span class="line">    limit 10;</span><br></pre></td></tr></table></figure></p>
+<p>执行计划<br>explain + 查询SQL – 用于显示SQL执行信息参数，根据参考信息可以进行SQL优化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from tb2;</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+------+------+-------+</span><br><span class="line">| id | select_type | table | type | possible_keys | key  | key_len | ref  | rows | Extra |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+------+------+-------+</span><br><span class="line">|  1 | SIMPLE      | tb2   | ALL  | NULL          | NULL | NULL    | NULL |    2 | NULL  |</span><br><span class="line">+----+-------------+-------+------+---------------+------+---------+------+------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>执行计划<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">id</span><br><span class="line">        查询顺序标识</span><br><span class="line">            如：mysql&gt; explain select * from (select nid,name from tb1 where nid &lt; 10) as B;</span><br><span class="line">            +----+-------------+------------+-------+---------------+---------+---------+------+------+-------------+</span><br><span class="line">            | id | select_type | table      | type  | possible_keys | key     | key_len | ref  | rows | Extra       |</span><br><span class="line">            +----+-------------+------------+-------+---------------+---------+---------+------+------+-------------+</span><br><span class="line">            |  1 | PRIMARY     | &lt;derived2&gt; | ALL   | NULL          | NULL    | NULL    | NULL |    9 | NULL        |</span><br><span class="line">            |  2 | DERIVED     | tb1        | range | PRIMARY       | PRIMARY | 8       | NULL |    9 | Using where |</span><br><span class="line">            +----+-------------+------------+-------+---------------+---------+---------+------+------+-------------+</span><br><span class="line">        特别的：如果使用union连接气值可能为null</span><br><span class="line"></span><br><span class="line">    select_type</span><br><span class="line">        查询类型</span><br><span class="line">            SIMPLE          简单查询</span><br><span class="line">            PRIMARY         最外层查询</span><br><span class="line">            SUBQUERY        映射为子查询</span><br><span class="line">            DERIVED         子查询</span><br><span class="line">            UNION           联合</span><br><span class="line">            UNION RESULT    使用联合的结果</span><br><span class="line">            ...</span><br><span class="line">    table</span><br><span class="line">        正在访问的表名</span><br><span class="line"></span><br><span class="line">    type</span><br><span class="line">        查询时的访问方式，性能：all &lt; index &lt; range &lt; index_merge &lt; ref_or_null &lt; ref &lt; eq_ref &lt; system/const</span><br><span class="line">            ALL             全表扫描，对于数据表从头到尾找一遍</span><br><span class="line">                            select * from tb1;</span><br><span class="line">                            特别的：如果有limit限制，则找到之后就不在继续向下扫描</span><br><span class="line">                                   select * from tb1 where email = &apos;seven@live.com&apos;</span><br><span class="line">                                   select * from tb1 where email = &apos;seven@live.com&apos; limit 1;</span><br><span class="line">                                   虽然上述两个语句都会进行全表扫描，第二句使用了limit，则找到一个后就不再继续扫描。</span><br><span class="line"></span><br><span class="line">            INDEX           全索引扫描，对索引从头到尾找一遍</span><br><span class="line">                            select nid from tb1;</span><br><span class="line"></span><br><span class="line">            RANGE          对索引列进行范围查找</span><br><span class="line">                            select *  from tb1 where name &lt; &apos;alex&apos;;</span><br><span class="line">                            PS:</span><br><span class="line">                                between and</span><br><span class="line">                                in</span><br><span class="line">                                &gt;   &gt;=  &lt;   &lt;=  操作</span><br><span class="line">                                注意：!= 和 &gt; 符号</span><br><span class="line"></span><br><span class="line">            INDEX_MERGE     合并索引，使用多个单列索引搜索</span><br><span class="line">                            select *  from tb1 where name = &apos;alex&apos; or nid in (11,22,33);</span><br><span class="line"></span><br><span class="line">            REF             根据索引查找一个或多个值</span><br><span class="line">                            select *  from tb1 where name = &apos;seven&apos;;</span><br><span class="line"></span><br><span class="line">            EQ_REF          连接时使用primary key 或 unique类型</span><br><span class="line">                            select tb2.nid,tb1.name from tb2 left join tb1 on tb2.nid = tb1.nid;</span><br><span class="line"></span><br><span class="line">            CONST           常量</span><br><span class="line">                            表最多有一个匹配行,因为仅有一行,在这行的列值可被优化器剩余部分认为是常数,const表很快,因为它们只读取一次。</span><br><span class="line">                            select nid from tb1 where nid = 2 ;</span><br><span class="line"></span><br><span class="line">            SYSTEM          系统</span><br><span class="line">                            表仅有一行(=系统表)。这是const联接类型的一个特例。</span><br><span class="line">                            select * from (select nid from tb1 where nid = 1) as A;</span><br><span class="line">    possible_keys</span><br><span class="line">        可能使用的索引</span><br><span class="line"></span><br><span class="line">    key</span><br><span class="line">        真实使用的</span><br><span class="line"></span><br><span class="line">    key_len</span><br><span class="line">        MySQL中使用索引字节长度</span><br><span class="line"></span><br><span class="line">    rows</span><br><span class="line">        mysql估计为了找到所需的行而要读取的行数 ------ 只是预估值</span><br><span class="line"></span><br><span class="line">    extra</span><br><span class="line">        该列包含MySQL解决查询的详细信息</span><br><span class="line">        “Using index”</span><br><span class="line">            此值表示mysql将使用覆盖索引，以避免访问表。不要把覆盖索引和index访问类型弄混了。</span><br><span class="line">        “Using where”</span><br><span class="line">            这意味着mysql服务器将在存储引擎检索行后再进行过滤，许多where条件里涉及索引中的列，当（并且如果）它读取索引时，就能被存储引擎检验，因此不是所有带where子句的查询都会显示“Using where”。有时“Using where”的出现就是一个暗示：查询可受益于不同的索引。</span><br><span class="line">        “Using temporary”</span><br><span class="line">            这意味着mysql在对查询结果排序时会使用一个临时表。</span><br><span class="line">        “Using filesort”</span><br><span class="line">            这意味着mysql会对结果使用一个外部索引排序，而不是按索引次序从表里读取行。mysql有两种文件排序算法，这两种排序方式都可以在内存或者磁盘上完成，explain不会告诉你mysql将使用哪一种文件排序，也不会告诉你排序会在内存里还是磁盘上完成。</span><br><span class="line">        “Range checked for each record(index map: N)”</span><br><span class="line">            这个意味着没有好用的索引，新的索引将在联接的每一行上重新估算，N是显示在possible_keys列中索引的位图，并且是冗余的。</span><br></pre></td></tr></table></figure></p>
+<p>慢日志查询<br>a、配置MySQL自动记录慢日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">slow_query_log = OFF                            是否开启慢日志记录</span><br><span class="line">long_query_time = 2                              时间限制，超过此时间，则记录</span><br><span class="line">slow_query_log_file = /usr/slow.log        日志文件</span><br><span class="line">log_queries_not_using_indexes = OFF     为使用索引的搜索是否记录</span><br></pre></td></tr></table></figure></p>
+<p>注：查看当前配置信息：<br>　　     show variables like ‘%query%’<br>     修改当前配置：<br>　　　　set global 变量名 = 值<br>b、查看mysql慢日志<br>mysqldumpslow -s at -a  /usr/local/var/mysql/MacBook-Pro-3-slow.log<br>参数详解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">--verbose    版本</span><br><span class="line">--debug      调试</span><br><span class="line">--help       帮助</span><br><span class="line"></span><br><span class="line">-v           版本</span><br><span class="line">-d           调试模式</span><br><span class="line">-s ORDER     排序方式</span><br><span class="line">             what to sort by (al, at, ar, c, l, r, t), &apos;at&apos; is default</span><br><span class="line">              al: average lock time</span><br><span class="line">              ar: average rows sent</span><br><span class="line">              at: average query time</span><br><span class="line">               c: count</span><br><span class="line">               l: lock time</span><br><span class="line">               r: rows sent</span><br><span class="line">               t: query time</span><br><span class="line">-r           反转顺序，默认文件倒序拍。reverse the sort order (largest last instead of first)</span><br><span class="line">-t NUM       显示前N条just show the top n queries</span><br><span class="line">-a           不要将SQL中数字转换成N，字符串转换成S。don&apos;t abstract all numbers to N and strings to &apos;S&apos;</span><br><span class="line">-n NUM       abstract numbers with at least n digits within names</span><br><span class="line">-g PATTERN   正则匹配；grep: only consider stmts that include this string</span><br><span class="line">-h HOSTNAME  mysql机器名或者IP；hostname of db server for *-slow.log filename (can be wildcard),</span><br><span class="line">             default is &apos;*&apos;, i.e. match all</span><br><span class="line">-i NAME      name of server instance (if using mysql.server startup script)</span><br><span class="line">-l           总时间中不减去锁定时间；don&apos;t subtract lock time from total time</span><br></pre></td></tr></table></figure></p>
+<h3 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h3><p>创建全文索引(FullText index)<br>旧版的MySQL的全文索引只能用在MyISAM表格的char、varchar和text的字段上。<br>不过新版的MySQL5.6.24上InnoDB引擎也加入了全文索引，所以具体信息要随时关注官网，<br>创建表的同时创建全文索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table article(</span><br><span class="line">	id int auto_increment not null primary key,</span><br><span class="line">	title varchar(200),</span><br><span class="line">	body text,</span><br><span class="line">	fulltext(title,body)</span><br><span class="line">)type=myisam;</span><br></pre></td></tr></table></figure></p>
+<p>通过alter table的方式来添加<br>alter table ‘student’ add fulltext index ft_stu_name(‘name’)#ft_stu_name是索引名，可以随便起<br>或者:alter table ‘student’ add fulltext ft_stu_name(‘name’)<br>直接通过create index的方式<br>create fulltext index ft_email_name on ‘student’(‘name’)<br>也可以在创建索引的时候指定索引的长度:<br>create fulltext index ft_email_name on ‘student’(‘name’(20))<br>删除全文索引<br>直接使用drop index(注意：没有 drop fulltext index 这种用法)<br>drop index full_idx_name on tommy.girl;<br>使用alter table的方式<br>alter table tommy.girl drop index ft_email_abck;<br>使用全文索引<br>跟普通索引稍有不同<br>使用全文索引的格式：  MATCH (columnName) AGAINST (‘string’)<br>eg:<br>select <em> from ‘student’ where match(‘name’) against(‘聪’);<br>当查询多列数据时:<br>建议在此多列数据上创建一个联合的全文索引，否则使用不了索引的。<br>select </em> from ‘student’ where match(‘name’,’address’) AGAINST(‘聪 广东’);<br>使用全文索引需要注意的是:(基本单位是词)<br>分词，全文索引以词为基础，MySQL默认的分词是所有非字母和数字的特殊符号都是分词符<br> MySQL中与全文索引相关的几个变量：<br> 使用命令：mysql&gt; SHOW VARIABLES LIKE ‘ft%’; #ft就是FullText的简写<br> ft_boolean_syntax    + -&gt;&lt;()~<em>:””&amp;|         #改变IN BOOLEAN MODE的查询字符，不用重新启动MySQL也不用重建索引<br>             ft_min_word_len    4                                   #最短的索引字符串，默认值为4，(通常改为1)修改后必须重建索引文件<br>             重新建立索引命令：repair table tablename quick<br>             ft_max_word_len    84                                #最长的索引字符串，默认值为84，修改后必须重建索引文件<br>             ft_query_expansion_limit   20                      #查询括展时取最相关的几个值用作二次查询<br>             ft_stopword_file    (built-in)                      #全文索引的过滤词文件，具体可以参考：MySQL全文检索中不进行全文索引默认过滤词<br> 特别注意：50%的门坎限制(当查询结果很多，几乎所有记录都有，或者极少的数据，都有可能会返回非所期望的结果)<br>  –&gt;可用IN BOOLEAN MODE即可以避开50%的限制。<br>  此时使用全文索引的格式就变成了： SELECT </em> FROM <code>student</code> WHERE MATCH(<code>name</code>) AGAINST(‘聪’ IN BOOLEAN MODE)<br>  ft_boolean_syntax (+ -&gt;&lt;()~<em>:””&amp;|)使用的例子：<br>  4.1  + : 用在词的前面，表示一定要包含该词，并且必须在开始位置。<br>  eg: +Apple 匹配：Apple123,     “tommy, Apple”<br>  4.2  - : 不包含该词，所以不能只用「-yoursql」这样是查不到任何row的，必须搭配其他语法使用。<br>  eg: MATCH (girl_name) AGAINST (‘-林志玲 +张筱雨’)匹配到： 所有不包含林志玲，但包含张筱雨的记录<br>  4.3. 空(也就是默认情况)，表示可选的，包含该词的顺序较高。<br>  例子：apple banana   找至少包含上面词中的一个的记录行<br>+apple +juice      两个词均在被包含<br>+apple macintosh    包含词 “apple”，但是如果同时包含 “macintosh”，它的排列将更高一些<br>+apple -macintosh   包含 “apple” 但不包含 “macintosh”<br>4.4. &gt; :提高该字的相关性，查询的结果会排在比较靠前的位置。<br>4.5.&lt; :降低相关性，查询的结果会排在比较靠后的位置。<br>例子：4.5.1.先不使用 &gt;&lt;<br>select </em> from tommy.girl where match(girl_name) against(‘张欣婷’ in boolean mode);<br><img src="/2017/07/22/first/step1.png" alt="图片加载中">可以看到完全匹配的排的比较靠前<br>4.5.2. 单独使用 &gt;<br>select <em> from tommy.girl where match(girl_name) against(‘张欣婷 &gt;李秀琴’ in boolean mode);<br><img src="/2017/07/22/first/step2.png" alt="图片加载中">使用了&gt;的李秀琴马上就排到最前面了<br> 4.5.3. 单独使用 &lt;<br> select </em> from tommy.girl where match(girl_name) against(‘张欣婷 &lt;不是人’ in boolean mode);<br> <img src="/2017/07/22/first/step3.png" alt="图片加载中">看到没，不是人也排到最前面了，这里使用的可是 &lt; 哦，说好的降低相关性呢，往下看吧。<br> 4.5.4.同时使用&gt;&lt;<br>  select * from tommy.girl where match(girl_name) against(‘张欣婷 &gt;李秀琴 &lt;练习册 &lt;不是人&gt;是个鬼’ in boolean mode);<br>   <img src="/2017/07/22/first/step4.png" alt="图片加载中">到这里终于有答案了，只要使用了 &gt;&lt;的都会往前排，而且&gt;的总是排在&lt;的前面<br>小结一下：1. 只要使用 &gt;&lt;的总比没用的 靠前；</p>
+<ol start="2">
+<li>使用  &gt;的一定比 &lt;的排的靠前 (这就符合相关性提高和降低)；</li>
+<li>使用同一类的，使用的越早，排的越前。<br>4.6. ( )：可以通过括号来使用字条件。<br>eg: +aaa +(&gt;bbb &lt; ccc) // 找到有aaa和bbb和ccc，aaa和bbb，或者aaa和ccc(因为bbb，ccc前面没有+，所以表示可有可无),然后 aaa&amp;bbb &gt; aaa&amp;bbb&amp;ccc &gt; aaa&amp;ccc<br>4.7. ~ :将其相关性由正转负，表示拥有该字会降低相关性，但不像「-」将之排除，只是排在较后面。<br>eg:   +apple ~macintosh   先匹配apple，但如果同时包含macintosh，就排名会靠后。<br>4.8. <em> :通配符，这个只能接在字符串后面。<br>MATCH (girl_name) AGAINST (‘+</em>ABC<em>‘)   #错误，不能放前面<br>MATCH (girl_name) AGAINST (‘+张筱雨</em>‘)  #正确<br>4.9. “ “ :整体匹配，用双引号将一段句子包起来表示要完全相符，不可拆字。<br>eg:  “tommy huang” 可以匹配  tommy huang xxxxx   但是不能匹配  tommy is huang。<br>5.补充：Windows下无法修改 ft_min_word_len的情况，</li>
+<li><ol>
+<li>使用cmd打开 services.msc，<br>找到你的 MySQL服务，右键Properties,找到你的my.ini所在的路径<br><img src="/2017/07/22/first/step5.png" alt="图片加载中"><br>5.2. 停止MySQL,在my.ini中增加 ft_min_word_len = 1,重启MySQL,<br>然后使用命令 show variables like ‘ft_min_word_len’; 查看是否生效了<h3 id="单列索引与多列索引"><a href="#单列索引与多列索引" class="headerlink" title="单列索引与多列索引"></a>单列索引与多列索引</h3></li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/21/first/" rel="next" title="PHP知识点总结">
+                <i class="fa fa-chevron-left"></i> PHP知识点总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/26/first/" rel="prev" title="ThinkPHP开发规范">
+                ThinkPHP开发规范 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是索引"><span class="nav-number">1.</span> <span class="nav-text">什么是索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何创建索引"><span class="nav-number">2.</span> <span class="nav-text">如何创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#普通索引"><span class="nav-number">3.</span> <span class="nav-text">普通索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#唯一性索引"><span class="nav-number">4.</span> <span class="nav-text">唯一性索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主键索引"><span class="nav-number">5.</span> <span class="nav-text">主键索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合索引"><span class="nav-number">6.</span> <span class="nav-text">组合索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全文索引"><span class="nav-number">7.</span> <span class="nav-text">全文索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单列索引与多列索引"><span class="nav-number">8.</span> <span class="nav-text">单列索引与多列索引</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/07/22/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

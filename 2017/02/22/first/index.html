@@ -1,0 +1,1108 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="instanceof操作符通过instanceof操作符，我们可以测试一个对象是不是由某个指定的构造器函数所创建的。例如:&amp;gt;&amp;gt;&amp;gt; function Hero(){}&amp;gt;&amp;gt;&amp;gt; var h = new Hero(){};&amp;gt;&amp;gt;&amp;gt; var o = {};&amp;gt;&amp;gt;&amp;gt; h instanceof Hero;true&amp;gt;&amp;gt;&amp;gt; h instanceof Objec">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于JavaScript对象的知识点">
+<meta property="og:url" content="https://youandme66.github.io/2017/02/22/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="instanceof操作符通过instanceof操作符，我们可以测试一个对象是不是由某个指定的构造器函数所创建的。例如:&amp;gt;&amp;gt;&amp;gt; function Hero(){}&amp;gt;&amp;gt;&amp;gt; var h = new Hero(){};&amp;gt;&amp;gt;&amp;gt; var o = {};&amp;gt;&amp;gt;&amp;gt; h instanceof Hero;true&amp;gt;&amp;gt;&amp;gt; h instanceof Objec">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-23T05:22:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于JavaScript对象的知识点">
+<meta name="twitter:description" content="instanceof操作符通过instanceof操作符，我们可以测试一个对象是不是由某个指定的构造器函数所创建的。例如:&amp;gt;&amp;gt;&amp;gt; function Hero(){}&amp;gt;&amp;gt;&amp;gt; var h = new Hero(){};&amp;gt;&amp;gt;&amp;gt; var o = {};&amp;gt;&amp;gt;&amp;gt; h instanceof Hero;true&amp;gt;&amp;gt;&amp;gt; h instanceof Objec">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/02/22/first/">
+
+
+
+
+
+  <title> 关于JavaScript对象的知识点 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/02/22/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于JavaScript对象的知识点
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-22T00:00:00+08:00">
+                2017-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/02/22/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/02/22/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/22/first/" class="leancloud_visitors" data-flag-title="关于JavaScript对象的知识点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="instanceof操作符"><a href="#instanceof操作符" class="headerlink" title="instanceof操作符"></a>instanceof操作符</h3><p>通过instanceof操作符，我们可以测试一个对象是不是由某个指定的构造器函数所创建的。例如:<br>>&gt;&gt; function Hero(){}<br>>&gt;&gt; var h = new Hero(){};<br>>&gt;&gt; var o = {};<br>>&gt;&gt; h instanceof Hero;<br>true<br>>&gt;&gt; h instanceof Object;<br>true<br>>&gt;&gt; o instanceof Object;<br>true<br>请注意，这里的函数名后面没有加括号(即不是h instanceof Hero()),因为这里不是函数调用，所以我们只需要像使用其他变量一样，引用该函数的名字即可。</p>
+<h3 id="返回对象的函数"><a href="#返回对象的函数" class="headerlink" title="返回对象的函数"></a>返回对象的函数</h3><p>除了使用new操作符来调用构造函数以外，我们也可以抛开new操作符，只用一般函数来创建对象，这就需要一个能执行某些预备工作，并以对象为返回值的函数。<br>例如，下面就有一个用于产生对象的简单函数fanctory();<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factory</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        name: name</span><br><span class="line">&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们调用factory();<br>>&gt;&gt; var o = factory(‘one’);<br>>&gt;&gt; o.name<br>“onw”<br>>&gt;&gt; o.constructor<br>Object()<br>实际上，构造器函数也是可以返回对象的，只不过在this值得使用上会有所不同。这意味着我们需要修改构造器函数的默认行为。下面，我们来看看具体是怎么做。<br>这是构造器的一般用法:<br>>&gt;&gt; function C() {this.a=1};<br>>&gt;&gt; var c = new C();<br>>&gt;&gt; c.a<br>1<br>但现在要考虑的是这种用法:<br>>&gt;&gt; function c2() {this.a=1;return {b:2};}<br>>&gt;&gt; var c2= new C2();<br>>&gt;&gt; typeof c2.a<br>“undefined”<br>>&gt;&gt; c2.b<br>2<br>能看出来发生了什么吗？在这里，构造器返回的不再是包含属性a的this对象，而是另一个包含属性b的对象。但这也只有在函数的返回值是一个对象时才会发生，而当我们企图返回的是一个非对象类型时，该构造器将会照常返回this。</p>
+<h3 id="传递对象"><a href="#传递对象" class="headerlink" title="传递对象"></a>传递对象</h3><p>当我们拷贝某个对象或者将它传递给某个函数时，往往传递的都是该对象的引用。因此我们在引用上所做的任何改动，实际上都会影响它所引用的原对象。<br>在下面的示例中，我们将会看到对象是如何赋值给另一个变量的，并且，如果我们对该拷贝做一些改变操作的话，原对象也会跟着被改变:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var original = &#123;howmany:1&#125;;</span><br><span class="line">&gt;&gt;&gt; var copy = original;</span><br><span class="line">&gt;&gt;&gt; copy.howmany</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; copy.howmany = 100;</span><br><span class="line">100</span><br><span class="line">&gt;&gt;&gt; original.howmany</span><br><span class="line">100</span><br></pre></td></tr></table></figure></p>
+<p>同样的，将对象传递给函数的情况也大致如此:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var original = &#123;howmany: 100&#125;;</span><br><span class="line">&gt;&gt;&gt; var nullify = <span class="keyword">function</span>(o) &#123;o.howmany=0;&#125;</span><br><span class="line">&gt;&gt;&gt; nullify(original);</span><br><span class="line">&gt;&gt;&gt; original.howmany</span><br><span class="line">0</span><br></pre></td></tr></table></figure></p>
+<h3 id="对象比较"><a href="#对象比较" class="headerlink" title="对象比较"></a>对象比较</h3><p>当我们对对象进行比较操作时，当且仅当两个引用指向同一个对象时为true，而如果是不同的对象，即使他们碰巧拥有相同的属性和方法，比较操作也会放回false。<br>下面，我们来创建两个看上去完全相同的对象:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var fido = &#123;breed:<span class="string">'dog'</span>&#125;;</span><br><span class="line">&gt;&gt;&gt; var benji = &#123;breed: <span class="string">'dog'</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，我们对它进行比较，操作将会返回false:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;　benji === fido</span><br><span class="line"><span class="literal">false</span></span><br><span class="line">&gt;&gt;&gt;  benji == fido</span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
+<p>我们可以创建一个变量mydog,并将其中一个对象赋值给它。这样一来mydog实际上指向了这个变量。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var mydog = benji;</span><br></pre></td></tr></table></figure></p>
+<p>在这种情况下，mydog与benji所指向的对象是相同的(也就是说，改变myblog的属性就等同于改变benji)，比较操作就会返回true。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; mydog === benji</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>并且，由于fido是一个不同的对象，所以它不能与mydog进行比较。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; mydog === fido</span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><p>Object是JavaScript中所有对象的父级对象，这意味着我们创建的所有对象都继承与此。为了新建一个空对象，我们既可以用对象文本标识法也可以调用Object()构造器函数，即下面这两行代码的执行结构是等价的:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var o = &#123;&#125;;</span><br><span class="line">&gt;&gt;&gt; var o = new Object();</span><br></pre></td></tr></table></figure></p>
+<p>所谓的空对象，实际上并非是完全无用的，它还是包含了一些方法和属性。下面，我们来看看其中的一小部分:</p>
+<ul>
+<li>返回构造器函数的构造属性。</li>
+<li>返回对象描述字符串的toString()方法。</li>
+<li>返回对象单值描述信息的valueOf()方法。一般情况下，返回的就是对象本身。现在来看看这些方法的实际应用。首先，我们来创建一个对象:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var o = new Object();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>然后调用toString()方法，返回该对象的描述字符串:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; o.toString()</span><br><span class="line"><span class="string">"[object Object]"</span></span><br></pre></td></tr></table></figure></p>
+<p>toString()方法会在某些需要用字符串来表示对象的时候被JavaScript内部调用。例如alert()工作就需要用到这样的字符串。所以如果我们将对象传递给了一个alert()函数，toString()方法就会在后台被调用，也就是说，下面两行代码的执行结果是相同的:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; alert(o)</span><br><span class="line">&gt;&gt;&gt; alert(o.toString())</span><br></pre></td></tr></table></figure></p>
+<p>另一种会使用字符串描述文本的地方就是字符串连接操作，如果我们将某个对象与字符串进行连接，那么该对象就先调用自身的toString()方法:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="string">"An object:"</span>+o</span><br><span class="line"><span class="string">"An object:[object Object]"</span></span><br></pre></td></tr></table></figure></p>
+<p>valueOf()方法也是一个所有的对象所共有的方法。对于简单的额对对象来说(即构造器是Object的对象)，valueOf()方法返回的就是对象自己。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; o.valueOf() === o</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>总而言之:</p>
+<ul>
+<li>我们创建对象时既可以用var o = {}的形式，也可以用var o = new Object()。</li>
+<li>无论是多复杂的对象，它都是继承自Object对象的，并且拥有其所有的方法和属性。<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3>Array()是一个用来构建数组的內建构造器函数，例如:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var a = new Array();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这与下面的数组文本标识法是等效的:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var a = [];</span><br></pre></td></tr></table></figure></p>
+<p>无论数组是以什么方式创建的，我们都能照常往里添加元素:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a[0] = 1;a[1] = 2; a;</span><br><span class="line">[1,2]</span><br></pre></td></tr></table></figure></p>
+<p>当我们使用Array()构造器创建数组时，也可以通过传值的方式为其设定元素。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var a = new Array(1,2,3,<span class="string">'four'</span>);</span><br><span class="line">&gt;&gt;&gt; a;</span><br><span class="line">[1,2,3,<span class="string">"four"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>但是如果我们传递给该构造器的是一个数字，就会出现一种异常情况，即该数值会认为是数组的长度。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var a2 = new Array(5);</span><br><span class="line">&gt;&gt;&gt; a2;</span><br><span class="line">[undefined,undefined,undefined,undefined,undefined]</span><br></pre></td></tr></table></figure></p>
+<p>既然数组是由构造器创建的，那么这是否意味着数组实际上是一个对象呢？的确如此，我们可以用typeof操作符来验证一下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; typeof a;</span><br><span class="line"><span class="string">"object"</span></span><br></pre></td></tr></table></figure></p>
+<p>由于数组也是对象，那么就说明它也继承了Object的所有方法和属性。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.toString();</span><br><span class="line"><span class="string">"1,2,3,four"</span></span><br><span class="line">&gt;&gt;&gt; a.valueOf()</span><br><span class="line">[1,2,3,<span class="string">"four"</span>]</span><br><span class="line">&gt;&gt;&gt; a.constructor</span><br><span class="line">Array()</span><br></pre></td></tr></table></figure></p>
+<p>尽管数组也是对象，但还是有一些特殊之处，因为：</p>
+<ul>
+<li>他们的属性名都是从0开始递增的，并自动生成数值</li>
+<li>它们拥有一个记录数组中元素数量的length属性。</li>
+<li>它们都是在父级对象的基础上扩展额外的內建方法。<br>下面来实际验证一下对象与数组之间的区别，让我们从创建空对象o和空数组a开始:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var a = [], o = &#123;&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>首先，定义数组对象时会自动生成一个length属性，而这在一般对象中是没有的。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;　a.length</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; typeof o.length</span><br><span class="line"><span class="string">"undefined"</span></span><br></pre></td></tr></table></figure></p>
+<p>在为数组和对象添加数字和非数字属性方面，两者并没有什么区别:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a[0] = 1;o[0]=1;</span><br><span class="line">&gt;&gt;&gt; a.prop = 2; o.prop = 2;</span><br></pre></td></tr></table></figure></p>
+<p>length属性通常会随着数字属性的数量而更新，而非数字属性则会被忽略。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.length</span><br><span class="line">1</span><br></pre></td></tr></table></figure></p>
+<p>当然我们也可以手动设置length属性。如果设置的值大于当前数组中元素数量，剩下的部分会被自动创建空对象所填充。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.length-5</span><br><span class="line">5</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,undefined,undefined,undefined,undefined]</span><br></pre></td></tr></table></figure></p>
+<p>而如果我们设置的length值小于当前元素数，多出的那部分元素会被移除:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.length -2 </span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,undefined]</span><br></pre></td></tr></table></figure></p>
+<p>值得关注的数组方法<br>除了从父级对象那里继承的方法以外，数组对象中还有一些更为有用的方法，例如sort(),join()和slice()等。<br>下面，我们将通过一个数组来试验一下这方法:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var a = [3,5,1,7,<span class="string">'test'</span>];</span><br></pre></td></tr></table></figure></p>
+<p>push()方法会在数组的末端添加一个新元素，而pop()方法会移除最后一个元素，也就是说a.push(“new”)就相当于a[a.length]=”new”,而a.pop()则与a.length–的结果相同。<br>另外，push()返回的是改变后的数组长度，而pop所返回的是被移除的元素。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.push(<span class="string">"new"</span>);</span><br><span class="line">6</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[3,5,1,7,<span class="string">"test"</span>,<span class="string">"new"</span>]</span><br><span class="line">&gt;&gt;&gt; a.pop();</span><br><span class="line"><span class="string">"new"</span></span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[3,5,1,7,<span class="string">"test"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>而sort方法则是用于给数组排序的，它会返回修改后的数组，在下面的示例中，排序完成后，a和b所指向的数组是相同的:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; var b = a.sort();</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">[1,3,5,7,<span class="string">"test"</span>]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,3,5,7,<span class="string">"test"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>join()方法会返回一个由目标数组中所有元素值连接而成的字符串，另外，我们还可以通过该方法的参数来设定这些元素之间的字符串。例如:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.join(<span class="string">' is not'</span>);</span><br><span class="line"><span class="string">"1 is not 3 is not 5 is not 7 is not test"</span></span><br></pre></td></tr></table></figure></p>
+<p>slice() 方法会在不修改目标数组的情况下返回其中的某个片段，该片段的首尾索引位置由slice()的头两个参数来指定(都以0为基数)。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; b = a.slice(1,3);</span><br><span class="line">[3,5]</span><br><span class="line">&gt;&gt;&gt; b = a.slice(0,1);</span><br><span class="line">[1]</span><br><span class="line">&gt;&gt;&gt; b = a.slice(0,2);</span><br><span class="line">[1,3]</span><br></pre></td></tr></table></figure></p>
+<p>所有的截取完成之后，原数组的状态不变:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,3,5,7,<span class="string">"test"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>splice() 则是会修改目标数组的，它会移除并返回指定切片，并且在可选情况下，它还会用指定的新元素来填补被切除的空缺。该方法的头两个参数所指定的是要移除切片的首尾索引位置，其他参数则是用于填补新元素的值。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; b = a.splice(1,2,100,101,102);</span><br><span class="line">[3,5]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,100,101,102,7,<span class="string">"test"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>当然，用于填补空缺的新元素是可选的，我们也可以直接跳过:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a.splice(1,3)</span><br><span class="line">[100,101,102]</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">[1,7,<span class="string">"test"</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><p>之前，我们已经了解了函数是一种特殊的数据类型，但事实还远远不止如此，它实际上是一种对象，函数对象的內建构造器是Function()，我们可以将它作为创建函数的一种备选方式(但我门不推荐这种方式)<br>也就是说下面三种定义函数的方式都是等效的:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="keyword">function</span> sum(a,b) &#123;<span class="built_in">return</span> a+b&#125;;</span><br><span class="line">&gt;&gt;&gt; sum(1,2)</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; var sum = <span class="keyword">function</span>(a,b) &#123;<span class="built_in">return</span> a+b&#125;;</span><br><span class="line">&gt;&gt;&gt; sum(1,2);</span><br><span class="line">3</span><br><span class="line">&gt;&gt;&gt; var sum = new Function(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'return a+b;'</span>);</span><br><span class="line">&gt;&gt;&gt; sum(1,2)</span><br><span class="line">3</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/18/first/" rel="next" title="闭包的应用">
+                <i class="fa fa-chevron-left"></i> 闭包的应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/second/" rel="prev" title="scrapy爬虫技术九">
+                scrapy爬虫技术九 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof操作符"><span class="nav-number">1.</span> <span class="nav-text">instanceof操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回对象的函数"><span class="nav-number">2.</span> <span class="nav-text">返回对象的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传递对象"><span class="nav-number">3.</span> <span class="nav-text">传递对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象比较"><span class="nav-number">4.</span> <span class="nav-text">对象比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object"><span class="nav-number">5.</span> <span class="nav-text">Object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array"><span class="nav-number">6.</span> <span class="nav-text">Array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function"><span class="nav-number">7.</span> <span class="nav-text">Function</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/02/22/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

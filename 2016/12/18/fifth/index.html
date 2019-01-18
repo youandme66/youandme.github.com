@@ -1,0 +1,1170 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="命令使用1、创建django项目：django-admin startproject djangodemo12、创建django应用：python manage.py startapp login3、自动创建表：python manage.py makemigrations,python manage.py migrate4、使用开发服务器:python manage.py runserver5、">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django初步">
+<meta property="og:url" content="https://youandme66.github.io/2016/12/18/fifth/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="命令使用1、创建django项目：django-admin startproject djangodemo12、创建django应用：python manage.py startapp login3、自动创建表：python manage.py makemigrations,python manage.py migrate4、使用开发服务器:python manage.py runserver5、">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-12-18T04:11:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="django初步">
+<meta name="twitter:description" content="命令使用1、创建django项目：django-admin startproject djangodemo12、创建django应用：python manage.py startapp login3、自动创建表：python manage.py makemigrations,python manage.py migrate4、使用开发服务器:python manage.py runserver5、">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2016/12/18/fifth/">
+
+
+
+
+
+  <title> django初步 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2016/12/18/fifth/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                django初步
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-18T00:00:00+08:00">
+                2016-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/django/" itemprop="url" rel="index">
+                    <span itemprop="name">django</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2016/12/18/fifth/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2016/12/18/fifth/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/18/fifth/" class="leancloud_visitors" data-flag-title="django初步">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="命令使用"><a href="#命令使用" class="headerlink" title="命令使用"></a>命令使用</h3><p>1、创建django项目：django-admin startproject djangodemo1<br>2、创建django应用：python manage.py startapp login<br>3、自动创建表：python manage.py makemigrations,python manage.py migrate<br>4、使用开发服务器:python manage.py runserver<br>5、清空数据库：python manage.py flush<br>6、创建超级管理员:python manage.py createsuperuser<br>7、导出数据:python manage.py dumpdata appname&gt;appname.json<br>8、导入数据:python manage.py loaddata appname.json<br>9、项目环境终端python manage.py shell<br>10、数据库命令行python manage.py dbshell<br>11、更多命令python manage.py<br>12、新建项目后生成一个文件夹主要是项目的设置文件<br>13、新建项目，新建应用<br>14、定义视图函数（访问页面时的内容）</p>
+<h3 id="django的get，post方法与express的get，post方法不同"><a href="#django的get，post方法与express的get，post方法不同" class="headerlink" title="django的get，post方法与express的get，post方法不同"></a>django的get，post方法与express的get，post方法不同</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(request)</span>:</span></span><br><span class="line">	a=request.GET[<span class="string">'a'</span>]</span><br><span class="line">	b=request.GET[<span class="string">'b'</span>]</span><br><span class="line">	c=int(a)+int(b)</span><br><span class="line">	<span class="keyword">return</span> HttpResponse(str(c))</span><br></pre></td></tr></table></figure>
+<h3 id="url匹配参数与express不同"><a href="#url匹配参数与express不同" class="headerlink" title="url匹配参数与express不同"></a>url匹配参数与express不同</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add2</span><span class="params">(request,a,b)</span>:</span></span><br><span class="line">	c=int(a)+int(b)</span><br><span class="line">	<span class="keyword">return</span> HttpResponse(str(c))</span><br></pre></td></tr></table></figure>
+<h3 id="巧妙访问网页"><a href="#巧妙访问网页" class="headerlink" title="巧妙访问网页"></a>巧妙访问网页</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不带参数的：</span><br><span class="line">&#123;% url &apos;name&apos; %&#125;</span><br><span class="line">带参数的：参数可以是变量名</span><br><span class="line">&#123;% url &apos;name&apos; 参数 %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模板：模板中的for循环，条件判断，常用的标签，过滤器的使用。"><a href="#模板：模板中的for循环，条件判断，常用的标签，过滤器的使用。" class="headerlink" title="模板：模板中的for循环，条件判断，常用的标签，过滤器的使用。"></a>模板：模板中的for循环，条件判断，常用的标签，过滤器的使用。</h3><p>for循环示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">列表类型：</span><br><span class="line">&#123;% for i in TutorialList %&#125;</span><br><span class="line">&#123;&#123; i &#125;&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">字典类型：</span><br><span class="line">&#123;% for key, value in info_dict.items %&#125;</span><br><span class="line">    &#123;&#123; key &#125;&#125;: &#123;&#123; value &#125;&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>if条件判断示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for item in List %&#125;</span><br><span class="line">    &#123;&#123; item &#125;&#125;&#123;% if not forloop.last%&#125;,&#123;% endif %&#125; </span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>for循环常用循环位置判断：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>forloop.counter</strong></td>
+<td>索引从 1 开始算</td>
+</tr>
+<tr>
+<td><strong>forloop.counter0</strong></td>
+<td>索引从 0 开始算</td>
+</tr>
+<tr>
+<td><strong>forloop.revcounter</strong></td>
+<td>索引从最大长度到 1</td>
+</tr>
+<tr>
+<td><strong>forloop.revcounter0</strong></td>
+<td>索引从最大长度到 0</td>
+</tr>
+<tr>
+<td><strong>forloop.first</strong></td>
+<td>当遍历的元素为第一项时为真</td>
+</tr>
+<tr>
+<td><strong>forloop.last</strong></td>
+<td>当遍历的元素为最后一项时为真</td>
+</tr>
+<tr>
+<td><strong>forloop.parentloop</strong></td>
+<td>用在嵌套的 for 循环中，获取上一层 for 循环的 forloop</td>
+</tr>
+</tbody>
+</table>
+<p>当列表中可能为空值时用 for  empty<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">&#123;% for athlete in athlete_list %&#125;</span><br><span class="line">    &lt;li&gt;&#123;&#123; athlete.name &#125;&#125;&lt;/li&gt;</span><br><span class="line">&#123;% empty %&#125;</span><br><span class="line">    &lt;li&gt;抱歉，列表为空&lt;/li&gt;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></p>
+<p>模板中的逻辑操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if var &gt;= 90 %&#125;</span><br><span class="line">成绩优秀，自强学堂你没少去吧！学得不错</span><br><span class="line">&#123;% elif var &gt;= 80 %&#125;</span><br><span class="line">成绩良好</span><br><span class="line">&#123;% elif var &gt;= 70 %&#125;</span><br><span class="line">成绩一般</span><br><span class="line">&#123;% elif var &gt;= 60 %&#125;</span><br><span class="line">需要努力</span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">不及格啊，大哥！多去自强学堂学习啊！</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>and,or,not,in,not in也可以在模板中使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if num &lt;= 100 and num &gt;= 0 %&#125;</span><br><span class="line">num在0到100之间</span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">数值不在范围之内！</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="判断用户是否登录"><a href="#判断用户是否登录" class="headerlink" title="判断用户是否登录"></a>判断用户是否登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if request.user.is_authenticated %&#125;</span><br><span class="line">    &#123;&#123; request.user.username &#125;&#125;，您好！</span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    请登陆，这里放登陆链接</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据库模型"><a href="#数据库模型" class="headerlink" title="数据库模型"></a>数据库模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">30</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">python manage.py syncdb <span class="comment"># 进入 manage.py 所在的那个文件夹下输入这个命令</span></span><br><span class="line"> </span><br><span class="line">注意：Django <span class="number">1.7</span> 及以上的版本需要用以下命令</span><br><span class="line">python manage.py makemigrations</span><br><span class="line">python manage.py migrate</span><br><span class="line">$ python manage.py shell</span><br><span class="line"> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> people.models <span class="keyword">import</span> Person</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Person.objects.create(name=<span class="string">"WeizhongTu"</span>, age=<span class="number">24</span>)</span><br><span class="line">&lt;Person: Person object&gt;</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">30</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="comment"># 在Python3中使用 def __str__(self)</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br></pre></td></tr></table></figure>
+<p><font color="red"><strong>新建一个对象的方法有以下几种：</strong></font><br>1.Person.objects.create(name=name,age=age)<br>2.p = Person(name=”WZ”, age=23)<br>   p.save()<br>3.p = Person(name=”TWZ”)<br>   p.age = 23<br>   p.save()<br>4.Person.objects.get_or_create(name=”WZT”, age=23)<br>这种方法是防止重复很好的方法，但是速度要相对慢些，返回一个元组，第一个为Person对象，第二个为True或False, 新建时返回的是True, 已经存在时返回False.</p>
+<p><font color="red"><strong>获取对象有以下方法：</strong></font><br>1.Person.objects.all()<br>2.Person.objects.all()[:10] 切片操作，获取10个人，不支持负索引，切片可以节约内存<br>3.Person.objects.get(name=name)<br>1.<font color="blue">get是用来获取一个对象的，如果需要获取满足条件的一些人，就要用到filter</font><br>2.Person.objects.filter(name=”abc”) # 等于  <br>Person.objects.filter(name__exact=”abc”) 名称严格等于 “abc” 的人<br>3.Person.objects.filter(name__iexact=”abc”) # 名称为 abc 但是不区分大小写，可以找到 ABC, Abc, aBC，这些都符合条件</p>
+<p>4.Person.objects.filter(name__contains=”abc”) # 名称中包含 “abc”的人<br>5.Person.objects.filter(name__icontains=”abc”) #名称中包含 “abc”，且abc不区分大小写</p>
+<p>6.Person.objects.filter(name__regex=”^abc”) # 正则表达式查询<br>7.Person.objects.filter(name__iregex=”^abc”)# 正则表达式不区分大小写</p>
+<p><font color="blue">filter是找出满足条件的，当然也有排除符合某条件的</font><br>8.Person.objects.exclude(name__contains=”WZ”) # 排除包含 WZ 的Person对象<br>9.Person.objects.filter(name__contains=”abc”).exclude(age=23) # 找出名称含有abc, 但是排除年龄是23岁的</p>
+<h3 id="自定义Field"><a href="#自定义Field" class="headerlink" title="自定义Field"></a>自定义Field</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompressedTextField</span><span class="params">(models.TextField)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    model Fields for storing text in a compressed format (bz2 by default)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_db_value</span><span class="params">(self, value, expression, connection, context)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> value:</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> value.decode(<span class="string">'base64'</span>).decode(<span class="string">'bz2'</span>).decode(<span class="string">'utf-8'</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_python</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> value:</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> value.decode(<span class="string">'base64'</span>).decode(<span class="string">'bz2'</span>).decode(<span class="string">'utf-8'</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_prep_value</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> value:</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            value.decode(<span class="string">'base64'</span>)</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">return</span> value.encode(<span class="string">'utf-8'</span>).encode(<span class="string">'bz2'</span>).encode(<span class="string">'base64'</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">return</span> value</span><br><span class="line">做一个列表保存到数据库</span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">import</span> ast</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListField</span><span class="params">(models.TextField)</span>:</span></span><br><span class="line">    __metaclass__ = models.SubfieldBase</span><br><span class="line">    description = <span class="string">"Stores a python list"</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        super(ListField, self).__init__(*args, **kwargs)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_python</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> value:</span><br><span class="line">            value = []</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> isinstance(value, list):</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> ast.literal_eval(value)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_prep_value</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> value <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> unicode(value) <span class="comment"># use str(value) in Python 3</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">value_to_string</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        value = self._get_val_from_obj(obj)</span><br><span class="line">        <span class="keyword">return</span> self.get_db_prep_value(value)</span><br></pre></td></tr></table></figure>
+<h3 id="数据表修改"><a href="#数据表修改" class="headerlink" title="数据表修改"></a>数据表修改</h3><p>South工具<br>(1)QuerySet创建对象的方法<br>(2)获取对象的方法<br>(3)QuerySet是可迭代的<br>(4)QuerySet是可以用pickle序列化到硬盘再读取出来<br>(5)QuerySet查询结果排序<br>(6)QuerySet支持链式查询<br>(7)QuerySet不支持负索引<br>(8)QuerySet重复的问题，使用.distinct()去重</p>
+<h3 id="django后台"><a href="#django后台" class="headerlink" title="django后台"></a>django后台</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Article</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    title = models.CharField(<span class="string">u'标题'</span>, max_length=<span class="number">256</span>)</span><br><span class="line">    content = models.TextField(<span class="string">u'内容'</span>)</span><br><span class="line"> </span><br><span class="line">    pub_date = models.DateTimeField(<span class="string">u'发表时间'</span>, auto_now_add=<span class="keyword">True</span>, editable = <span class="keyword">True</span>)</span><br><span class="line">    update_time = models.DateTimeField(<span class="string">u'更新时间'</span>,auto_now=<span class="keyword">True</span>, null </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span><span class="comment"># 在Python3中用 __str__ 代替 __unicode__</span></span><br><span class="line">        <span class="keyword">return</span> self.title=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="django表单"><a href="#django表单" class="headerlink" title="django表单"></a>django表单</h3><p>GET请求：<br>前台：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;请输入两个数字&lt;/p&gt;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">&lt;form action=<span class="string">"/add/"</span> method=<span class="string">"get"</span>&gt;</span><br><span class="line">    a: &lt;input type=<span class="string">"text"</span> name=<span class="string">"a"</span>&gt; &lt;br&gt;</span><br><span class="line">    b: &lt;input type=<span class="string">"text"</span> name=<span class="string">"b"</span>&gt; &lt;br&gt;</span><br><span class="line">     </span><br><span class="line">    &lt;input type=<span class="string">"submit"</span> value=<span class="string">"提交"</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>后台：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>)</span><br><span class="line">     </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(request)</span>:</span></span><br><span class="line">    a = request.GET[<span class="string">'a'</span>]</span><br><span class="line">    b = request.GET[<span class="string">'b'</span>]</span><br><span class="line">    a = int(a)</span><br><span class="line">    b = int(b)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(str(a+b))</span><br></pre></td></tr></table></figure></p>
+<p>POST请求:<br>forms.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django <span class="keyword">import</span> forms</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddForm</span><span class="params">(forms.Form)</span>:</span></span><br><span class="line">    a = forms.IntegerField()</span><br><span class="line">    b = forms.IntegerField()</span><br></pre></td></tr></table></figure></p>
+<p>views.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 引入我们创建的表单类</span></span><br><span class="line"><span class="keyword">from</span> .forms <span class="keyword">import</span> AddForm</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span>:<span class="comment"># 当提交表单时</span></span><br><span class="line">     </span><br><span class="line">        form = AddForm(request.POST) <span class="comment"># form 包含提交的数据</span></span><br><span class="line">         </span><br><span class="line">        <span class="keyword">if</span> form.is_valid():<span class="comment"># 如果提交的数据合法</span></span><br><span class="line">            a = form.cleaned_data[<span class="string">'a'</span>]</span><br><span class="line">            b = form.cleaned_data[<span class="string">'b'</span>]</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(str(int(a) + int(b)))</span><br><span class="line">     </span><br><span class="line">    <span class="keyword">else</span>:<span class="comment"># 当正常访问时</span></span><br><span class="line">        form = AddForm()</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'form'</span>: form&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>index.html<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">'post'</span>&gt;</span></span><br><span class="line">&#123;% csrf_token %&#125;</span><br><span class="line">&#123;&#123; form &#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>urls.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line">admin.autodiscover()</span><br><span class="line"> </span><br><span class="line">urlpatterns = patterns(<span class="string">''</span>,</span><br><span class="line">    <span class="comment"># 注意下面这一行</span></span><br><span class="line">    url(<span class="string">r'^$'</span>, <span class="string">'tools.views.index'</span>, name=<span class="string">'home'</span>),</span><br><span class="line">    url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h3 id="django配置"><a href="#django配置" class="headerlink" title="django配置"></a>django配置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build paths inside the project like this: os.path.join(BASE_DIR, ...)</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(__file__))</span><br></pre></td></tr></table></figure>
+<p>这里用到了python中一个神奇的变量 <strong>file</strong> 这个变量可以获取到当前文件（包含这个代码的文件）的路径。os.path.dirname(<strong>file</strong>) 得到文件所在目录，再来一个os.path.dirname()就是目录的上一级，BASE_DIR 即为 项目 所在目录。我们在后面的与目录有关的变量都用它，这样使得移植性更强。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SECURITY WARNING: don't run with debug turned on in production!</span></span><br><span class="line">DEBUG = <span class="keyword">True</span></span><br><span class="line">TEMPLATE_DEBUG = <span class="keyword">True</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>DEBUG＝True</strong> 时，如果出现 bug 便于我们看见问题所在，但是部署时最好不要让用户看见bug的详情，可能一些不怀好心的人攻击网站，造成不必要的麻烦。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALLOWED_HOSTS = [<span class="string">'*.besttome.com'</span>,<span class="string">'www.ziqiangxuetang.com'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>ALLOWED_HOSTS 允许你设置哪些域名可以访问，即使在 Apache 或 Nginx 等中绑定了，这里不允许的话，也是不能访问的。<br>当 DEBUG=False 时，这个为必填项，如果不想输入，可以用 <strong>ALLOW_HOSTS = [‘*’]</strong> 来允许所有的。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STATIC_URL = <span class="string">'/static/'</span></span><br><span class="line">STATIC_ROOT = os.path.join(BASE_DIR,<span class="string">'static'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>static 是静态文件所有目录，比如 jquery.js, bootstrap.min.css 等文件。<br>一般来说我们只要把静态文件放在 APP 中的 static 目录下，部署时用 python manage.py collectstatic 就可以把静态文件收集到（复制到） STATIC_ROOT 目录，但是有时我们有一些共用的静态文件，这时候可以设置 <strong>STATICFILES_DIRS</strong> 另外弄一个文件夹，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">STATICFILES_DIRS = (</span><br><span class="line">    os.path.join(BASE_DIR, <span class="string">"common_static"</span>),</span><br><span class="line">    <span class="string">'/var/www/static/'</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>这样我们就可以把静态文件放在 common_static 和 /var/www/static/中了，Django也能找到它们。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MEDIA_URL = <span class="string">'/media/'</span></span><br><span class="line">MEDIA_ROOT = os.path.join(BASE_DIR,<span class="string">'media'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>media文件夹用来存放用户上传的文件，与权限有关，详情见  <font color="blue">Django 静态文件</font> 和   <font color="blue">Django 部署</font><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">TEMPLATES = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'BACKEND'</span>: <span class="string">'django.template.backends.django.DjangoTemplates'</span>,</span><br><span class="line">        <span class="string">'DIRS'</span>: [</span><br><span class="line">            os.path.join(BASE_DIR,<span class="string">'templates'</span>).replace(<span class="string">'\\'</span>, <span class="string">'/'</span>),</span><br><span class="line">            os.path.join(BASE_DIR,<span class="string">'templates2'</span>).replace(<span class="string">'\\'</span>, <span class="string">'/'</span>),</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'APP_DIRS'</span>: <span class="keyword">True</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>这样 就可以把模板文件放在 templates 和 templates2 文件夹中了。</p>
+<h3 id="Django静态文件"><a href="#Django静态文件" class="headerlink" title="Django静态文件"></a>Django静态文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Static files (CSS, JavaScript, Images)</span></span><br><span class="line"><span class="comment"># https://docs.djangoproject.com/en/1.8/howto/static-files/</span></span><br><span class="line"> </span><br><span class="line">STATIC_URL = <span class="string">'/static/'</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 当运行 python manage.py collectstatic 的时候</span></span><br><span class="line"><span class="comment"># STATIC_ROOT 文件夹 是用来将所有STATICFILES_DIRS中所有文件夹中的文件，以及各app中static中的文件都复制过来</span></span><br><span class="line"><span class="comment"># 把这些文件放到一起是为了用apache等部署的时候更方便</span></span><br><span class="line">STATIC_ROOT = os.path.join(BASE_DIR, <span class="string">'collected_static'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 其它 存放静态文件的文件夹，可以用来存放项目中公用的静态文件，里面不能包含 STATIC_ROOT</span></span><br><span class="line"><span class="comment"># 如果不想用 STATICFILES_DIRS 可以不用，都放在 app 里的 static 中也可以</span></span><br><span class="line">STATICFILES_DIRS = (</span><br><span class="line">    os.path.join(BASE_DIR, <span class="string">"common_static"</span>),</span><br><span class="line">    <span class="string">'/path/to/others/static/'</span>,  <span class="comment"># 用不到的时候可以不写这一行</span></span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 这个是默认设置，Django 默认会在 STATICFILES_DIRS中的文件夹 和 各app下的static文件夹中找文件</span></span><br><span class="line"><span class="comment"># 注意有先后顺序，找到了就不再继续找了</span></span><br><span class="line">STATICFILES_FINDERS ＝ (</span><br><span class="line">    <span class="string">"django.contrib.staticfiles.finders.FileSystemFinder"</span>,</span><br><span class="line">    <span class="string">"django.contrib.staticfiles.finders.AppDirectoriesFinder"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>自己分配静态文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># static files</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> django.conf.urls.static <span class="keyword">import</span> static</span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">if</span> settings.DEBUG:</span><br><span class="line">    media_root = os.path.join(settings.BASE_DIR,<span class="string">'media2'</span>)</span><br><span class="line">    urlpatterns += static(<span class="string">'/media2/'</span>, document_root=media_root)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls.static <span class="keyword">import</span> static</span><br><span class="line"> </span><br><span class="line">urlpatterns = patterns(<span class="string">''</span>,</span><br><span class="line">    url(<span class="string">r'^$'</span>, <span class="string">'app.views.index'</span>, name=<span class="string">'index'</span>),</span><br><span class="line">    url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span><br><span class="line">) + static(<span class="string">'/media2/'</span>, document_root=media_root)</span><br></pre></td></tr></table></figure>
+<h3 id="django部署"><a href="#django部署" class="headerlink" title="django部署"></a>django部署</h3><p>apache部署和nginx部署</p>
+<h3 id="文本数据导入"><a href="#文本数据导入" class="headerlink" title="文本数据导入"></a>文本数据导入</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.environ.setdefault(<span class="string">"DJANGO_SETTINGS_MODULE"</span>, <span class="string">"mysite.settings"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Django 版本大于等于1.7的时候，需要加上下面两句</span></span><br><span class="line"><span class="string">import django</span></span><br><span class="line"><span class="string">django.setup()</span></span><br><span class="line"><span class="string">否则会抛出错误 django.core.exceptions.AppRegistryNotReady: Models aren't loaded yet.</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> django</span><br><span class="line"><span class="keyword">if</span> django.VERSION &gt;= (<span class="number">1</span>, <span class="number">7</span>):<span class="comment">#自动判断版本</span></span><br><span class="line">    django.setup()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">from</span> blog.models <span class="keyword">import</span> Blog</span><br><span class="line">    f = open(<span class="string">'oldblog.txt'</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">        title,content = line.split(<span class="string">'****'</span>)</span><br><span class="line">        Blog.objects.create(title=title,content=content)</span><br><span class="line">    f.close()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br><span class="line">    print(<span class="string">'Done!'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="json文本数据导入"><a href="#json文本数据导入" class="headerlink" title="json文本数据导入"></a>json文本数据导入</h3><p>python manage.py dumpdata fixture.json导出<br>python manage.py loaddata fixture.json导入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.environ.setdefault(<span class="string">"DJANGO_SETTINGS_MODULE"</span>, <span class="string">"mysite.settings"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">from</span> blog.models <span class="keyword">import</span> Blog</span><br><span class="line">    f = open(<span class="string">'oldblog.txt'</span>)</span><br><span class="line">     </span><br><span class="line">    BlogList = []</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">        parts = line.split(<span class="string">'****'</span>)</span><br><span class="line">        BlogList.append(Blog(title=parts[<span class="number">0</span>], content=parts[<span class="number">1</span>]))</span><br><span class="line">     </span><br><span class="line">    f.close()</span><br><span class="line">         </span><br><span class="line">    <span class="comment"># 以上四行 也可以用 列表解析 写成下面这样</span></span><br><span class="line">    <span class="comment"># BlogList = [Blog(title=line.split('****')[0], content=line.split('****')[1]) for line in f]</span></span><br><span class="line">     </span><br><span class="line">    Blog.objects.bulk_create(BlogList)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br><span class="line">    print(<span class="string">'Done!'</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="django数据迁移"><a href="#django数据迁移" class="headerlink" title="django数据迁移"></a>django数据迁移</h3><p>python manage.py dumpdata [appname] &gt; appname_data.json数据库导出<br>python manage.py loaddata blog_dump.json数据导入<br>mysql<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导出数据库 zqxt 到 zqxt.sql 文件中</span></span><br><span class="line">mysqldump -u username -p --database zqxt &gt; zqxt.sql</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 导入数据库到 新的服务器</span></span><br><span class="line">mysql -u username -p</span><br><span class="line">输入密码进入 MySQL 命令行</span><br><span class="line">&gt; <span class="built_in">source</span> /path/to/zqxt.sql</span><br></pre></td></tr></table></figure></p>
+<h3 id="django多数据库联用"><a href="#django多数据库联用" class="headerlink" title="django多数据库联用"></a>django多数据库联用</h3><p>(1)每个app都可以单独设置一个数据库<br>settings.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Database</span></span><br><span class="line"><span class="comment"># https://docs.djangoproject.com/en/1.8/ref/settings/#databases</span></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.sqlite3'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: os.path.join(BASE_DIR, <span class="string">'db.sqlite3'</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'db1'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.postgresql_psycopg2'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'dbname1'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'your_db_user_name'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'yourpassword'</span>,</span><br><span class="line">        <span class="string">"HOST"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'db2'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.postgresql_psycopg2'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'dbname2'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'your_db_user_name'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'yourpassword'</span>,</span><br><span class="line">        <span class="string">"HOST"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># use multi-database in django</span></span><br><span class="line"><span class="comment"># add by WeizhongTu</span></span><br><span class="line">DATABASE_ROUTERS = [<span class="string">'project_name.database_router.DatabaseAppsRouter'</span>]</span><br><span class="line">DATABASE_APPS_MAPPING = &#123;</span><br><span class="line">    <span class="comment"># example:</span></span><br><span class="line">    <span class="comment">#'app_name':'database_name',</span></span><br><span class="line">    <span class="string">'app1'</span>: <span class="string">'db1'</span>,</span><br><span class="line">    <span class="string">'app2'</span>: <span class="string">'db2'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在project_name文件夹中存放database_route.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"> </span><br><span class="line">DATABASE_MAPPING = settings.DATABASE_APPS_MAPPING</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DatabaseAppsRouter</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    A router to control all database operations on models for different</span></span><br><span class="line"><span class="string">    databases.</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">    In case an app is not set in settings.DATABASE_APPS_MAPPING, the router</span></span><br><span class="line"><span class="string">    will fallback to the `default` database.</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">    Settings example:</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">    DATABASE_APPS_MAPPING = &#123;'app1': 'db1', 'app2': 'db2'&#125;</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">db_for_read</span><span class="params">(self, model, **hints)</span>:</span></span><br><span class="line">        <span class="string">""""Point all read operations to the specific database."""</span></span><br><span class="line">        <span class="keyword">if</span> model._meta.app_label <span class="keyword">in</span> DATABASE_MAPPING:</span><br><span class="line">            <span class="keyword">return</span> DATABASE_MAPPING[model._meta.app_label]</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">db_for_write</span><span class="params">(self, model, **hints)</span>:</span></span><br><span class="line">        <span class="string">"""Point all write operations to the specific database."""</span></span><br><span class="line">        <span class="keyword">if</span> model._meta.app_label <span class="keyword">in</span> DATABASE_MAPPING:</span><br><span class="line">            <span class="keyword">return</span> DATABASE_MAPPING[model._meta.app_label]</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">allow_relation</span><span class="params">(self, obj1, obj2, **hints)</span>:</span></span><br><span class="line">        <span class="string">"""Allow any relation between apps that use the same database."""</span></span><br><span class="line">        db_obj1 = DATABASE_MAPPING.get(obj1._meta.app_label)</span><br><span class="line">        db_obj2 = DATABASE_MAPPING.get(obj2._meta.app_label)</span><br><span class="line">        <span class="keyword">if</span> db_obj1 <span class="keyword">and</span> db_obj2:</span><br><span class="line">            <span class="keyword">if</span> db_obj1 == db_obj2:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">allow_syncdb</span><span class="params">(self, db, model)</span>:</span></span><br><span class="line">        <span class="string">"""Make sure that apps only appear in the related database."""</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> db <span class="keyword">in</span> DATABASE_MAPPING.values():</span><br><span class="line">            <span class="keyword">return</span> DATABASE_MAPPING.get(model._meta.app_label) == db</span><br><span class="line">        <span class="keyword">elif</span> model._meta.app_label <span class="keyword">in</span> DATABASE_MAPPING:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
+<p>2、使用指定的数据库来进行操作<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询</span></span><br><span class="line">YourModel.objects.using(<span class="string">'db1'</span>).all() </span><br><span class="line">或者 YourModel.objects.using(<span class="string">'db2'</span>).all()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存 或 删除</span></span><br><span class="line">user_obj.save(using=<span class="string">'new_users'</span>)</span><br><span class="line">user_obj.delete(using=<span class="string">'legacy_users'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>3、多个数据库联用时数据导入导出<br>数据库同步<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">python manage.py syncdb <span class="comment">#同步默认的数据库，和原来的没有区别</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#同步数据库 db1 (注意：不是数据库名是db1,是settings.py中的那个db1，不过你可以使这两个名称相同，容易使用)</span></span><br><span class="line">python manage.py syncdb --database=db1</span><br><span class="line">数据导出</span><br><span class="line">python manage.py dumpdata app1 --database=db1 &gt; app1_fixture.json</span><br><span class="line">python manage.py dumpdata app2 --database=db2 &gt; app2_fixture.json</span><br><span class="line">python manage.py dumpdata auth &gt; auth_fixture.json</span><br><span class="line">数据导入</span><br><span class="line">python manage.py loaddata app1_fixture.json --database=db1</span><br><span class="line">python manage.py loaddata app2_fixture.json --database=db2</span><br></pre></td></tr></table></figure></p>
+<h3 id="django缓存cache"><a href="#django缓存cache" class="headerlink" title="django缓存cache"></a>django缓存cache</h3><p>settings.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'BACKEND'</span>: <span class="string">'django.core.cache.backends.locmem.LocMemCache'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>利用文件系统来缓存<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CACHES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'BACKEND'</span>: <span class="string">'django.core.cache.backends.filebased.FileBasedCache'</span>,</span><br><span class="line">        <span class="string">'LOCATION'</span>: <span class="string">'/var/tmp/django_cache'</span>,</span><br><span class="line">        <span class="string">'TIMEOUT'</span>: <span class="number">600</span>,</span><br><span class="line">        <span class="string">'OPTIONS'</span>: &#123;</span><br><span class="line">            <span class="string">'MAX_ENTRIES'</span>: <span class="number">1000</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>利用数据库来缓存<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CACHES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'BACKEND'</span>: <span class="string">'django.core.cache.backends.db.DatabaseCache'</span>,</span><br><span class="line">        <span class="string">'LOCATION'</span>: <span class="string">'cache_table_name'</span>,</span><br><span class="line">        <span class="string">'TIMEOUT'</span>: <span class="number">600</span>,</span><br><span class="line">        <span class="string">'OPTIONS'</span>: &#123;</span><br><span class="line">            <span class="string">'MAX_ENTRIES'</span>: <span class="number">2000</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>django缓存系统实例<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="comment"># 读取数据库等 并渲染到网页</span></span><br><span class="line">    <span class="comment"># 数据库获取的结果保存到 queryset 中</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'queryset'</span>:queryset&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>像这样每次访问都要读取数据库，一般的小网站没什么问题，当访问量非常大的时候，就会有很多次的数据库查询，肯定会造成访问速度变慢，服务器资源占用较多等问题。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.views.decorators.cache <span class="keyword">import</span> cache_page</span><br><span class="line"> </span><br><span class="line"><span class="meta">@cache_page(60 * 15) # 秒数，这里指缓存 15 分钟，不直接写900是为了提高可读性</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="comment"># 读取数据库等 并渲染到网页</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'queryset'</span>:queryset&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="django生成静态网页"><a href="#django生成静态网页" class="headerlink" title="django生成静态网页"></a>django生成静态网页</h3><p>views.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> django.template.loader <span class="keyword">import</span> render_to_string</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span><br><span class="line">    context = &#123;<span class="string">'some_key'</span>: <span class="string">'some_value'</span>&#125;</span><br><span class="line"> </span><br><span class="line">    static_html = <span class="string">'/path/to/static.html'</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(static_html):</span><br><span class="line">        content = render_to_string(<span class="string">'template.html'</span>, context)</span><br><span class="line">        <span class="keyword">with</span> open(static_html, <span class="string">'w'</span>) <span class="keyword">as</span> static_file:</span><br><span class="line">            static_file.write(content)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> render(request, static_html)</span><br></pre></td></tr></table></figure></p>
+<p>上面的例子中，当用户访问时，如果判断没有静态页面就自动生成静态页面，然后返回静态文件，当文件存在的时候就不再次生成。<br>也可以用一个文件夹，比如在project下建一个 static_html 文件夹，把生成的静态文件都放里面，让用户像访问静态文件那样访问页面。</p>
+<h3 id="django国际化"><a href="#django国际化" class="headerlink" title="django国际化"></a>django国际化</h3><p>(1)开启国际化支持settings.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">MIDDLEWARE_CLASSES = (</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">'django.middleware.locale.LocaleMiddleware'</span>,</span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">LANGUAGE_CODE = <span class="string">'en'</span></span><br><span class="line">TIME_ZONE = <span class="string">'UTC'</span></span><br><span class="line">USE_I18N = <span class="keyword">True</span></span><br><span class="line">USE_L10N = <span class="keyword">True</span></span><br><span class="line">USE_TZ = <span class="keyword">True</span></span><br><span class="line"> </span><br><span class="line">LANGUAGES = (</span><br><span class="line">    (<span class="string">'en'</span>, (<span class="string">'English'</span>)),</span><br><span class="line">    (<span class="string">'zh-cn'</span>, (<span class="string">'中文简体'</span>)),</span><br><span class="line">    (<span class="string">'zh-tw'</span>, (<span class="string">'中文繁體'</span>)),</span><br><span class="line">)</span><br><span class="line"><span class="number">1.9</span>版本以上</span><br><span class="line">LANGUAGES = (</span><br><span class="line">    (<span class="string">'en'</span>, (<span class="string">'English'</span>)),</span><br><span class="line">    (<span class="string">'zh-hans'</span>, (<span class="string">'中文简体'</span>)),</span><br><span class="line">    (<span class="string">'zh-hant'</span>, (<span class="string">'中文繁體'</span>)),</span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#翻译文件所在目录，需要手工创建</span></span><br><span class="line">LOCALE_PATHS = (</span><br><span class="line">    os.path.join(BASE_DIR, <span class="string">'locale'</span>),</span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line">TEMPLATE_CONTEXT_PROCESSORS = (</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">"django.core.context_processors.i18n"</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>(2)生成需要的编译的文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemessages -l zh-cn</span><br><span class="line">python manage.py makemessages -l zh-tw</span><br></pre></td></tr></table></figure></p>
+<p>(3)编译<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py compilemessages</span><br></pre></td></tr></table></figure></p>
+<h3 id="django-session"><a href="#django-session" class="headerlink" title="django session"></a>django session</h3><p>settings.py配置<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'django.contrib.sessions.middleware.SessionMiddleware'</span>,</span><br></pre></td></tr></table></figure></p>
+<p>在视图中使用session<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建或修改 session：</span></span><br><span class="line">request.session[key] = value</span><br><span class="line"><span class="comment"># 获取 session：</span></span><br><span class="line">request.session.get(key,default=<span class="keyword">None</span>)</span><br><span class="line"><span class="comment"># 删除 session</span></span><br><span class="line"><span class="keyword">del</span> request.session[key] <span class="comment"># 不存在时报错</span></span><br></pre></td></tr></table></figure></p>
+<p>session例子：不让用户评论两次<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_comment</span><span class="params">(request, new_comment)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> request.session.get(<span class="string">'has_commented'</span>, <span class="keyword">False</span>):</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">"You've already commented."</span>)</span><br><span class="line">    c = comments.Comment(comment=new_comment)</span><br><span class="line">    c.save()</span><br><span class="line">    request.session[<span class="string">'has_commented'</span>] = <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">'Thanks for your comment!'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>一个简化的登录认证：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(request)</span>:</span></span><br><span class="line">    m = Member.objects.get(username=request.POST[<span class="string">'username'</span>])</span><br><span class="line">    <span class="keyword">if</span> m.password == request.POST[<span class="string">'password'</span>]:</span><br><span class="line">        request.session[<span class="string">'member_id'</span>] = m.id</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">"You're logged in."</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> HttpResponse(<span class="string">"Your username and password didn't match."</span>)</span><br><span class="line">         </span><br><span class="line">         </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">del</span> request.session[<span class="string">'member_id'</span>]</span><br><span class="line">    <span class="keyword">except</span> KeyError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">"You're logged out."</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="django传递数据给js"><a href="#django传递数据给js" class="headerlink" title="django传递数据给js"></a>django传递数据给js</h3><p>一、页面加载完成后(ajax)<br>二、直接在视图函数(一次性渲染，同一次请求)<br>views.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">home</span><span class="params">(request)</span>:</span></span><br><span class="line">    List = [<span class="string">'自强学堂'</span>, <span class="string">'渲染Json到模板'</span>]</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'home.html'</span>, &#123;<span class="string">'List'</span>: List&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>home.html<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">    var List = &#123;&#123; List &#125;&#125;;</span><br><span class="line">    alert(List);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>会报错<br><strong>需要注意两点：</strong></p>
+<ol>
+<li>views.py中返回的函数中的值要用 <font color="red">json.dumps()</font>处理</li>
+<li>在网页上要加一个 <font color="red">safe 过滤器</font>。<br>views.py<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">home</span><span class="params">(request)</span>:</span></span><br><span class="line">    List = [<span class="string">'自强学堂'</span>, <span class="string">'渲染Json到模板'</span>]</span><br><span class="line">    Dict = &#123;<span class="string">'site'</span>: <span class="string">'自强学堂'</span>, <span class="string">'author'</span>: <span class="string">'涂伟忠'</span>&#125;</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'home.html'</span>, &#123;</span><br><span class="line">            <span class="string">'List'</span>: json.dumps(List),</span><br><span class="line">            <span class="string">'Dict'</span>: json.dumps(Dict)</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>home.html 只给出了js的核心部分<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//列表</span><br><span class="line">var List = &#123;&#123; List|safe &#125;&#125;;</span><br><span class="line">//字典</span><br><span class="line">var Dict = &#123;&#123; Dict|safe &#125;&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="django中间件"><a href="#django中间件" class="headerlink" title="django中间件"></a>django中间件</h3><p>1、比如我们要做一个拦截器，发现有恶意访问网站的人，就拦截他。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#项目 zqxt 文件名 zqxt/middleware.py</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlockedIpMiddleware</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> request.META[<span class="string">'REMOTE_ADDR'</span>] <span class="keyword">in</span> getattr(settings, <span class="string">"BLOCKED_IPS"</span>, []):</span><br><span class="line">            <span class="keyword">return</span> http.HttpResponseForbidden(<span class="string">'&lt;h1&gt;Forbidden&lt;/h1&gt;'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>这里的代码的功能就是 获取当前访问者的 IP (request.META[‘REMOTE_ADDR’])，如果这个 IP 在黑名单中就拦截，如果不在就返回 None (函数中没有返回值其实就是默认为 None)，把这个中间件的 Python 路径写到settings.py中<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MIDDLEWARE_CLASSES = (</span><br><span class="line">    <span class="string">'zqxt.middleware.BlockedIpMiddleware'</span>,</span><br><span class="line">    ...其它的中间件</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>Django 会从 MIDDLEWARE_CLASSES 中按照从上到下的顺序一个个执行中间件中的 process_request 函数，而其中 process_response 函数则是最前面的最后执行。<br>2.<font color="red">再比如，我们在网站放到服务器上正式运行后，DEBUG改为了 False，这样更安全，但是有时候发生错误我们不能看到错误详情，调试不方便，有没有办法处理好这两个事情呢？</font><br>(1)普通访问者看到的是友好的报错信息。<br>(2)管理员看到的是错误详情，以便于修复BUG<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> django.views.debug <span class="keyword">import</span> technical_500_response</span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserBasedExceptionMiddleware</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_exception</span><span class="params">(self, request, exception)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> request.user.is_superuser <span class="keyword">or</span> request.META.get(<span class="string">'REMOTE_ADDR'</span>) <span class="keyword">in</span> settings.INTERNAL_IPS:</span><br><span class="line">            <span class="keyword">return</span> technical_500_response(request, *sys.exc_info())</span><br></pre></td></tr></table></figure></p>
+<p>3、识别手机的中间件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">MOBILE_USERAGENTS = (<span class="string">"2.0 MMP"</span>,<span class="string">"240x320"</span>,<span class="string">"400X240"</span>,<span class="string">"AvantGo"</span>,<span class="string">"BlackBerry"</span>,</span><br><span class="line">    <span class="string">"Blazer"</span>,<span class="string">"Cellphone"</span>,<span class="string">"Danger"</span>,<span class="string">"DoCoMo"</span>,<span class="string">"Elaine/3.0"</span>,<span class="string">"EudoraWeb"</span>,</span><br><span class="line">    <span class="string">"Googlebot-Mobile"</span>,<span class="string">"hiptop"</span>,<span class="string">"IEMobile"</span>,<span class="string">"KYOCERA/WX310K"</span>,<span class="string">"LG/U990"</span>,</span><br><span class="line">    <span class="string">"MIDP-2."</span>,<span class="string">"MMEF20"</span>,<span class="string">"MOT-V"</span>,<span class="string">"NetFront"</span>,<span class="string">"Newt"</span>,<span class="string">"Nintendo Wii"</span>,<span class="string">"Nitro"</span>,</span><br><span class="line">    <span class="string">"Nokia"</span>,<span class="string">"Opera Mini"</span>,<span class="string">"Palm"</span>,<span class="string">"PlayStation Portable"</span>,<span class="string">"portalmmm"</span>,<span class="string">"Proxinet"</span>,</span><br><span class="line">    <span class="string">"ProxiNet"</span>,<span class="string">"SHARP-TQ-GX10"</span>,<span class="string">"SHG-i900"</span>,<span class="string">"Small"</span>,<span class="string">"SonyEricsson"</span>,<span class="string">"Symbian OS"</span>,</span><br><span class="line">    <span class="string">"SymbianOS"</span>,<span class="string">"TS21i-10"</span>,<span class="string">"UP.Browser"</span>,<span class="string">"UP.Link"</span>,<span class="string">"webOS"</span>,<span class="string">"Windows CE"</span>,</span><br><span class="line">    <span class="string">"WinWAP"</span>,<span class="string">"YahooSeeker/M1A1-R2D2"</span>,<span class="string">"iPhone"</span>,<span class="string">"iPod"</span>,<span class="string">"Android"</span>,</span><br><span class="line">    <span class="string">"BlackBerry9530"</span>,<span class="string">"LG-TU915 Obigo"</span>,<span class="string">"LGE VX"</span>,<span class="string">"webOS"</span>,<span class="string">"Nokia5800"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MobileTemplate</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    If a mobile user agent is detected, inspect the default args for the view </span></span><br><span class="line"><span class="string">    func, and if a template name is found assume it is the template arg and </span></span><br><span class="line"><span class="string">    attempt to load a mobile template based on the original template name.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_view</span><span class="params">(self, request, view_func, view_args, view_kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> any(ua <span class="keyword">for</span> ua <span class="keyword">in</span> MOBILE_USERAGENTS <span class="keyword">if</span> ua <span class="keyword">in</span> </span><br><span class="line">            request.META[<span class="string">"HTTP_USER_AGENT"</span>]):</span><br><span class="line">            template = view_kwargs.get(<span class="string">"template"</span>)</span><br><span class="line">            <span class="keyword">if</span> template <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                <span class="keyword">for</span> default <span class="keyword">in</span> view_func.func_defaults:</span><br><span class="line">                    <span class="keyword">if</span> str(default).endswith(<span class="string">".html"</span>):</span><br><span class="line">                        template = default</span><br><span class="line">            <span class="keyword">if</span> template <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                template = template.rsplit(<span class="string">".html"</span>, <span class="number">1</span>)[<span class="number">0</span>] + <span class="string">".mobile.html"</span></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    get_template(template)</span><br><span class="line">                <span class="keyword">except</span> TemplateDoesNotExist:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    view_kwargs[<span class="string">"template"</span>] = template</span><br><span class="line">                    <span class="keyword">return</span> view_func(request, *view_args, **view_kwargs)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/18/fourth/" rel="prev" title="angularjs初步">
+                angularjs初步 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令使用"><span class="nav-number">1.</span> <span class="nav-text">命令使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django的get，post方法与express的get，post方法不同"><span class="nav-number">2.</span> <span class="nav-text">django的get，post方法与express的get，post方法不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#url匹配参数与express不同"><span class="nav-number">3.</span> <span class="nav-text">url匹配参数与express不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#巧妙访问网页"><span class="nav-number">4.</span> <span class="nav-text">巧妙访问网页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板：模板中的for循环，条件判断，常用的标签，过滤器的使用。"><span class="nav-number">5.</span> <span class="nav-text">模板：模板中的for循环，条件判断，常用的标签，过滤器的使用。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断用户是否登录"><span class="nav-number">6.</span> <span class="nav-text">判断用户是否登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库模型"><span class="nav-number">7.</span> <span class="nav-text">数据库模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义Field"><span class="nav-number">8.</span> <span class="nav-text">自定义Field</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据表修改"><span class="nav-number">9.</span> <span class="nav-text">数据表修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django后台"><span class="nav-number">10.</span> <span class="nav-text">django后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django表单"><span class="nav-number">11.</span> <span class="nav-text">django表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django配置"><span class="nav-number">12.</span> <span class="nav-text">django配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django静态文件"><span class="nav-number">13.</span> <span class="nav-text">Django静态文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django部署"><span class="nav-number">14.</span> <span class="nav-text">django部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本数据导入"><span class="nav-number">15.</span> <span class="nav-text">文本数据导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json文本数据导入"><span class="nav-number">16.</span> <span class="nav-text">json文本数据导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django数据迁移"><span class="nav-number">17.</span> <span class="nav-text">django数据迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django多数据库联用"><span class="nav-number">18.</span> <span class="nav-text">django多数据库联用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django缓存cache"><span class="nav-number">19.</span> <span class="nav-text">django缓存cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django生成静态网页"><span class="nav-number">20.</span> <span class="nav-text">django生成静态网页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django国际化"><span class="nav-number">21.</span> <span class="nav-text">django国际化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django-session"><span class="nav-number">22.</span> <span class="nav-text">django session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django传递数据给js"><span class="nav-number">23.</span> <span class="nav-text">django传递数据给js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#django中间件"><span class="nav-number">24.</span> <span class="nav-text">django中间件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2016/12/18/fifth/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1071 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="必备知识ip地址与二进制的关系:00000000.00000000.00000000.000000000.0.0.0第一个是二进制0，第二个是根据二进制划分为四个十进制。又是按一个一个字节来划分的。ABCDE类地址:A地址由1字节的网络地址和3字节的主机地址组成，网络地址的最高位必须是”0”,地址范围是1.0.0.0到126.0.0.0。126个网络，每个网络能容纳1千多万个主机。127.0.0.">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows搭建DHCP服务器">
+<meta property="og:url" content="https://youandme66.github.io/2017/05/19/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="必备知识ip地址与二进制的关系:00000000.00000000.00000000.000000000.0.0.0第一个是二进制0，第二个是根据二进制划分为四个十进制。又是按一个一个字节来划分的。ABCDE类地址:A地址由1字节的网络地址和3字节的主机地址组成，网络地址的最高位必须是”0”,地址范围是1.0.0.0到126.0.0.0。126个网络，每个网络能容纳1千多万个主机。127.0.0.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step1.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step2.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step3.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step4.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step5.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step6.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step7.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step8.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step9.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step10.png">
+<meta property="og:image" content="https://youandme66.github.io/2017/05/19/first/step12.png">
+<meta property="og:updated_time" content="2017-05-19T04:09:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows搭建DHCP服务器">
+<meta name="twitter:description" content="必备知识ip地址与二进制的关系:00000000.00000000.00000000.000000000.0.0.0第一个是二进制0，第二个是根据二进制划分为四个十进制。又是按一个一个字节来划分的。ABCDE类地址:A地址由1字节的网络地址和3字节的主机地址组成，网络地址的最高位必须是”0”,地址范围是1.0.0.0到126.0.0.0。126个网络，每个网络能容纳1千多万个主机。127.0.0.">
+<meta name="twitter:image" content="https://youandme66.github.io/2017/05/19/first/step1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/05/19/first/">
+
+
+
+
+
+  <title> windows搭建DHCP服务器 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/05/19/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                windows搭建DHCP服务器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-19T00:00:00+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务器/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/05/19/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/05/19/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/05/19/first/" class="leancloud_visitors" data-flag-title="windows搭建DHCP服务器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="必备知识"><a href="#必备知识" class="headerlink" title="必备知识"></a>必备知识</h3><p>ip地址与二进制的关系:<br>00000000.00000000.00000000.00000000<br>0.0.0.0<br>第一个是二进制0，第二个是根据二进制划分为四个十进制。又是按一个一个字节来划分的。<br>ABCDE类地址:<br>A地址由1字节的网络地址和3字节的主机地址组成，网络地址的最高位必须是”0”,地址范围是1.0.0.0到126.0.0.0。126个网络，每个网络能容纳1千多万个主机。<br>127.0.0.1是电脑的内测地址。<br>B类地址由两字节的网络地址和两字节的主机地址组成，网络地址的最高位必须是”10”,地址范围是128.0.0.0到191.255.255.255。16320个网络，每个网络能容纳6万多个主机。<br>C类地址由三字节的网络地址和一字节的主机地址组成，网络地址的最高位必须是”110”,范围从192.0.0.0到223.255.255.255.C类网络可达209万余个，每个网络能容纳254个主机。<br>D类地址多用于广播，D类IP地址第一个字节以”1110”开始，它并不指向特定网络，目前这一类地址被用在多点广播中。多点广播地址用来一次寻址一组计算机，它表示共享同一协议的一组计算机。<br>E类IP地址，以”1111”开始，为将来使用保留。<br>全零（“0．0．0．0”）地址对应于当前主机。全“1”的IP地址（“255．255．255．255”）是当前子网的广播地址。这里的全1是指11111111.11111111.11111111.11111111<br>在IP地址3种主要类型里，各保留了3个区域作为私有地址，其地址范围如下：<br>A类地址：10.0.0.0～10.255.255.255<br>B类地址：172.16.0.0～172.31.255.255<br>C类地址：192.168.0.0～192.168.255.255<br>A类地址的第一组数字为1～126。注意，数字0和 127不作为A类地址，数字127保留给内部回送函数，而数字0则表示该地址是本地宿主机，不能传送。<br>A类地址的子网掩码为255.0.0.0<br>B类地址的子网掩码为255.255.0.0<br>C类地址的子网掩码为255.255.255.0<br>子网掩码目的就是划分出网络地址和主机地址，关于子网掩码的计算，可以<a href="http://www.lzhword.cn/2017/01/17/20170117first/" target="_blank" rel="noopener">http://www.lzhword.cn/2017/01/17/20170117first/</a><br>去看。</p>
+<h3 id="DHCP个人理解"><a href="#DHCP个人理解" class="headerlink" title="DHCP个人理解"></a>DHCP个人理解</h3><p>其实在网络中DHCP可以是不必要的，通过静态IP地址即可实现，但是在大型网络中，有上万台主机，你不可能一个个去设置吧。所以这就出现了DHCP，这里就将C类地址的DHCP吧。DHCP客户端是以UDP 68号端口进行数据传输的，而DHCP服务器是以UDP 67号端口进行数据传输的。DHCP是利用传输层的UDP 68号端口发送（封装的目的端口为UDP 68号端口），经过网络层IP协议封装后，源IP地址为0.0.0.0（因为此时还没有分配IP地址），目的IP地址为255.255.255.255（有限广播IP地址）。这个有限广播地址就是代表任意一个IPv4子网的广播地址，当然是发送报文的主机所在的子网和DHCP服务器所在子网的广播地址。 至于IP报头中的源地址，由于当前DHCP客户端主机并未分配具体的IP地址，所以只能用具有任意代表功能的0.0.0.0地址来表示了。<br>客户端发送的报文:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">IP:ID = 0x0; Proto = UDP;Len: 328</span><br><span class="line">IP:Version = 4 (0x4)</span><br><span class="line">IP:Header Length = 20 (0x14)</span><br><span class="line">IP:Service Type = 0 (0x0)</span><br><span class="line">IP:Precedence = Routine</span><br><span class="line">IP:...0.... = Normal Delay</span><br><span class="line">IP:....0... = NormalThroughput</span><br><span class="line">IP:.....0.. = NormalReliability</span><br><span class="line">IP:Total Length = 328(0x148)</span><br><span class="line">IP:Identification = 0 (0x0)</span><br><span class="line">IP:Flags Summary = 0 (0x0)</span><br><span class="line">IP:.......0 = Last fragmentin datagram</span><br><span class="line">IP:......0. = May fragmentdatagram ifnecessary</span><br><span class="line">IP:Fragment Offset = 0 (0x0)bytes</span><br><span class="line">IP:Time to Live = 128 (0x80)</span><br><span class="line">IP:Protocol = UDP - User Datagram  !---使用UDP传输层协议</span><br><span class="line">IP:Checksum = 0x39A6</span><br><span class="line">IP:Source Address = 0.0.0.0    !---源IP地址为0.0.0.0</span><br><span class="line">IP:Destination Address = 255.255.255.255   !----目的IP地址为255.255.255.255</span><br><span class="line">IP:Data:Number of data bytesremaining =308 (0x0134)</span><br><span class="line">DHCP:Discover          (xid=21274A1D)</span><br><span class="line">DHCP:OpCode          (op)     = 1 (0x1)</span><br><span class="line">DHCP:HardwareType     (htype) = 1 (0x1) 10Mb Ethernet</span><br><span class="line">DHCP:Hardware Address Length(hlen) = 6(0x6)</span><br><span class="line">DHCP:Hops             (hops)   = 0 (0x0)</span><br><span class="line">DHCP:Transaction ID   (xid)   = 556223005 (0x21274A1D)</span><br><span class="line">DHCP:Seconds          (secs)   = 0 (0x0)</span><br><span class="line">DHCP:Flags            (flags) = 1 (0x1)   !---标志位置1，代表以广播方式发送</span><br><span class="line">DHCP:1............... = Broadcast</span><br><span class="line">DHCP:Client IP Address (ciaddr) =0.0.0.0</span><br><span class="line">DHCP:Your   IP Address(yiaddr) =0.0.0.0</span><br><span class="line">DHCP:Server IP Address (siaddr) =0.0.0.0</span><br><span class="line">DHCP:Relay  IP Address (giaddr)=0.0.0.0</span><br><span class="line">DHCP:Client Ethernet Address (chaddr) =08002B2ED85E</span><br><span class="line">DHCP:Server Host Name (sname) = &lt;Blank&gt;</span><br><span class="line">DHCP:Boot File Name   (file)  = &lt;Blank&gt;</span><br><span class="line">DHCP:Magic Cookie = [OK]</span><br><span class="line">DHCP:OptionField      (options)</span><br><span class="line">DHCP:DHCP MessageType      = DHCP Discover   !---DHCP报文类型为DHCP Discover</span><br><span class="line">DHCP:Client-identifier     =(Type:1) 08 00 2b 2e d8 5e</span><br><span class="line">DHCP:HostName             = JUMBO-WS    !---DHCP服务器主机名</span><br><span class="line">DHCP:Parameter Request List= (Length:7)01 0f 03 2c 2e 2f 06</span><br><span class="line">DHCP:End of this optionfield</span><br></pre></td></tr></table></figure></p>
+<p>提供阶段：即DHCP服务器向DHCP客户端提供预分配IP地址的阶段。网络中的所有DHCP服务器接收到客户端的DHCP DISCOVER报文后，都会根据自己地址池中IP地址分配的优先次序选出一个IP地址，然后与其它参数一起通过传输层的UDP 67号端口，在DHCP OFFER报文中以广播方式发送给客户端（目的端口是DHCP客户端的UDP 68号端口）。客户端通过封装在帧中的目的MAC地址（也就在DHCP DISCOVER报文中的CHADDR字段值）的比对来确定是否接收该帧。但这样一来，理论上DHCP客户端可能会收到多个DHCP OFFER报文（当网络中存在多个DHCP服务器时），但DHCP客户端只接受第一个到来的DHCP OFFER报文。<br>服务器的报文<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">IP:ID = 0x3C30; Proto = UDP;Len: 328</span><br><span class="line">IP:Version = 4 (0x4)</span><br><span class="line">IP:Header Length = 20 (0x14)</span><br><span class="line">IP:Service Type = 0 (0x0)</span><br><span class="line">IP:Precedence = Routine</span><br><span class="line">IP:...0.... = Normal Delay</span><br><span class="line">IP:....0... = NormalThroughput</span><br><span class="line">IP:.....0.. = NormalReliability</span><br><span class="line">IP:Total Length = 328(0x148)</span><br><span class="line">IP:Identification = 15408(0x3C30)</span><br><span class="line">IP:Flags Summary = 0 (0x0)</span><br><span class="line">IP:.......0 = Last fragmentin datagram</span><br><span class="line">IP:......0. = May fragmentdatagram ifnecessary</span><br><span class="line">IP:Fragment Offset = 0 (0x0)bytes</span><br><span class="line">IP:Time to Live = 128 (0x80)</span><br><span class="line">IP:Protocol = UDP - User Datagram</span><br><span class="line">IP:Checksum = 0x2FA8</span><br><span class="line">IP:Source Address = 157.54.48.151</span><br><span class="line">IP:Destination Address = 255.255.255.255</span><br><span class="line">IP:Data:Number of data bytesremaining =308 (0x0134)</span><br><span class="line">DHCP:Offer             (xid=21274A1D)</span><br><span class="line">DHCP:OpCode          (op)     = 2 (0x2)</span><br><span class="line">DHCP:HardwareType     (htype) = 1 (0x1) 10Mb Ethernet</span><br><span class="line">DHCP:Hardware Address Length(hlen) = 6(0x6)</span><br><span class="line">DHCP:Hops             (hops)   = 0 (0x0)</span><br><span class="line">DHCP:Transaction ID   (xid)   = 556223005 (0x21274A1D)</span><br><span class="line">DHCP:Seconds          (secs)   = 0 (0x0)</span><br><span class="line">DHCP:Flags            (flags)  = 1 (0x1)</span><br><span class="line">DHCP:1............... =  Broadcast</span><br><span class="line">DHCP:Client IP Address (ciaddr) =0.0.0.0</span><br><span class="line">DHCP:Your   IP Address(yiaddr) =157.54.50.5</span><br><span class="line">DHCP:Server IP Address (siaddr) =0.0.0.0</span><br><span class="line">DHCP:Relay  IP Address (giaddr)=0.0.0.0</span><br><span class="line">DHCP:Client Ethernet Address(chaddr) =08002B2ED85E</span><br><span class="line">DHCP:Server Host Name (sname) = &lt;Blank&gt;</span><br><span class="line">DHCP:Boot File Name   (file)  = &lt;Blank&gt;</span><br><span class="line">DHCP:Magic Cookie = [OK]</span><br><span class="line">DHCP:OptionField      (options)</span><br><span class="line">DHCP:DHCP MessageType      = DHCPOffer    !---DHCP报文类型为DHCP Offer</span><br><span class="line">DHCP:SubnetMask           =255.255.240.0    !---所分配IP地址的子网掩码为255.255.240.0</span><br><span class="line">DHCP:Renewal Time Value (T1) = 8Days, 0:00:00   !---想要继续租约原来分配的IP地址，则提出续约申请的期限为8天</span><br><span class="line">DHCP:Rebinding Time Value (T2) = 14Days,  0:00:00 !---如果上次申请续约失败，再次申请绑定原来分配到的IP地址的期限为14天</span><br><span class="line">DHCP:IP Address Lease Time  =16Days,  0:00:00   !---租约期限为16天，也就是DHCP客户端可使用此IP地址的最长时间为16天</span><br><span class="line">DHCP:ServerIdentifier      =157.54.48.151  !---DHCP服务器的IP地址为157.54.48.151</span><br><span class="line">DHCP:Router                =157.54.48.1  !---默认网关IP地址为157.54.48.1</span><br><span class="line">DHCP:NetBIOS Name Service  =157.54.16.154  !---DNS服务器IP地址为157.54.16.154</span><br><span class="line">DHCP:NetBIOS Node Type     =(Length: 1) 04</span><br><span class="line">DHCP:End of this optionfield</span><br></pre></td></tr></table></figure></p>
+<p>选择阶段<br>即DHCP客户端选择IP地址的阶段。如果有多台DHCP服务器向该客户端发来DHCP OFFER报文，客户端只接受第一个收到的DHCP OFFER报文，然后以广播方式发送DHCP REQUEST报文。在该报文的“RequestedAddress”选项中包含DHCP服务器在DHCP OFFER报文中预分配的IP地址，对应的DHCP服务器IP地址等。这样也就相当于同时告诉得其他DHCP服务器，它们可以释放已提供的地址，并将这些地址返回到可用地址池中。<br>报文:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">IP:ID = 0x100; Proto = UDP;Len: 328</span><br><span class="line">IP:Version = 4 (0x4)</span><br><span class="line">IP:Header Length = 20 (0x14)</span><br><span class="line">IP:Service Type = 0 (0x0)</span><br><span class="line">IP:Precedence = Routine</span><br><span class="line">IP:...0.... = Normal Delay</span><br><span class="line">IP:....0... = NormalThroughput</span><br><span class="line">IP:.....0.. = NormalReliability</span><br><span class="line">IP:Total Length = 328(0x148)</span><br><span class="line">IP:Identification = 256(0x100)</span><br><span class="line">IP:Flags Summary = 0 (0x0)</span><br><span class="line">IP:.......0 = Last fragmentin datagram</span><br><span class="line">IP:......0. = May fragmentdatagram ifnecessary</span><br><span class="line">IP:Fragment Offset = 0 (0x0)bytes</span><br><span class="line">IP:Time to Live = 128 (0x80)</span><br><span class="line">IP:Protocol = UDP - UserDatagram</span><br><span class="line">IP:Checksum = 0x38A6</span><br><span class="line">IP:Source Address = 0.0.0.0</span><br><span class="line">IP:Destination Address = 255.255.255.255</span><br><span class="line">IP:Data:Number of data bytesremaining =308 (0x0134)</span><br><span class="line"> </span><br><span class="line">DHCP:Request           (xid=21274A1D)</span><br><span class="line">DHCP:OpCode          (op)     = 1 (0x1)</span><br><span class="line">DHCP:HardwareType     (htype) = 1 (0x1) 10Mb Ethernet</span><br><span class="line">DHCP:Hardware Address Length(hlen) = 6(0x6)</span><br><span class="line">DHCP:Hops             (hops)   = 0 (0x0)</span><br><span class="line">DHCP:Transaction ID   (xid)   = 556223005 (0x21274A1D)</span><br><span class="line">DHCP:Seconds          (secs)   = 0 (0x0)</span><br><span class="line">DHCP:Flags            (flags)  = 1 (0x1)</span><br><span class="line">DHCP:1............... = Broadcast</span><br><span class="line">DHCP:Client IP Address (ciaddr) =0.0.0.0</span><br><span class="line">DHCP:Your   IP Address(yiaddr) =0.0.0.0</span><br><span class="line">DHCP:Server IP Address (siaddr) =0.0.0.0</span><br><span class="line">DHCP:Relay  IP Address (giaddr)=0.0.0.0</span><br><span class="line">DHCP:Client Ethernet Address(chaddr) =08002B2ED85E</span><br><span class="line">DHCP:Server Host Name (sname) = &lt;Blank&gt;</span><br><span class="line">DHCP:Boot File Name   (file)  = &lt;Blank&gt;</span><br><span class="line">DHCP:Magic Cookie = [OK]</span><br><span class="line">DHCP:OptionField      (options)</span><br><span class="line">DHCP:DHCP MessageType      = DHCP Request</span><br><span class="line">DHCP:Client-identifier     = (Type:1) 08 00 2b 2e d8 5e</span><br><span class="line">DHCP:RequestedAddress      =157.54.50.5</span><br><span class="line">DHCP:ServerIdentifier      =157.54.48.151</span><br><span class="line">DHCP:HostName             =JUMBO-WS</span><br><span class="line">DHCP:Parameter Request List= (Length:7)01 0f 03 2c 2e 2f 06</span><br><span class="line">DHCP:End of this optionfield</span><br></pre></td></tr></table></figure></p>
+<p>确认阶段：即DHCP服务器确认分配级DHCP客户端IP地址的阶段。某个DHCP服务器在收到DHCP客户端发来的DHCP REQUEST报文后，只有DHCP客户端选择的服务器会进行如下操作：如果确认将地址分配给该客户端，则以广播方式返回DHCP ACK报文；否则返回DHCP NAK报文，表明地址不能分配给该客户端。<br>   在DHCP 服务器发送的DHCP ACK报文的IP协议头部，Source Address是 DHCP 服务器IP地址，DestinationAddress仍然是广播地址255.255.255.255。在DHCP ACK报文中的Yiaddr字段包含要分配给客户端的IP地址，而Chaddr和DHCP:ClientIdentifier字段是发出请求的客户端中网卡的MAC地址。同时在选项部分也会在DHCP OFFER报文中把所分配的IP地址的子网掩码、默认网关、DNS服务器、租约期、续约时间等信息加上。<br>报文<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">IP:ID = 0x3D30; Proto = UDP;Len: 328</span><br><span class="line">IP:Version = 4 (0x4)</span><br><span class="line">IP:Header Length = 20 (0x14)</span><br><span class="line">IP:Service Type = 0 (0x0)</span><br><span class="line">IP:Precedence = Routine</span><br><span class="line">IP:...0.... = Normal Delay</span><br><span class="line">IP:....0... = NormalThroughput</span><br><span class="line">IP:.....0.. = NormalReliability</span><br><span class="line">IP:Total Length = 328(0x148)</span><br><span class="line">IP:Identification = 15664(0x3D30)</span><br><span class="line">IP:Flags Summary = 0 (0x0)</span><br><span class="line">IP:.......0 = Last fragmentin datagram</span><br><span class="line">IP:......0. = May fragmentdatagram ifnecessary</span><br><span class="line">IP:Fragment Offset = 0 (0x0)bytes</span><br><span class="line">IP:Time to Live = 128 (0x80)</span><br><span class="line">IP:Protocol = UDP - UserDatagram</span><br><span class="line">IP:Checksum = 0x2EA8</span><br><span class="line">IP:Source Address = 157.54.48.151</span><br><span class="line">IP:Destination Address = 255.255.255.255</span><br><span class="line">IP:Data:Number of data bytesremaining =308 (0x0134)</span><br><span class="line"> </span><br><span class="line">DHCP:ACK               (xid=21274A1D)</span><br><span class="line">DHCP:OpCode          (op)     = 2 (0x2)</span><br><span class="line">DHCP:HardwareType     (htype) = 1 (0x1) 10Mb Ethernet</span><br><span class="line">DHCP:Hardware Address Length(hlen) = 6(0x6)</span><br><span class="line">DHCP:Hops             (hops)   = 0 (0x0)</span><br><span class="line">DHCP:Transaction ID   (xid)   = 556223005 (0x21274A1D)</span><br><span class="line">DHCP:Seconds          (secs)   = 0 (0x0)</span><br><span class="line">DHCP:Flags            (flags)  = 1 (0x1)</span><br><span class="line">DHCP:1............... =Broadcast</span><br><span class="line">DHCP:Client IP Address (ciaddr) =0.0.0.0</span><br><span class="line">DHCP:Your   IP Address(yiaddr) =157.54.50.5</span><br><span class="line">DHCP:Server IP Address (siaddr) =0.0.0.0</span><br><span class="line">DHCP:Relay  IP Address (giaddr)=0.0.0.0</span><br><span class="line">DHCP:Client Ethernet Address(chaddr) =08002B2ED85E</span><br><span class="line">DHCP:Server Host Name (sname) = &lt;Blank&gt;</span><br><span class="line">DHCP:Boot File Name   (file)  = &lt;Blank&gt;</span><br><span class="line">DHCP:Magic Cookie = [OK]</span><br><span class="line">DHCP:OptionField      (options)</span><br><span class="line">DHCP:DHCP MessageType      = DHCP ACK</span><br><span class="line">DHCP:Renewal Time Value (T1)= 8Days,  0:00:00</span><br><span class="line">DHCP:Rebinding Time Value(T2) = 14Days,  0:00:00</span><br><span class="line">DHCP:IP Address LeaseTime  = 16Days,  0:00:00</span><br><span class="line">DHCP:ServerIdentifier      =157.54.48.151</span><br><span class="line">DHCP:SubnetMask           =255.255.240.0</span><br><span class="line">DHCP:Router                =157.54.48.1</span><br><span class="line">DHCP:NetBIOS Name Service  =157.54.16.154</span><br><span class="line">DHCP:NetBIOS NodeType      = (Length: 1) 04</span><br><span class="line">DHCP:End of this optionfield</span><br></pre></td></tr></table></figure></p>
+<h3 id="搭建DHCP服务器"><a href="#搭建DHCP服务器" class="headerlink" title="搭建DHCP服务器"></a>搭建DHCP服务器</h3><p>首先添加角色和功能<br><img src="/2017/05/19/first/step1.png" alt="加载中..."><br>下一步<br>基于角色或基于功能安装<br><img src="/2017/05/19/first/step2.png" alt="加载中..."><br>下一步服务器选择<br>从服务器池中选择服务器<br><img src="/2017/05/19/first/step3.png" alt="加载中..."><br>选择DHCP服务器即可安装。<br>安装完成后，可能需要重启。<br>重启后，进入管理器。<br>点击DHCP，右键服务器名称，点击DHCP管理<br><img src="/2017/05/19/first/step4.png" alt="加载中..."><br>进入DHCP管理器<br><img src="/2017/05/19/first/step5.png" alt="加载中..."><br>在这里我们建立IPV4的DHCP，右击IPV4选择新建域。<br><img src="/2017/05/19/first/step6.png" alt="加载中..."><br>点击下一步<br>名称和描述可以随意写，我这里写test,test<br><img src="/2017/05/19/first/step7.png" alt="加载中..."><br>下一步，填写起始IP地址和子网掩码，起始ip地址最好从10开始，而结束ip地址最好是250以前后，因为后面有保留的。这个长度的意思是网络位，子网掩码就是计算网络地址和主机地址的当你填完这些就自动会根据ABCDE网络类型进行自动填充，当然你也可以设置自己的子网。(注意你的ip地址，一定要和你的服务器的ip地址在同一子网，否则就无法在子网广播)<br><img src="/2017/05/19/first/step8.png" alt="加载中..."><br>下一步，添加排除和延迟，意思就是这些ip为保留ip，不可用。<br>我选择的是5到15这个ip段。<br><img src="/2017/05/19/first/step9.png" alt="加载中..."><br>下一步，租用期限<br>当主机租的ip到了期限会重新获取ip地址。默认为8天。<br>接着就下一步，由于这里只介绍DHCP服务器搭建，所以其他配置选否。<br>然后完成。<br>紧接着可以选择这个作用域并右键激活。<br><img src="/2017/05/19/first/step10.png" alt="加载中..."><br>我是用的虚拟机的网卡做的DHCP所以结果如下<br><img src="/2017/05/19/first/step12.png" alt="加载中..."></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/18/first/" rel="next" title="安卓工具汇总">
+                <i class="fa fa-chevron-left"></i> 安卓工具汇总
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/19/third/" rel="prev" title="触发器提权">
+                触发器提权 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#必备知识"><span class="nav-number">1.</span> <span class="nav-text">必备知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DHCP个人理解"><span class="nav-number">2.</span> <span class="nav-text">DHCP个人理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建DHCP服务器"><span class="nav-number">3.</span> <span class="nav-text">搭建DHCP服务器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/05/19/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>

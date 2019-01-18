@@ -1,0 +1,1108 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="学习,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="指令简介对于指令，可以把它简单的理解成在特定DOM元素上运行的函数，指令可以扩展这个元素的功能。例如,ng-click可以让一个元素能够监听click事件，并在接收到事件的时候执行angularjs表达式。正是指令使得angularjs这个框架变得强大，并且正如所见，我们可以自己创造新的指令。angularjs应用的模块中有很多方法可以使用，其中directive()这个方法是用来定义指令的: 1">
+<meta name="keywords" content="学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angularjs之指令深入版">
+<meta property="og:url" content="https://youandme66.github.io/2017/03/13/first/index.html">
+<meta property="og:site_name" content="战马博客">
+<meta property="og:description" content="指令简介对于指令，可以把它简单的理解成在特定DOM元素上运行的函数，指令可以扩展这个元素的功能。例如,ng-click可以让一个元素能够监听click事件，并在接收到事件的时候执行angularjs表达式。正是指令使得angularjs这个框架变得强大，并且正如所见，我们可以自己创造新的指令。angularjs应用的模块中有很多方法可以使用，其中directive()这个方法是用来定义指令的: 1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-15T10:31:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="angularjs之指令深入版">
+<meta name="twitter:description" content="指令简介对于指令，可以把它简单的理解成在特定DOM元素上运行的函数，指令可以扩展这个元素的功能。例如,ng-click可以让一个元素能够监听click事件，并在接收到事件的时候执行angularjs表达式。正是指令使得angularjs这个框架变得强大，并且正如所见，我们可以自己创造新的指令。angularjs应用的模块中有很多方法可以使用，其中directive()这个方法是用来定义指令的: 1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'youandme'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youandme66.github.io/2017/03/13/first/">
+
+
+
+
+
+  <title> angularjs之指令深入版 | 战马博客 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">战马博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://youandme66.github.io/2017/03/13/first/">
+
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="刘志豪">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="战马博客">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="战马博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                angularjs之指令深入版
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-13T00:00:00+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/angularjs/" itemprop="url" rel="index">
+                    <span itemprop="name">angularjs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                  <a href="/2017/03/13/first/#comments" itemprop="discussionUrl">
+                    <span class="post-comments-count hc-comment-count" data-xid="2017/03/13/first/" itemprop="commentsCount"></span>
+                  </a>
+                </span>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/13/first/" class="leancloud_visitors" data-flag-title="angularjs之指令深入版">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="指令简介"><a href="#指令简介" class="headerlink" title="指令简介"></a>指令简介</h3><p>对于指令，可以把它简单的理解成在特定DOM元素上运行的函数，指令可以扩展这个元素的功能。<br>例如,ng-click可以让一个元素能够监听click事件，并在接收到事件的时候执行angularjs表达式。正是指令使得angularjs这个框架变得强大，并且正如所见，我们可以自己创造新的指令。<br>angularjs应用的模块中有很多方法可以使用，其中directive()这个方法是用来定义指令的:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.directive(<span class="string">'myDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$timeout,userDefinedService</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//指令放在这里</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>1、name(字符串)<br>指令的名字，用来在视图中引用特定的指令。<br>2、factory_function(函数)<br>这个函数返回一个对象，其中定义了指令的全部行为。$compile服务利用这个方法返回的对象，在DOM调用指令时来构造指令的行为。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.directive(<span class="string">'myDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//一个指令定义对象</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">       <span class="comment">//通过设置项来定义指令，在这里进行重写     </span></span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们也可以返回一个函数代替对象来定义指令，但是像上面的例子一样，通过对象来定义是最佳的方式。当返回一个函数时，这个函数通常被称作链接传递函数，利用它我们可以定义指令的链接功能。<br>当angularjs启动应用时，它会把第一个参数当做一个字符串，并以此字符串为名来注册第二个参数返回的对象。angularjs编译器会解析HTML的DOM中的元素、属性、注释和CSS类名中使用了这个名字的地方，并在这些地方引用对应的指令。当它找到某个已知的指令时，就会在页面中插入指令所对应的DOM元素。<br>指令的工厂函数只会在编译器第一次匹配到这个指令时调用一次。和controller函数类似，我们通过\$injector.invoke来调用指令的工厂函数。<br>当angularjs在DOM中遇到具名的指令时，会去匹配已经注册过的指令，并通过名字在注册过的对象中查找。此时，就开始了一个指令的生命周期，指令的生命周期开始于$compile方法并结束于link方法。</p>
+<h3 id="指令全部设置"><a href="#指令全部设置" class="headerlink" title="指令全部设置"></a>指令全部设置</h3><p>全部配置选项如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.directive(<span class="string">'myDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        restrict:<span class="built_in">String</span>,</span><br><span class="line">        priority:<span class="built_in">Number</span>,</span><br><span class="line">        terminal:<span class="built_in">Boolean</span>,</span><br><span class="line">        template:<span class="built_in">String</span> or Template <span class="built_in">Function</span>:</span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params">tElement,tAttrs</span>)</span>&#123;...&#125;,</span><br><span class="line">        templateUrl:<span class="built_in">String</span>,</span><br><span class="line">        replace:<span class="built_in">Boolean</span> or <span class="built_in">String</span>,</span><br><span class="line">        scope:<span class="built_in">Boolean</span> or <span class="built_in">String</span>,</span><br><span class="line">        transclude:<span class="built_in">String</span> or <span class="function"><span class="keyword">function</span>(<span class="params">scope,element,attrs,transclude,otherInjectables</span>)</span>&#123;...&#125;,</span><br><span class="line">        controllers:<span class="built_in">String</span>,</span><br><span class="line">        <span class="built_in">require</span>:<span class="built_in">String</span>,</span><br><span class="line">        link:<span class="function"><span class="keyword">function</span>(<span class="params">scope,iElement,iAttrs</span>)</span>&#123;...&#125;,</span><br><span class="line">        compile:</span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params">tElement,tAttrs,transclude</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span>&#123;</span><br><span class="line">            pre:<span class="function"><span class="keyword">function</span>(<span class="params">scope,iElement,iAttrs,controller</span>)</span>&#123;...&#125;,</span><br><span class="line">post:<span class="function"><span class="keyword">function</span>(<span class="params">scope,iElement,iAttrs,controller</span>)</span>&#123;...&#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">postLink</span>(<span class="params">...</span>)</span>&#123;...&#125;    </span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="restrict-字符串配置"><a href="#restrict-字符串配置" class="headerlink" title="restrict(字符串配置)"></a>restrict(字符串配置)</h3><p>restrict是一个可选的参数。它告诉angularjs这个指令在DOM中可以何种形式被声明。默认angularjs认为restrict的值是A，即以属性的形式来进行声明。<br>可选值如下:<br>E(元素)</p>
+<p><my-directive></my-directive><br>A(属性，默认值)</p>
+<p><div my-directive="expression"></div><br>C(类名)</p>
+<p><div class="my-directive:expression"></div><br>M(注释)<br>&lt;–directive:my-directive expression–&gt;<br>这些选项可以单独使用，也可以混合在一起使用:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        restrict:<span class="string">'EA'</span> <span class="comment">//输入元素或属性</span></span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>属性是用来声明指令最常用的方式，因为它能在包括老版本的IE浏览器在内的所有浏览器中正常工作，并且不需要在文档头部注册新的标签。<br>元素方式还是属性方式<br>在页面中通过元素方式创建新的指令可以将一些功能封装在元素内部。例如，如果我们想要做一个时钟，可以创建一个clock指令，然后在DOM中用如下代码来声明:</p>
+<p><my-clock></my-clock><br>这样做可以告诉指令的使用者，这里会完整包含应用的某一些内容。这个时钟并不是对一个既有时钟的修饰或扩展，而是一个全新的单元。尽管这里也可以使用属性形式声明指令，但我们选择了元素形式，因为这样可以更明确地表达意图。<br>用属性形式来给一个已经存在的元素添加数据或行为。以时钟为例，假设我们更喜欢模拟时钟:</p>
+<p><my-clock clock-display="analog"></my-clock><br>如何进行选择，通常取决于定义的指令是否包含某个组件的核心行为，或者用额外的行为、状态或者其他内容对某个核心组件进行修饰或扩展。<br>另外一个重要的标准，是根据指令是否创建、继承或将自己从所属的环境中隔离出去进行判断。指令的父子关系对其组成和重用性起着至关重要的作用，会有额外的内容来更加深入地讨论指令的作用域。</p>
+<h3 id="priority优先级-数字"><a href="#priority优先级-数字" class="headerlink" title="priority优先级(数字)"></a>priority优先级(数字)</h3><p>优先级参数可以被设置为一个数值。大多数指令会忽略这个参数，使用默认值0，但也有些场景设置高优先级是非常重要甚至是必须的。例如,ngRepeat将这个参数设置为1000，这样就可以保证在同一元素上，它总是在其他指令之前被调用。<br>注意:ngRepeat是所有内置指令中优先级最高的，它总是在其他指令之前运行。这样设置主要考虑的是性能。</p>
+<h3 id="terminal-布尔型"><a href="#terminal-布尔型" class="headerlink" title="terminal(布尔型)"></a>terminal(布尔型)</h3><p>terminal是一个布尔型参数，可以被设置为true或false。<br>这个参数用来告诉angularjs停止运行当前元素上比本指令优先级低的指令。但同当前指令优先级相同的指令还是会被执行。<br>使用了terminal参数的例子是ngView和ngIf。ngIf的优先级略高于ngView,如果ngIf的表达式值为true,ngView就可以被正常执行，但如果ngIf表达式的值为false,由于ngView的优先级较低就不会被执行。</p>
+<h3 id="template-字符串或函数"><a href="#template-字符串或函数" class="headerlink" title="template(字符串或函数)"></a>template(字符串或函数)</h3><p>template参数是可选的，必须被设置为以下两种形式之一:<br>一段HTML文本。<br>一个可以接受两个参数的函数，参数为tElement和tAttrs,并返回一个代表模板的字符串。tElement和tAttrs中的t代表template,是相对于instance。在讨论链接和编译设置时会详细介绍，模板元素或属性与实例元素或属性之间的区别。<br>angularjs会同处理HTML一样处理模板字符串。模板中可以通过大括号来访问作用域，例如。<br>如果模板字符串中含有多个DOM元素，或者只由一个单独的文本节点构成，那它必须被包含在一个父元素内。换句话说，必须存在一个根DOM元素:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">template: <span class="string">'\</span></span><br><span class="line"><span class="string">    &lt;div&gt;&lt;-- single root element --&gt;\</span></span><br><span class="line"><span class="string">        &lt;a href="http://www.baidu.com"&gt;Click me&lt;/a&gt;\</span></span><br><span class="line"><span class="string">        &lt;h1&gt;when using two elements,wrap them in a parent element&lt;/h1&gt;\</span></span><br><span class="line"><span class="string">        &lt;/div&gt;\'</span></span><br></pre></td></tr></table></figure>
+<p>另外，注意每一行末尾的反斜线，这样angularjs才能正确解析多行字符串。在实际生产中，更好的选择是使用templateUrl参数引用外部模板。<br>模板字符串和templateURL中最需要了解的重要功能，是它们如何同作用域链接起来。</p>
+<h3 id="templateUrl-字符串或函数"><a href="#templateUrl-字符串或函数" class="headerlink" title="templateUrl(字符串或函数)"></a>templateUrl(字符串或函数)</h3><p>templateUrl是可选的参数，可以是以下类型:<br>一个代表外部HTML文件路径的字符串<br>一个可以接受两个参数的函数，参数为tElement和tAttrs,并返回一个外部HTML文件路径的字符串。<br>无论哪种方式，模板的URL都将通过AngularJS内置的安全层，特别是$getTrustedResourceUrl,这样可以保护模板不会被不信任的源加载。<br>默认情况下，调用指令时会在后台通过ajax来请求HTML模板文件。有两件事需要知道。<br>在本地开发时，需要在后台运行一个本地服务器，用以从文件系统加载HTML模板，否则会导致Cross Origin Request script(CORS)错误.<br>模板加载时异步的，意味着编译和链接要暂停，等待模板加载完成。<br>通过Ajax异步加载大量的模板将严重拖慢一个客户端应用的速度。为了避免延迟，可以在部署应用之间对HTML模板进行缓存。在大多数场景下缓存都是一个非常好的选择，因为angularjs通过减少请求数量提升了性能。<br>模板加载后，angularjs会将它默认缓存到$templateCache服务中。在实际生产中，可以提前将模板缓存到一个定义模板的javascript文件中，这样就不需要通过XHR来加载模板了。</p>
+<h3 id="replace-布尔型"><a href="#replace-布尔型" class="headerlink" title="replace(布尔型)"></a>replace(布尔型)</h3><p>replace是一个可选参数，如果设置了这个参数，值必须为true，因为默认值为false。默认值意味着模板会被当做子元素插入到调用此指令的元素内部:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div some-directive&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">.directive(<span class="string">'someDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span>&#123;</span><br><span class="line">	template:<span class="string">'&lt;div&gt;some stuff here&lt;/div&gt;'</span></span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>调用指令之后的结果如下(这是默认replace为false时的情况):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div some-directive&gt;</span><br><span class="line">&lt;div&gt;some stuff here&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+<p>如果replace被设置为了true:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.directive(<span class="string">'someDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">	replace:<span class="literal">true</span>,<span class="comment">//修饰过</span></span><br><span class="line">	template:<span class="string">'&lt;div&gt;some stuff here&lt;/div&gt;'</span></span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>指令调用后的结果</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>some stuff here<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="指令作用域"><a href="#指令作用域" class="headerlink" title="指令作用域"></a>指令作用域</h3><p>为了完全理解指令定义对象中剩下的参数，需要先介绍指令作用域是如何工作的。<br>$rootScope这个特殊的对象会在DOM中声明ng-app时被创建:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-app</span>=<span class="string">"myApp"</span> <span class="attr">ng-init</span>=<span class="string">"someProperty='some data'"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-init</span>=<span class="string">"siblingProperty='more data'"</span>&gt;</span></span><br><span class="line">	Inside Div Two</span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-init</span>=<span class="string">"aThirdProperty"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码中，我们在应用的根作用域中设置了三个属性:someProperty、siblingProperty和anotherSiblingProperty。<br>从这里开始，DOM中每个指令调用时都可能会:<br>直接调用相同的作用域对象。<br>从当前作用域对象继承一个新的作用域对象。<br>创建一个同当前作用域想隔离的作用域对象。<br>上面的例子展示的是第一种情况。前两个div是兄弟元素，可以通过get和set访问$rootScope。第二个div内部的div同样可以通过get和set访问相同的根作用域。<br>指令嵌套并不一定意味着需要改变它的作用域。默认情况下，子指令会被付予访问父DOM元素对应的作用域的能力，这样做的原因可以通过介绍指令的scope参数来理解，scope参数默认是false。</p>
+<h3 id="scope参数-布尔型或对象"><a href="#scope参数-布尔型或对象" class="headerlink" title="scope参数(布尔型或对象)"></a>scope参数(布尔型或对象)</h3><p>scope参数是可选的，可以被设置为true或一个对象。默认值是false。<br>当scope设置为true时，会从父作用域继承并创建一个新的作用域对象。<br>如果一个元素上有多个指令使用了隔离作用域，其中只有一个可以生效。只有指令模板中的根元素可以获得一个新的作用域。因此，对于这些对象来说scope默认被设置为true。<br>内置指令ng-controller的作用，就是从父级作用域继承并创建一个新的子作用域。它会创建一个新的从父作用域继承而来的子作用域。<br>用这些新内容更新一下前面的例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div ng-app=<span class="string">"myApp"</span> ng-init=<span class="string">"someProperty='some data'"</span>&gt;</span><br><span class="line">	&lt;div ng-init=<span class="string">"siblingProperty='moredata'"</span>&gt;</span><br><span class="line">	Inside Div Two:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line">	&lt;div ng-init=<span class="string">"aThirdProperty='data for 3rd property'"</span> ng-controller=<span class="string">"someController"</span>&gt;</span><br><span class="line">		Inside Div Three :&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line">		&lt;div ng-init=<span class="string">"aFourthProperty"</span>&gt;</span><br><span class="line">			Inside Div Four:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line">		&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>div&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+<p>如果直接运行代码会报错，因为没有javascript中定义所需的控制器，下面就来定义这个控制器:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.controller(<span class="string">'SomeController'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//可以留空，但需要被定义</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>刷新页面，会发现第二个div中由于未定义，因此什么都没有输出。第三个div显示了设置在继承来的作用有中的data for a 3rd property。<br>为了进一步证明作用域的继承机制是向下而非向上进行的，下面再看另外一个例子，展示的是从父作用域继承而来:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div ng-app=<span class="string">"myApp"</span> ng-init=<span class="string">"someProperty='some data'"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;div ng-init=<span class="string">"siblingProperty='moredata'"</span>&gt;</span><br><span class="line">	Inside Div Two:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line">	&lt;div ng-init=<span class="string">"aThirdProperty='data for 3rd property'"</span> ng-controller=<span class="string">"SomeController"</span>&gt;</span><br><span class="line">	Inside Div Three:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line">	&lt;div ng-controller=<span class="string">"SecondController"</span>&gt;</span><br><span class="line">		Inside Div Four:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">	 &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Inside Div:Two;</span><br><span class="line">Inside Div Three:data <span class="keyword">for</span> 3rd property</span><br><span class="line">Inside Div Four:data <span class="keyword">for</span> 3rd property</span><br></pre></td></tr></table></figure></p>
+<p>在javascript中加入SecondController的定义:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.controller(<span class="string">'SomeController'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//可以留空，但需要被定义</span></span><br><span class="line">&#125;)</span><br><span class="line">.controller(<span class="string">'SecondController'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//同样可以留空</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果要创建一个能够从外部原型继承作用域的指令，将scope属性设置为true:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>,[])</span><br><span class="line">.directive(<span class="string">'myDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">	restrict:<span class="string">'A'</span>,</span><br><span class="line">	scope:<span class="literal">true</span></span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>下面用指令来改变DOM的作用域:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div ng-app=<span class="string">"myApp"</span> ng-init=<span class="string">"someProperty='some data'"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;div ng-init=<span class="string">"siblingProperty='moredata'"</span>&gt;</span><br><span class="line">Inside Div Two:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line">&lt;div ng-init=<span class="string">"aThirdProperty='data for 3rd property'"</span> ng-controller=<span class="string">"SomeController"</span> &gt;</span><br><span class="line"> Inside Div Three:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line"> &lt;div ng-controller=<span class="string">"SecondController"</span>&gt;</span><br><span class="line"> Inside Div Four:&#123;&#123;aThirdProperty&#125;&#125;</span><br><span class="line"> &lt;br/&gt;</span><br><span class="line"> Outside myDirective:&#123;&#123;myProperty&#125;&#125;</span><br><span class="line"> &lt;div my-directive ng-init=<span class="string">"myProperty='wow,this is cool'"</span>&gt;</span><br><span class="line"> 	Inside myDirective:&#123;&#123;myProperty&#125;&#125;</span><br><span class="line"> &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"> &lt;/</span>div&gt;</span><br><span class="line"> &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"> &lt;/</span>div&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习/" rel="tag"># 学习</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/first/" rel="next" title="最小二乘法">
+                <i class="fa fa-chevron-left"></i> 最小二乘法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/19/first/" rel="prev" title="读Java源代码总结一">
+                读Java源代码总结一 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="hypercomments_widget"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="刘志豪">
+          <p class="site-author-name" itemprop="name">刘志豪</p>
+          <p class="site-description motion-element" itemprop="description">刘志豪的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">152</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              我的其他足迹
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/qq_33433029" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://github.com/youandme66" title="GitHub" target="_blank">GitHub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/767025e0c4df/timeline" title="我的简书" target="_blank">我的简书</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities" title="我的知乎" target="_blank">我的知乎</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#指令简介"><span class="nav-number">1.</span> <span class="nav-text">指令简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令全部设置"><span class="nav-number">2.</span> <span class="nav-text">指令全部设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#restrict-字符串配置"><span class="nav-number">3.</span> <span class="nav-text">restrict(字符串配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#priority优先级-数字"><span class="nav-number">4.</span> <span class="nav-text">priority优先级(数字)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#terminal-布尔型"><span class="nav-number">5.</span> <span class="nav-text">terminal(布尔型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#template-字符串或函数"><span class="nav-number">6.</span> <span class="nav-text">template(字符串或函数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#templateUrl-字符串或函数"><span class="nav-number">7.</span> <span class="nav-text">templateUrl(字符串或函数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#replace-布尔型"><span class="nav-number">8.</span> <span class="nav-text">replace(布尔型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令作用域"><span class="nav-number">9.</span> <span class="nav-text">指令作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scope参数-布尔型或对象"><span class="nav-number">10.</span> <span class="nav-text">scope参数(布尔型或对象)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘志豪</span>
+</div>
+
+
+<div class="powered-by">
+   <a class="theme-link" href="http://www.jianshu.com/users/767025e0c4df/timeline">我的简书</a> 
+</div>
+
+<div class="theme-info">
+  链接 -
+  <a class="theme-link" href="https://www.zhihu.com/people/liu-zhi-hao-85-39/activities">
+    我的知乎
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 93245, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 93245, xid: "2017/03/13/first/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/93245/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("EAvSG3QtXW1dqzq5WQ5CjH7S-gzGzoHsz", "2aiWv7vIfVY4CjKc49aPBHFX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+</body>
+</html>
